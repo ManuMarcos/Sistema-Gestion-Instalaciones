@@ -4,7 +4,6 @@ public class Administrativo extends Empleado{
 
 	//Attributes
 	
-	
 	//Methods
 	
 	//Constructor

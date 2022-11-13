@@ -24,11 +24,6 @@ public class Agenda{
 			Turno turno = new Turno(fecha, instalacion);
 			diaParaAgendar.agregarTurno(turno, turnoLaboral);
 			this.dias.add(diaParaAgendar);
-			/*
-			System.out.println("------------------------------------- ");
-			System.out.println("Se agendo la instalacion para el dia: " + diaParaAgendar.toString());
-			System.out.println("------------------------------------- ");
-			*/
 			return true;
 		}
 		System.out.println("No hay un turno disponible para el dia " + diaParaAgendar.toString());

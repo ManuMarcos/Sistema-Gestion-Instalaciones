@@ -30,6 +30,9 @@ public class Main {
 		Calendar fecha6 = new GregorianCalendar();
 		Calendar fecha7 = new GregorianCalendar();
 		Calendar fecha8 = new GregorianCalendar();
+
+	
+		
 		
 		fecha1.set(2020, 8, 24, 10, 0);
 		fecha2.set(2020, 8, 24, 11, 0);
@@ -37,8 +40,9 @@ public class Main {
 		fecha4.set(2020, 8, 24, 16, 0);
 		
 		fecha5.set(2022, 10, 12, 9, 30);
-		fecha6.set(2022, 10, 12, 10, 30);
+		fecha6.set(2022, 10, 12, 8, 30);
 		fecha7.set(2022, 10, 12, 8, 0);
+		fecha8.set(2022, 10, 12, 18, 0, 0);
 		
 		
 		Instalacion instalacion1 = new Instalacion(cliente);
@@ -61,17 +65,14 @@ public class Main {
 		
 		tecnico1.getAgenda().agendarInstalacion(instalacion1, fecha7);
 		
-		tecnico1.getAgenda().imprimirTurnosPorFecha(fecha1);
+		tecnico1.getAgenda().imprimirTurnosPorFecha(fecha2);
 		
 		tecnico1.getAgenda().imprimirTurnosPorFecha(fecha5);
 		
 		
 		
 		
-		
 	
-		
-		
 		
 		/*
 		Turno turno1 = new Turno(fecha1.getTime());
