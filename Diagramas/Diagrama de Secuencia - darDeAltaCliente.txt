@@ -1,0 +1,22 @@
+@startuml
+
+actor Usuario
+participant Empresa
+participant Operador
+participant "cliente : Cliente" as Cliente
+participant "clientes : List<Cliente>" as Clientes
+
+Usuario -> Empresa : agregarCliente(String, String, String, TipoCliente) : void
+activate Empresa
+activate Clientes
+Empresa -> Operador : darDeAltaCliente(String, String, String, TipoCliente) : Cliente
+activate Operador
+Operador -> Cliente : <<create>>
+activate Cliente
+destroy Cliente
+destroy Operador
+Empresa -> Clientes : add(Cliente)
+destroy Clientes
+destroy Empresa
+
+@enduml

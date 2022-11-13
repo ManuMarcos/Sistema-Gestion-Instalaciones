@@ -1,0 +1,252 @@
+@startuml
+class Empresa <<Singleton, Facade>>{
+- instalaciones : ArrayList<Instalacion>
+- personas : ArrayList<Persona>
+- inventario : Inventario
++ agregarProducto(String) 
++ agregarCliente(String)
++ agregarEmpleado(String)
++ agregarCalendario()
+}
+
+
+abstract class Persona{
+- id : int
+- nombre : String
+- direccion : String
+# Persona(nombre : String, direccion : String)
+}
+
+class Cliente{
+- {static} generador : int
+- tipoCliente : TipoCliente
+- correoElectronico : String
++ Cliente(nombre : String, direccion : String, tipoCliente : TipoCliente, correoElectronico : String)
+}
+
+abstract class Empleado{
+# {static} generador : int
+- sueldo : float
+# Empleado(nombre : String, direccion : String)
+}
+
+
+
+enum TipoCliente{
+INDIVIDUO
+EMPRESA
+}
+
+class Operador{
++ darDeAlta() : void
++ agendarInstalacion(Cliente, Tecnico, Dia, Turno, boolean, boolean) : void 
+}
+
+class Tecnico{
+- experienciaLaboral : ExperienciaLaboral
+- agenda : Agenda
+- turnoLaboral : TurnoLaboral
++ Tecnico(nombre : String, direccion : String, experienciaLaboral : ExperienciaLaboral, turnoLaboral : TurnoLaboral)
++ Tecnico(nombre : String, direccion : String, turnoLaboral : turnoLaboral)
++ getAgenda() : Agenda
++ toString() : String
+}
+
+abstract class ExperienciaLaboral{}
+
+class Junior{
+- {static} costoHora : float
+}
+
+class SemiSenior{
+- {static} costoHora : float
+}
+
+class Senior{
+- {static} costoHora : float
+}
+
+class Administrativo{
++ facturarInstalacion()
+- emitirFactura()
+- enviarFactura()
++ modificarInstalacion(Instalacion)
++ imprimirFactura()
++ obtenerFacturasEmitidas() : ArrayList<Factura>
+}
+
+class Factura{
+- {static} generador : int
+- numero : int 
+- {static} iva : int
+- precioTotal : float
+}
+
+
+class Administrador{
++ crearTecnico(faltanParametros) : void
++ crearProducto(faltanParametros) : void
++ setCostoHoraTrabajo(Tecnico, float) : void
++ setStockProducto(Producto, int) : void
++ setPrecioProducto(Producto, float) : void
++ setCostoViaje(float) : void
+}
+
+
+
+
+class Inventario{
+- productos : ArrayList<Producto>
++ agregarProducto(Producto) : void
++ hayStock(Producto) : boolean
++ obtenerCantStock(Producto) : int
+}
+
+abstract class Producto{
+}
+
+
+class Evaporadora{
+- {static} precio : float
+}
+
+class Condensadora{
+- {static} precio : float
+}
+
+class KitDeInstalacion{
+- {static} precio : float
+}
+
+class Instalacion{
+- generador {static} : int
+- id : int
+- estado : Estado
+- horaInicio : Date
+- horaFinalizacion : Date
+- dia : NombreDia
+- turno : Turno
+- elementos : ArrayList<Producto>
+- tecnico : Tecnico
+- cliente : Cliente
+- factura : Factura
+- tiempoTrabajado : Date
+- necesitaSeguro : boolean
+- necesitaSoportePared : boolean
+- almuerzo : boolean
+- costoDeViaje : float
+}
+
+enum Estado{
+PROGRAMADA
+EN CURSO
+CANCELADA
+FINALIZADA
+}
+
+class Agenda{
+- dias : ArrayList<Dia>
+- turnoLaboral : TurnoLaboral
++ Agenda(turnoLaboral : TurnoLaboral)
++ agendarInstalacion(instalacion : Instalacion, fecha : Calendar)
++ imprimirTurnosPorFecha(fecha : Calendar)
+- existeDia(fecha : Calendar) : Dia
+- buscarDia(fecha : Calendar) : Dia
+- verificarFecha(fecha : Calendar) : boolean
+}
+
+class Dia{
+- fecha : Calendar
+- turnos : ArrayList<Turno>
++ Dia(fecha : Calendar)
++ agregarTurno(turno : Turno, turnoLaboral : TurnoLaboral) : boolean
++ imprimirTurnos() : void
++ estaDisponible(fecha : Calendar) : boolean
++ soyLaFecha(fecha : Calendar) : boolean
++ getFecha() : Calendar
++ getTurnos() : ArrayList<Turno>
++ toString() : String
+}
+
+class Turno{
+- horaInicio : Calendar
+- horaFinalizacion : Calendar
+- instalacion : Instalacion
++ Turno(fecha : Calendar, instalacion Instalacion)
+- asignarHoraFinalizacion(fecha : Calendar) : void
++ toString() : String
++ estaEnMiRangoHorario(fecha : Calendar) : boolean
++ getHoraInicio() : Calendar
++ getHoraFinalizacion() : Calendar
++ getInstalacion() : Instalacion
+}
+
+abstract class TurnoLaboral{
+# {abstract} esHorarioLaboral(turno : Turno) : boolean
+# {abstract} getHoraInicio() : Calendar
+# {abstract} getHoraFin() : Calendar
+# {abstract} esDiaLaboral(fecha : Calendar) : boolean
+}
+
+class TurnoManana{
+- {static} horaInicio : Calendar
+- {static} horafin : Calendar
+- {static} diasNoLaborales : int[]
++ TurnoManana()
++ getHoraInicio() : Calendar
++ getHoraFin() : Calendar
++ esDiaLaboral(fecha : Calendar) : boolean
++ esHorarioLaboral(turno : Turno) : boolean
+}
+
+class TurnoTarde{
+- {static} horaInicio : Calendar
+- {static} horafin : Calendar
+- {static} diasNoLaborales : int[]
++ TurnoTarde()
++ getHoraInicio() : Calendar
++ getHoraFin() : Calendar
++ esDiaLaboral(fecha : Calendar) : boolean
++ esHorarioLaboral(turno : Turno) : boolean
+}
+
+
+Agenda *-- Dia
+Agenda *-- TurnoLaboral
+Dia *-- Turno
+
+TurnoLaboral <|-- TurnoManana
+TurnoLaboral <|-- TurnoTarde
+
+Persona <|-- Cliente
+Persona <|-- Empleado
+Empleado <|-- Operador
+Empleado <|-- Administrativo
+Empleado <|-- Administrador
+Empleado <|-- Tecnico
+
+ExperienciaLaboral <|-- Junior
+ExperienciaLaboral <|-- SemiSenior
+ExperienciaLaboral <|-- Senior
+
+Tecnico *-- ExperienciaLaboral
+Tecnico *-- Agenda
+Instalacion o-- Persona
+Instalacion o-- Producto
+Instalacion o-- Estado
+Instalacion *-- Factura
+Instalacion o-- NombreDia
+Instalacion o-- Turno
+Inventario *-- Producto
+Empresa *-- Instalacion
+Empresa *-- Persona
+Empresa *-- Inventario
+Cliente o-- TipoCliente
+
+
+
+
+Producto <|-- Evaporadora
+Producto <|-- Condensadora
+Producto <|-- KitDeInstalacion
+@enduml
