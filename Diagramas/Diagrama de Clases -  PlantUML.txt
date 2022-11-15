@@ -96,26 +96,30 @@ class Administrador{
 
 
 class Inventario{
-- productos : ArrayList<Producto>
-+ agregarProducto(Producto) : void
+- productos : HashMap<Producto, stock : Integer>
++ obtenerStock(Producto) : int
++ setStock(Producto, stock : int) : void
++ setPrecioProducto(Producto, precio : float) : boolean
 + hayStock(Producto) : boolean
-+ obtenerCantStock(Producto) : int
++ quitarProducto(Producto) : Producto
+- buscarProducto(Producto) : Producto
++ toString() : String
 }
 
 abstract class Producto{
+# precio : float
+# setPrecio(precio : float) : void
+# getPrecio() : float
 }
 
 
 class Evaporadora{
-- {static} precio : float
 }
 
 class Condensadora{
-- {static} precio : float
 }
 
 class KitDeInstalacion{
-- {static} precio : float
 }
 
 class Instalacion{
@@ -124,7 +128,6 @@ class Instalacion{
 - estado : Estado
 - horaInicio : Date
 - horaFinalizacion : Date
-- dia : NombreDia
 - turno : Turno
 - elementos : ArrayList<Producto>
 - tecnico : Tecnico
@@ -235,7 +238,6 @@ Instalacion o-- Persona
 Instalacion o-- Producto
 Instalacion o-- Estado
 Instalacion *-- Factura
-Instalacion o-- NombreDia
 Instalacion o-- Turno
 Inventario *-- Producto
 Empresa *-- Instalacion
