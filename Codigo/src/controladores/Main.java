@@ -70,37 +70,32 @@ public class Main {
 		tecnico1.getAgenda().imprimirTurnosPorFecha(fecha5);
 		
 		
+		Inventario inventario = new Inventario();
+		
+		inventario.setStock(new Evaporadora(), 50);
+		inventario.setStock(new Condensadora(), 20);
+		inventario.setStock(new KitDeInstalacion(), 5);
+		
+		inventario.quitarProducto(new Evaporadora());
+		inventario.quitarProducto(new Condensadora());
+		inventario.quitarProducto(new KitDeInstalacion());
+		
+		inventario.setPrecioProducto(new Evaporadora(), 500);
+		inventario.setPrecioProducto(new Condensadora(), 780);
+		inventario.setPrecioProducto(new KitDeInstalacion(), 200);
+		
+		
+		
+		System.out.println(inventario.toString());
+		
+		
+		
+		
 		
 		
 	
 		
-		/*
-		Turno turno1 = new Turno(fecha1.getTime());
-		Turno turno2 = new Turno(fecha2.getTime());
-		Turno turno3 = new Turno(fecha3.getTime());
-		Turno turno4 = new Turno(fecha4.getTime());
-		Turno turno5 = new Turno(fecha5.getTime());
 		
-		
-		System.out.println("Turno 1: " + turno1.toString() + "\n");
-		System.out.println("Turno 2: " + turno2.toString() + "\n");
-		System.out.println("Turno 3: " + turno3.toString() + "\n");
-		System.out.println("Turno 4: " + turno4.toString() + "\n");
-		System.out.println("Turno 5: " + turno4.toString() + "\n");
-		
-		dia.agregarTurno(turno1);
-		dia.agregarTurno(turno2);
-		dia.agregarTurno(turno4);
-		dia.agregarTurno(turno5);
-		
-		//Esta sucediendo un error con el horario de finalizacion, no se esta checkeando
-		
-		System.out.println();
-		System.out.println();
-		dia.imprimirTurnos();
-		*/
-		
-	
 		
 	}
 

@@ -3,8 +3,16 @@ package modelos;
 public class KitDeInstalacion extends Producto {
 
 	//Attributes
-	private static float precio;
+
 	
 	//Methods
+	
+	//Constructor
+	public KitDeInstalacion() {
+		
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 	
 }

@@ -3,9 +3,18 @@ package modelos;
 public class Condensadora extends Producto{
 
 	//Attributes
-	private static float precio;
+	
+	
+	
 	
 	//Methods
+	public Condensadora() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+
 	
 	
 }
