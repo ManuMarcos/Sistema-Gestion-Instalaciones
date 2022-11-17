@@ -21,10 +21,10 @@ public class ControladorPrincipal {
 			
 			Instalacion instalacion = new Instalacion(cliente, tecnico);
 			turno.setInstalacion(instalacion);
-			System.out.println("Se agendo con exito la instalacion");
+			System.out.println("Se agendo con exito la instalacion para la fecha " + fecha.getTime());
 			return true;
 		}
-		System.out.println("No se agendo la instalacion");
+		System.out.println("No se agendo la instalacion para la fecha " + fecha.getTime());
 		
 		return false;
 	}

@@ -27,10 +27,8 @@ public class Dia {
 		if (this.estaDisponible(turno)) {
 			this.turnos.add(turno);
 			this.ordenarTurnos();
-			System.out.println("El turno se agrego exitosamente");
 			return true;
 		}
-		System.out.println("El horario solicitado no se encuentra disponible");
 		return false;
 	};
 	

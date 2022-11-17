@@ -35,7 +35,6 @@ public class Turno {
 		if ((turno.getHoraInicio().after(this.horaInicio) && turno.getHoraInicio().before(this.horaFinalizacion)
 				|| turno.getHoraFinalizacion().after(horaInicio) && turno.getHoraFinalizacion().before(this.horaFinalizacion)
 				|| turno.getHoraInicio().equals(this.horaInicio))){
-			System.out.println("Estoy ocupando turno");
 			return true;
 		}
 		return false;

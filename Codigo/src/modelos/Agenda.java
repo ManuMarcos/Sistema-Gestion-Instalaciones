@@ -26,7 +26,6 @@ public class Agenda{
 		this.disponibilidad = new TurnoCompleto();
 	}
 	
-	
 	public boolean agendarTurno(Turno turno) {
 		Dia dia = this.getDia(turno.getHoraInicio());
 		if (this.esValido(turno)) {
@@ -37,12 +36,6 @@ public class Agenda{
 		return false;
 	};
 	
-	public void setInstalacionAlTurno(Instalacion instalacion, Turno turno) {
-		for (Turno ti : this.getTurnosAgendados()) {
-			ti.setInstalacion(instalacion);
-		}
-	}
-
 	public boolean estaDisponible(Turno turno) {
 		Calendar fechaDelTurno = turno.getHoraInicio();
 		if (this.esValido(turno)) {
@@ -56,7 +49,6 @@ public class Agenda{
 		}
 		return false;
 	}
-	
 	
 	private boolean esValido(Turno turno) {
 		if(this.disponibilidad.esDiaLaboral(turno.getHoraInicio()) && this.disponibilidad.esHorarioLaboral(turno) 
@@ -74,16 +66,10 @@ public class Agenda{
 		return true;
 	}
 	
-	
-	
-	
 	public void imprimirTurnosPorFecha(Calendar fecha) {
 		Dia diaBuscado = this.buscarDia(fecha);
 		if (diaBuscado != null) {
 			diaBuscado.imprimirTurnos();
-		}
-		else {
-			System.out.println("No hay ningun turno para ese dia");
 		}
 	}
 	
@@ -128,8 +114,7 @@ public class Agenda{
 		return false;
 	}
 	
-	
-	
+
 	public void imprimirTurnos() {
 		for (Dia dia : this.dias) {
 			dia.imprimirTurnos();

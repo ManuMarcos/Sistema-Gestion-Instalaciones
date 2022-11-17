@@ -39,11 +39,14 @@ public class TurnoCompleto extends Disponibilidad{
 	}
 	
 	public boolean esHorarioLaboral(Turno turno) {
-		if (horaInicio.get(Calendar.HOUR_OF_DAY) <= turno.getHoraInicio().get(Calendar.HOUR_OF_DAY) && 
+		if (horaInicio.get(Calendar.HOUR_OF_DAY)  <= turno.getHoraInicio().get(Calendar.HOUR_OF_DAY) && 
 				horaFin.get(Calendar.HOUR_OF_DAY) >= turno.getHoraFinalizacion().get(Calendar.HOUR_OF_DAY)) {
+			if(horaFin.get(Calendar.HOUR_OF_DAY) == turno.getHoraFinalizacion().get(Calendar.HOUR_OF_DAY)
+					&& horaFin.get(Calendar.MINUTE) < turno.getHoraFinalizacion().get(Calendar.MINUTE)) {
+				return false;
+			}
 			return true;
 		}
-
 		return false;
 	}
 	

@@ -44,8 +44,8 @@ public class Main {
 		
 		
 		//Sabado 26/11/2022
-		fecha7.set(2022, 10, 10, 8, 00);
-		fecha8.set(2022, 10, 10, 8, 00);
+		fecha7.set(2022, 10, 26, 8, 00);
+		fecha8.set(2022, 10, 26, 12, 30);
 		
 		fecha9.set(2022, 10, 17, 11, 0, 0);
 				
