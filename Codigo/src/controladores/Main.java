@@ -35,31 +35,31 @@ public class Main {
 		Calendar fecha9 = new GregorianCalendar();
 	
 		
-		fecha1.set(2022, 10, 16, 8, 0, 0);
-		fecha2.set(2022, 10, 16, 11, 0, 0);
-		fecha3.set(2022, 10, 16, 11, 40, 0);
-		fecha4.set(2022, 10, 16, 16, 0, 0);
-		fecha5.set(2022, 10, 16, 9, 30, 0);
-		fecha6.set(2022, 10, 16, 8, 30, 0);
-		fecha9.set(2022, 10, 16, 11, 0, 0);
+		fecha1.set(2022, 10, 17, 8, 0, 0);
+		fecha2.set(2022, 10, 17, 11, 0, 0);
+		fecha3.set(2022, 10, 17, 11, 20, 0);
+		fecha4.set(2022, 10, 17, 16, 0, 0);
+		fecha5.set(2022, 10, 18, 8, 0, 0);
+		fecha6.set(2022, 10, 18, 9, 30, 0);
+		
 		
 		//Sabado 26/11/2022
 		fecha7.set(2022, 10, 10, 8, 00);
 		fecha8.set(2022, 10, 10, 8, 00);
 		
-		
-		
-		
+		fecha9.set(2022, 10, 17, 11, 0, 0);
+				
+	
 		
 		controlador.agendarInstalacion(cliente1, tecnico1, fecha1);
 		controlador.agendarInstalacion(cliente1, tecnico1, fecha2);
+		controlador.agendarInstalacion(cliente1, tecnico1, fecha3);
 		controlador.agendarInstalacion(cliente1, tecnico1, fecha4);
 		controlador.agendarInstalacion(cliente1, tecnico1, fecha5);
 		controlador.agendarInstalacion(cliente1, tecnico1, fecha6);
 		controlador.agendarInstalacion(cliente1, tecnico1, fecha7);
 		controlador.agendarInstalacion(cliente1, tecnico1, fecha8);
 		controlador.agendarInstalacion(cliente1, tecnico1, fecha9);
-		controlador.agendarInstalacion(cliente1, tecnico1, fecha2);
 		
 
 		
@@ -90,12 +90,12 @@ public class Main {
 		
 		System.out.println(inventario.toString());
 		
-		
+		/*
 		CrearClienteVista vista = new CrearClienteVista(400,300);
 		
 		vista.setVisible(true);
+		*/
 		
-	
 		
 		
 		

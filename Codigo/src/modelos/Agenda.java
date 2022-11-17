@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 
 
 public class Agenda{
@@ -43,20 +44,38 @@ public class Agenda{
 	}
 
 	public boolean estaDisponible(Turno turno) {
-		Dia dia = this.getDia(turno.getHoraInicio());
-		if (dia.estaDisponible(turno) && this.esValido(turno)) {
-			return true;
+		Calendar fechaDelTurno = turno.getHoraInicio();
+		if (this.esValido(turno)) {
+			if (this.existeDia(fechaDelTurno)) {
+				Dia dia = this.buscarDia(fechaDelTurno);
+				return dia.estaDisponible(turno);
+			}
+			else {
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	
 	private boolean esValido(Turno turno) {
-		if(this.disponibilidad.esDiaLaboral(turno.getHoraInicio()) && this.disponibilidad.esHorarioLaboral(turno)) {
+		if(this.disponibilidad.esDiaLaboral(turno.getHoraInicio()) && this.disponibilidad.esHorarioLaboral(turno) 
+				&& this.tieneFechaPosteriorAHoy(turno)) {
 			return true;
 		}
 		return false;
 	}
+	
+	private boolean tieneFechaPosteriorAHoy(Turno turno) {
+		Calendar fechaHoy = new GregorianCalendar();
+		if (turno.getHoraInicio().before(fechaHoy)) {
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
 	
 	public void imprimirTurnosPorFecha(Calendar fecha) {
 		Dia diaBuscado = this.buscarDia(fecha);
@@ -99,6 +118,16 @@ public class Agenda{
 		}
 		return null;
 	}
+	
+	private boolean existeDia(Calendar dia) {
+		for (Dia di : this.dias) {
+			if (di.soyLaFecha(dia)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 	
 	public void imprimirTurnos() {
