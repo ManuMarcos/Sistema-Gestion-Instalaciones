@@ -3,29 +3,36 @@ package modelos;
 public class Cliente extends Persona{
 
 	//Attributes
-	private static int generador = 1;
+	private int cuitCuil;
+	private Agenda agenda;
 	private TipoCliente tipoCliente;
 	private String correoElectronico;
+	
 	
 	
 	
 	//Methods
 	
 	//Constructor
-	
-	/**
-	 * Constructor de Cliente
-	 * @param nombre
-	 * @param direccion
-	 * @param tipoCliente
-	 * @param correoElectronico
-	 */
-	public Cliente(String nombre, String direccion, TipoCliente tipoCliente, String correoElectronico) {
+
+	public Cliente(String nombre, String direccion, int cuitCuil, TipoCliente tipoCliente, String correoElectronico) {
 		super(nombre, direccion);
+		this.cuitCuil = cuitCuil;
 		this.tipoCliente = tipoCliente;
 		this.correoElectronico =  correoElectronico;
-		this.id = generador;
-		generador ++;
+		this.agenda = new Agenda();
 	}
+	
+	public boolean tengoElCuitCuil(int cuitCuil) {
+		if (this.cuitCuil == cuitCuil) {
+			return true;
+		} 
+		return false;
+	}
+	
+	public Agenda getAgenda() {
+		return this.agenda;
+	}
+	
 	
 }

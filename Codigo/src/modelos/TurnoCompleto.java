@@ -3,20 +3,21 @@ package modelos;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class TurnoManana extends Disponibilidad{
-
+public class TurnoCompleto extends Disponibilidad{
+	
+	
 	//Attributes
 	private static Calendar horaInicio = new GregorianCalendar();
 	private static Calendar horaFin = new GregorianCalendar();
 	private static int[] diasNoLaborales = {Calendar.SUNDAY};
 	
 	static {
-		horaInicio.set(0, 0, 0, 8, 0);
-		horaFin.set(0, 0, 0, 14, 0);
+		horaInicio.set(0, 0, 0, 0, 0);
+		horaFin.set(0, 0, 0, 23, 59);
 	}
 	
 	//Methods
-	public TurnoManana() {
+	public TurnoCompleto() {
 		
 	}
 	

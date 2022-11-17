@@ -7,7 +7,7 @@ public class Tecnico extends Empleado {
 	//Attributes
 	private ExperienciaLaboral experienciaLaboral;
 	private Agenda agenda;
-	private TurnoLaboral turnoLaboral;
+	private Disponibilidad turnoLaboral;
 
 	//Methods
 	
@@ -26,7 +26,7 @@ public class Tecnico extends Empleado {
 	}
 	
 	//Constructor para pruebas
-	public Tecnico(String nombre, String direccion, TurnoLaboral turnoLaboral) {
+	public Tecnico(String nombre, String direccion, Disponibilidad turnoLaboral) {
 		super(nombre,direccion);
 		this.turnoLaboral = turnoLaboral;
 		this.agenda = new Agenda(turnoLaboral);

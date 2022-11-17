@@ -1,10 +1,10 @@
-package modelos;
+ package modelos;
 
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class TurnoTarde extends TurnoLaboral{
+public class TurnoTarde extends Disponibilidad{
 
 	//Attributes
 	private static Calendar horaInicio = new GregorianCalendar();

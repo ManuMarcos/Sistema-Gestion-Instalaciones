@@ -3,6 +3,8 @@ package modelos;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -21,10 +23,10 @@ public class Dia {
 		this.turnos =  new ArrayList<Turno>();
 	}
 	
-	public boolean agregarTurno(Turno turno, TurnoLaboral turnoLaboral) {
-		if (this.estaDisponible(turno.getHoraInicio()) && this.estaDisponible(turno.getHoraFinalizacion()) && 
-				turnoLaboral.esHorarioLaboral(turno)) {
+	public boolean agregarTurno(Turno turno) {
+		if (this.estaDisponible(turno)) {
 			this.turnos.add(turno);
+			this.ordenarTurnos();
 			System.out.println("El turno se agrego exitosamente");
 			return true;
 		}
@@ -42,14 +44,13 @@ public class Dia {
 		}
 	}
 	
-	public boolean estaDisponible(Calendar fecha) {
-		boolean estaDisponible = true;
-		for(Turno turno : turnos) {
-			if (turno.estaEnMiRangoHorario(fecha)) {
-				estaDisponible = false;
+	public boolean estaDisponible(Turno turno) {
+		for(Turno ti : turnos) {
+			if (ti.estoyOcupando(turno)) {
+				return false;
 			}
 		}
-		return estaDisponible;
+		return true;
 	};
 	
 	public boolean soyLaFecha(Calendar dia) {
@@ -69,13 +70,27 @@ public class Dia {
 		return this.turnos;
 	}
 	
-	
-	
 	public String toString() {
 		
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 		String fechaFormateada = formatoFecha.format(this.fecha.getTime());
 		return fechaFormateada;
+	}
+	
+	public void ordenarTurnos() {
+		Collections.sort(this.turnos, new ordenarPorTurno());
+	}
+	
+	static class ordenarPorTurno implements Comparator<Turno>{
+
+		@Override
+		public int compare(Turno turno1, Turno turno2) {
+			// TODO Auto-generated method stub
+			return turno1.getHoraInicio().compareTo(turno2.getHoraInicio());
+		}
+
+		
+		
 	}
 	
 	

@@ -1,6 +1,8 @@
 package modelos;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -15,7 +17,7 @@ public class Turno {
 	//Methods
 	
 	//Constructor
-	public Turno(Calendar horaInicio, Instalacion instalacion) {
+	public Turno(Calendar horaInicio) {
 		this.horaInicio =  horaInicio;
 		this.asignarHoraFinalizacion(horaInicio);
 	}
@@ -29,12 +31,16 @@ public class Turno {
 		return "Hora Inicio: " + this.horaInicio.getTime() + "\nHora Finalizacion: " + this.horaFinalizacion.getTime();
 	}
 	
-	public boolean estaEnMiRangoHorario(Calendar hora) {
-		if (this.horaInicio.before(hora) && this.horaFinalizacion.after(hora)) {
+	public boolean estoyOcupando(Turno turno) {
+		if ((turno.getHoraInicio().after(this.horaInicio) && turno.getHoraInicio().before(this.horaFinalizacion)
+				|| turno.getHoraFinalizacion().after(horaInicio) && turno.getHoraFinalizacion().before(this.horaFinalizacion)
+				|| turno.getHoraInicio().equals(this.horaInicio))){
+			System.out.println("Estoy ocupando turno");
 			return true;
 		}
 		return false;
 	}
+	
 	
 	public Calendar getHoraInicio() {
 		return this.horaInicio;
@@ -47,4 +53,19 @@ public class Turno {
 	public Instalacion getInstalacion() {
 		return this.instalacion;
 	}
+	
+	public void setInstalacion(Instalacion instalacion) {
+		this.instalacion = instalacion;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -2,34 +2,61 @@ package modelos;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
+
 
 public class Agenda{
 
 	//Attributes
 	private ArrayList<Dia> dias;
-	private TurnoLaboral turnoLaboral;
+	private Disponibilidad disponibilidad;
 	
 	//Methods
 	
 	//Constructor
-	public Agenda(TurnoLaboral turnoLaboral) {
+	public Agenda(Disponibilidad turnoLaboral) {
 		this.dias = new ArrayList<Dia>();
-		this.turnoLaboral = turnoLaboral;
+		this.disponibilidad = turnoLaboral;
 	}
 	
-	public boolean agendarInstalacion(Instalacion instalacion, Calendar fecha) {
-		Dia diaParaAgendar = this.existeDia(fecha);
-		if (diaParaAgendar.estaDisponible(fecha) && this.verificarFecha(fecha)) {
-			Turno turno = new Turno(fecha, instalacion);
-			diaParaAgendar.agregarTurno(turno, turnoLaboral);
-			this.dias.add(diaParaAgendar);
+	public Agenda() {
+		this.dias = new ArrayList<Dia>();
+		this.disponibilidad = new TurnoCompleto();
+	}
+	
+	
+	public boolean agendarTurno(Turno turno) {
+		Dia dia = this.getDia(turno.getHoraInicio());
+		if (this.esValido(turno)) {
+			if (dia.agregarTurno(turno)) {
+				return true;
+			};
+		}
+		return false;
+	};
+	
+	public void setInstalacionAlTurno(Instalacion instalacion, Turno turno) {
+		for (Turno ti : this.getTurnosAgendados()) {
+			ti.setInstalacion(instalacion);
+		}
+	}
+
+	public boolean estaDisponible(Turno turno) {
+		Dia dia = this.getDia(turno.getHoraInicio());
+		if (dia.estaDisponible(turno) && this.esValido(turno)) {
 			return true;
 		}
-		System.out.println("No hay un turno disponible para el dia " + diaParaAgendar.toString());
 		return false;
-		
-	};
+	}
+	
+	
+	private boolean esValido(Turno turno) {
+		if(this.disponibilidad.esDiaLaboral(turno.getHoraInicio()) && this.disponibilidad.esHorarioLaboral(turno)) {
+			return true;
+		}
+		return false;
+	}
 	
 	public void imprimirTurnosPorFecha(Calendar fecha) {
 		Dia diaBuscado = this.buscarDia(fecha);
@@ -41,33 +68,66 @@ public class Agenda{
 		}
 	}
 	
+	public ArrayList<Turno> getTurnosAgendados(){
+		ArrayList<Turno> turnosAgendados = new ArrayList<Turno>();
+		for (Dia dia : this.dias) {
+			turnosAgendados.addAll(dia.getTurnos());
+		}
+		return turnosAgendados;
+	}
+	
 	/**
 	 * Verifica si @dia existe en el calendario. Si existe: lo devuelve. Si no existe: lo crea y lo devuelve
 	*/
-	private Dia existeDia(Calendar dia) {
+	private Dia getDia(Calendar dia) {
 		for (Dia di : this.dias) {
 			if (di.soyLaFecha(dia)) {
 				return di;
 			}
 		}
 		Dia nuevoDia = new Dia(dia);
+		this.dias.add(nuevoDia);
+		this.ordenarDias();
 		return nuevoDia;
 	}
 	
 	private Dia buscarDia(Calendar fecha) {
-		for (Dia di : this.dias) {
-			if (di.soyLaFecha(fecha)) {
-				return di;
+		for (Dia dia : this.dias) {
+			if (dia.soyLaFecha(fecha)) {
+				return dia;
 			}
 		}
 		return null;
 	}
 	
-	private boolean verificarFecha(Calendar fecha) {
-		if (this.turnoLaboral.esDiaLaboral(fecha)) {
-			return true;
+	
+	public void imprimirTurnos() {
+		for (Dia dia : this.dias) {
+			dia.imprimirTurnos();
 		}
-		return false;
 	}
+	
+	public void ordenarDias() {
+		Collections.sort(this.dias, new ordenarPorDia());
+	}
+	
+	public ArrayList<Dia> getDias(){
+		return this.dias;
+	}
+	
+	
+	static class ordenarPorDia implements Comparator<Dia>{
+
+		@Override
+		public int compare(Dia dia1, Dia dia2) {
+			// TODO Auto-generated method stub
+			return dia1.getFecha().compareTo(dia2.getFecha());
+		}
+		
+	}
+
+	
+	
+	
 	
 }

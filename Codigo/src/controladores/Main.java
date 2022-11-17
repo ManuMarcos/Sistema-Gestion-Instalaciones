@@ -5,19 +5,21 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import modelos.*;
+import vistas.CrearClienteVista;
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		ControladorPrincipal controlador= new ControladorPrincipal();
 		
-		TurnoLaboral turnoManana = new TurnoManana();
+		
+		Disponibilidad turnoManana = new TurnoManana();
 		
 		Tecnico tecnico1 = new Tecnico("Nahuel Damiano", "Los Indios 254", turnoManana);
-		
-		Cliente cliente = new Cliente("Manuel", "Marcos", TipoCliente.INDIVIDUO, "manuelignaciomarcos@gmail.com");
-		
+		Cliente cliente1 = new Cliente("Manuel Marcos", "Rivadavia 2589", 2041510275, TipoCliente.INDIVIDUO, 
+				"manuelignaciomarcos@gmail.com");
 		
 		System.out.println(tecnico1.toString());
 		
@@ -30,44 +32,42 @@ public class Main {
 		Calendar fecha6 = new GregorianCalendar();
 		Calendar fecha7 = new GregorianCalendar();
 		Calendar fecha8 = new GregorianCalendar();
-
+		Calendar fecha9 = new GregorianCalendar();
 	
 		
+		fecha1.set(2022, 10, 16, 8, 0, 0);
+		fecha2.set(2022, 10, 16, 11, 0, 0);
+		fecha3.set(2022, 10, 16, 11, 40, 0);
+		fecha4.set(2022, 10, 16, 16, 0, 0);
+		fecha5.set(2022, 10, 16, 9, 30, 0);
+		fecha6.set(2022, 10, 16, 8, 30, 0);
+		fecha9.set(2022, 10, 16, 11, 0, 0);
 		
-		fecha1.set(2023, 8, 24, 10, 0);
-		fecha2.set(2023, 8, 24, 11, 0);
-		fecha3.set(2023, 8, 24, 16, 30);
-		fecha4.set(2023, 8, 24, 16, 0);
-		
-		fecha5.set(2022, 10, 12, 9, 30);
-		fecha6.set(2022, 10, 12, 8, 30);
-		fecha7.set(2022, 10, 12, 8, 0);
-		fecha8.set(2022, 10, 12, 18, 0, 0);
+		//Sabado 26/11/2022
+		fecha7.set(2022, 10, 10, 8, 00);
+		fecha8.set(2022, 10, 10, 8, 00);
 		
 		
-		Instalacion instalacion1 = new Instalacion(cliente);
 		
-		//Se intentan agendar turnos para el dia 24/9/2020
 		
-		tecnico1.getAgenda().agendarInstalacion(instalacion1, fecha1);
 		
-		tecnico1.getAgenda().agendarInstalacion(instalacion1, fecha2);
+		controlador.agendarInstalacion(cliente1, tecnico1, fecha1);
+		controlador.agendarInstalacion(cliente1, tecnico1, fecha2);
+		controlador.agendarInstalacion(cliente1, tecnico1, fecha4);
+		controlador.agendarInstalacion(cliente1, tecnico1, fecha5);
+		controlador.agendarInstalacion(cliente1, tecnico1, fecha6);
+		controlador.agendarInstalacion(cliente1, tecnico1, fecha7);
+		controlador.agendarInstalacion(cliente1, tecnico1, fecha8);
+		controlador.agendarInstalacion(cliente1, tecnico1, fecha9);
+		controlador.agendarInstalacion(cliente1, tecnico1, fecha2);
 		
-		tecnico1.getAgenda().agendarInstalacion(instalacion1, fecha3);
+
 		
-		tecnico1.getAgenda().agendarInstalacion(instalacion1, fecha4);
 		
-		//Se intentan agendar turnos para el dia 2/5/2020
-		
-		tecnico1.getAgenda().agendarInstalacion(instalacion1, fecha5);
-		
-		tecnico1.getAgenda().agendarInstalacion(instalacion1, fecha6);
-		
-		tecnico1.getAgenda().agendarInstalacion(instalacion1, fecha7);
-		
-		tecnico1.getAgenda().imprimirTurnosPorFecha(fecha2);
-		
-		tecnico1.getAgenda().imprimirTurnosPorFecha(fecha5);
+		System.out.println("-----------------------------Agenda Tecnico-----------------------------");
+		tecnico1.getAgenda().imprimirTurnos();
+		System.out.println("-----------------------------Agenda Cliente-----------------------------");
+		cliente1.getAgenda().imprimirTurnos();
 		
 		
 		Inventario inventario = new Inventario();
@@ -80,18 +80,20 @@ public class Main {
 		inventario.quitarProducto(new Condensadora());
 		inventario.quitarProducto(new KitDeInstalacion());
 		
+		
+		
+		
 		inventario.setPrecioProducto(new Evaporadora(), 500);
 		inventario.setPrecioProducto(new Condensadora(), 780);
 		inventario.setPrecioProducto(new KitDeInstalacion(), 200);
 		
 		
-		
 		System.out.println(inventario.toString());
 		
 		
+		CrearClienteVista vista = new CrearClienteVista(400,300);
 		
-		
-		
+		vista.setVisible(true);
 		
 	
 		

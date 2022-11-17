@@ -12,8 +12,14 @@ public class Operador extends Empleado{
 		// TODO Auto-generated constructor stub
 	};
 	
-	public void darDeAltaCliente() {};
-	public void agendarInstalacion() {}
+	public void darDeAltaCliente(String nombre, String direccion, int cuitCuil, TipoCliente tipoCliente, String correoElectronico) {
+		Empresa empresa = Empresa.getInstance();
+		empresa.crearCliente(nombre, direccion, cuitCuil, tipoCliente, correoElectronico);
+	};
+	
+	public void agendarInstalacion() {
+		
+	}
 	
 	
 }

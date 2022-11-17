@@ -26,8 +26,10 @@ public class Instalacion {
 	//Methods
 	
 	//Constructor
-	public Instalacion(Cliente cliente) {
+	public Instalacion(Cliente cliente, Tecnico tecnico) {
 		this.cliente = cliente;
+		this.tecnico = tecnico;
+		this.estado = Estado.PROGRAMADA;
 	}
 	
 }
