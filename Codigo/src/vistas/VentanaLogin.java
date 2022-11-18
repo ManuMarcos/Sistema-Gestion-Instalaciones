@@ -10,14 +10,20 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import controladores.ControladorLogin;
+
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 
@@ -34,7 +40,7 @@ public class VentanaLogin extends JFrame {
 		/**
 		 * Create the frame.
 		 */
-		public VentanaLogin() {
+		public VentanaLogin(ControladorLogin controlador) {
 			setTitle("Sistema de Gestion de Instalaciones");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 774, 621);
@@ -57,26 +63,22 @@ public class VentanaLogin extends JFrame {
 			panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
 			panelSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			
-			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\manue\\OneDrive - Fundación UADE\\2do Cuatrimestre 2022\\IOO\\TPO\\TPO-POO\\logo-empresa (1).png"));
-			panelSuperior.add(lblNewLabel_1);
+			JLabel logoEmpresaLabel = new JLabel("");
+			logoEmpresaLabel.setIcon(new ImageIcon("logo-empresa.png"));
+			panelSuperior.add(logoEmpresaLabel);
 			
 			JPanel panelInferior = new JPanel();
 			panelInferior.setOpaque(false);
 			panelPrincipal.add(panelInferior, BorderLayout.SOUTH);
 			
-			JLabel lblNewLabel = new JLabel("Desarrollado por Grupo  6 - Programacion Orientada a Objetos");
-			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
-			panelInferior.add(lblNewLabel);
+			JLabel footerLabel = new JLabel("Desarrollado por Grupo  6 - Programacion Orientada a Objetos");
+			footerLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+			panelInferior.add(footerLabel);
 			
 			JPanel panelCentral = new JPanel();
 			panelCentral.setOpaque(false);
 			panelPrincipal.add(panelCentral, BorderLayout.CENTER);
 			panelCentral.setLayout(new BorderLayout(0, 0));
-			
-			JPanel panelSuperiorTitulo = new JPanel();
-			panelSuperiorTitulo.setOpaque(false);
-			panelCentral.add(panelSuperiorTitulo, BorderLayout.NORTH);
 			
 			JPanel panelCentralDatos = new JPanel();
 			panelCentralDatos.setOpaque(false);
@@ -109,9 +111,8 @@ public class VentanaLogin extends JFrame {
 			panelCentralDatos.add(tipoDeUsuarioLabel);
 			
 			
-			String [] tiposEmpleado = {"Operador","Administrativo", "Administrador", "Tecnico"};
+			String [] tiposEmpleado = {"Seleccione","Operador","Administrativo", "Administrador", "Tecnico"};
 			JComboBox<String> tipoDeUsuarioComboBox = new JComboBox<String>(tiposEmpleado);
-			
 			
 			panelCentralDatos.add(tipoDeUsuarioComboBox);
 			
@@ -120,6 +121,17 @@ public class VentanaLogin extends JFrame {
 			panelCentral.add(panelInferiorBoton, BorderLayout.SOUTH);
 			
 			JButton ingresarButton = new JButton("Ingresar");
+			ingresarButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String usuarioIngresado = usuarioTextField.getText();
+					String contrasenaIngresada =  contrasenaField.getText();
+					String tipoDeUsuarioSeleccionado = tipoDeUsuarioComboBox.getSelectedItem().toString();
+					
+					if (usuarioIngresado != "" && contrasenaIngresada != "" && tipoDeUsuarioSeleccionado != "Seleccione") {
+						controlador.login(usuarioIngresado, contrasenaIngresada,tipoDeUsuarioSeleccionado);
+					}
+				}
+			});
 			ingresarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			ingresarButton.setPreferredSize(new Dimension(200, 50));
 			ingresarButton.setBackground(Color.BLACK);
@@ -127,4 +139,13 @@ public class VentanaLogin extends JFrame {
 			panelInferiorBoton.add(ingresarButton);
 		}
 
+	
+		public void mostrarMensajeDeError(String mensaje) {
+			JOptionPane.showMessageDialog(contentPane, mensaje, mensaje, JOptionPane.ERROR_MESSAGE);
+		}
+		
+		public void mostrarMensajeExitoso(String mensaje) {
+			JOptionPane.showMessageDialog(contentPane, mensaje, mensaje, JOptionPane.INFORMATION_MESSAGE);
+		}
+		
 }

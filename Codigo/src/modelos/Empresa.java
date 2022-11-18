@@ -91,10 +91,28 @@ public class Empresa {
 		System.out.println(this.inventario.toString());
 	}
 	
+	public boolean esUsuarioValido(String usuario, String contrasena, String tipoEmpleado) {
+		for (Empleado empleado : this.empleados) {
+			if (empleado.getUsuario().equals(usuario) && empleado.getContrasena().equals(contrasena) 
+					&& empleado.getClass().getSimpleName().equals(tipoEmpleado)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void agregarEmpleado(Empleado empleado) {
+		this.empleados.add(empleado);
+	};
+	
+	
+	
+	
+	
 	
 	public void agregarProducto() {};
 	public void agregarCliente() {};
-	public void agregarEmpleado() {};
+	
 	public void agregarCalendario() {};
 	
 	

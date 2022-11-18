@@ -18,11 +18,20 @@ public class Main {
 		
 		Disponibilidad turnoManana = new TurnoManana();
 		
-		Tecnico tecnico1 = new Tecnico("Nahuel Damiano", "Los Indios 254", turnoManana);
+		Tecnico tecnico = new Tecnico("Nahuel Damiano", "Los Indios 254", new TurnoManana(), "tecnico", "tecnico");
+		Operador operador = new Operador("Sebastian Robles", "Casullo 182", "operador", "operador");
 		Cliente cliente1 = new Cliente("Manuel Marcos", "Rivadavia 2589", 2041510275, TipoCliente.INDIVIDUO, 
 				"manuelignaciomarcos@gmail.com");
 		
-		System.out.println(tecnico1.toString());
+		empresa.agregarEmpleado(operador);
+		empresa.agregarEmpleado(tecnico);
+		
+		
+		
+		System.out.println(tecnico.toString());
+		
+		
+		
 		
 		
 		Calendar fecha1 = new GregorianCalendar();
@@ -52,21 +61,21 @@ public class Main {
 				
 	
 		
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha1);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha2);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha3);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha4);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha5);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha6);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha7);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha8);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha9);
+		empresa.agendarInstalacion(cliente1, tecnico, fecha1);
+		empresa.agendarInstalacion(cliente1, tecnico, fecha2);
+		empresa.agendarInstalacion(cliente1, tecnico, fecha3);
+		empresa.agendarInstalacion(cliente1, tecnico, fecha4);
+		empresa.agendarInstalacion(cliente1, tecnico, fecha5);
+		empresa.agendarInstalacion(cliente1, tecnico, fecha6);
+		empresa.agendarInstalacion(cliente1, tecnico, fecha7);
+		empresa.agendarInstalacion(cliente1, tecnico, fecha8);
+		empresa.agendarInstalacion(cliente1, tecnico, fecha9);
 		
 
 		
 		
 		System.out.println("-----------------------------Agenda Tecnico-----------------------------");
-		tecnico1.getAgenda().imprimirTurnos();
+		tecnico.getAgenda().imprimirTurnos();
 		System.out.println("-----------------------------Agenda Cliente-----------------------------");
 		cliente1.getAgenda().imprimirTurnos();
 		
@@ -79,9 +88,12 @@ public class Main {
 		empresa.setPrecioProducto(new KitDeInstalacion(), 40);
 		empresa.imprimirInventario();
 		
-		VentanaLogin login = new VentanaLogin();
-		login.setVisible(true);
 		
+		ControladorLogin controlador = new ControladorLogin();
+		controlador.inciarVentanaLogin();
+		
+		
+
 		
 		
 		/*

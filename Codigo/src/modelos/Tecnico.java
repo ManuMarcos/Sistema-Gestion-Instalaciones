@@ -20,14 +20,14 @@ public class Tecnico extends Empleado {
 	 * @param direccion
 	 * @param experienciaLaboral
 	 */
-	public Tecnico(String nombre, String direccion, ExperienciaLaboral experienciaLaboral) {
-		super(nombre, direccion);
+	public Tecnico(String nombre, String direccion, ExperienciaLaboral experienciaLaboral, String usuario, String contrasena) {
+		super(nombre, direccion, usuario, contrasena);
 		this.experienciaLaboral = experienciaLaboral;
 	}
 	
 	//Constructor para pruebas
-	public Tecnico(String nombre, String direccion, Disponibilidad turnoLaboral) {
-		super(nombre,direccion);
+	public Tecnico(String nombre, String direccion, Disponibilidad turnoLaboral,String usuario, String contrasena) {
+		super(nombre,direccion, usuario, contrasena);
 		this.turnoLaboral = turnoLaboral;
 		this.agenda = new Agenda(turnoLaboral);
 	}

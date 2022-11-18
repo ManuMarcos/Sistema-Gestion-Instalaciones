@@ -6,8 +6,8 @@ public class Administrador extends Empleado{
 	
 	//Methods
 	
-	public Administrador(String nombre, String direccion) {
-		super(nombre, direccion);
+	public Administrador(String nombre, String direccion,String usuario, String contrasena) {
+		super(nombre, direccion, usuario, contrasena);
 		
 	}
 	

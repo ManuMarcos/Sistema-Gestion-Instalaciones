@@ -9,8 +9,8 @@ public class Operador extends Empleado{
 	//Methods
 	
 	//Constructor
-	public Operador(String nombre, String direccion) {
-		super(nombre, direccion);
+	public Operador(String nombre, String direccion, String usuario, String contrasena) {
+		super(nombre, direccion, usuario, contrasena);
 		// TODO Auto-generated constructor stub
 	};
 	
