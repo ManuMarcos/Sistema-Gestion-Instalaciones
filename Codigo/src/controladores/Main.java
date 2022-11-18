@@ -79,9 +79,8 @@ public class Main {
 		empresa.setPrecioProducto(new KitDeInstalacion(), 40);
 		empresa.imprimirInventario();
 		
-		
-		VentanaLogin ventana = new VentanaLogin();
-		ventana.setVisible(true);
+		VentanaLogin login = new VentanaLogin();
+		login.setVisible(true);
 		
 		
 		
