@@ -1,5 +1,7 @@
 package modelos;
 
+import java.util.Calendar;
+
 public class Operador extends Empleado{
 
 	//Attributes
@@ -17,9 +19,21 @@ public class Operador extends Empleado{
 		empresa.crearCliente(nombre, direccion, cuitCuil, tipoCliente, correoElectronico);
 	};
 	
-	public void agendarInstalacion() {
-		
+	public boolean existeCliente(int cuitCuil) {
+		Empresa empresa = Empresa.getInstance();
+		return empresa.existeCliente(cuitCuil);
 	}
+	
+	public void agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
+		Empresa empresa = Empresa.getInstance();
+		empresa.agendarInstalacion(cliente, tecnico, fecha);
+	}
+	
+	public Cliente buscarCliente(int cuitCuil) {
+		Empresa empresa = Empresa.getInstance();
+		return empresa.buscarCliente(cuitCuil);
+	}
+	
 	
 	
 }

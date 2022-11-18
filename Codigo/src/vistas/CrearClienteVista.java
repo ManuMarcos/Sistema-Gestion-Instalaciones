@@ -36,7 +36,7 @@ public class CrearClienteVista extends JFrame{
 	private JPanel panelRadioButtons;
 	private JPanel panelButtons;
 	
-	
+
 	public CrearClienteVista(int ancho, int alto) {
 		super("Crear cliente");
 		setSize(ancho,alto);
@@ -52,11 +52,6 @@ public class CrearClienteVista extends JFrame{
 		this.cuitCuilTextField = new JTextField(20);
 		this.crearClienteButton = new JButton("Crear");
 		this.cancelarButton = new JButton("Cancelar");
-		
-		
-		
-		
-
 		
 		//Panel button group
 		this.panelRadioButtons = new JPanel();

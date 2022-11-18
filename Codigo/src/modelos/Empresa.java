@@ -46,13 +46,50 @@ public class Empresa {
 		return false;
 	}
 	
+	public Cliente buscarCliente(int cuitCuil) {
+		for (Cliente cliente : this.clientes) {
+			if (cliente.tengoElCuitCuil(cuitCuil)) {
+				return cliente;
+			}
+		}
+		return null;
+	}
 	
+	public boolean agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
+		Agenda agendaCliente = cliente.getAgenda();
+		Agenda agendaTecnico = tecnico.getAgenda();
+		Turno turno = new Turno(fecha);
+		
+		if (agendaCliente.estaDisponible(turno) && agendaTecnico.estaDisponible(turno)){
+			agendaCliente.agendarTurno(turno);
+			agendaTecnico.agendarTurno(turno);
+			
+			Instalacion instalacion = new Instalacion(cliente, tecnico);
+			turno.setInstalacion(instalacion);
+			this.instalaciones.add(instalacion);
+			System.out.println("Se agendo con exito la instalacion para la fecha " + fecha.getTime());
+			return true;
+		}
+		System.out.println("No se agendo la instalacion para la fecha " + fecha.getTime());
+		
+		return false;
+	}
 	
+	public void setStockProducto(Producto producto, int cantidadStock) {
+		this.inventario.setStock(producto, cantidadStock);
+	}
 	
+	public void setPrecioProducto(Producto producto, float precio) {
+		this.inventario.setPrecioProducto(producto, precio);
+	}
 	
+	public Producto obtenerProducto(Producto producto) {
+		return this.inventario.quitarProducto(producto);
+	}
 	
-	
-	
+	public void imprimirInventario() {
+		System.out.println(this.inventario.toString());
+	}
 	
 	
 	public void agregarProducto() {};

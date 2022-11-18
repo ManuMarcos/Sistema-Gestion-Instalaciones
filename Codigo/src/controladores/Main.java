@@ -6,14 +6,15 @@ import java.util.GregorianCalendar;
 
 import modelos.*;
 import vistas.CrearClienteVista;
+import vistas.PanelLogin;
+import vistas.VentanaLogin;
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		ControladorPrincipal controlador= new ControladorPrincipal();
-		
+		Empresa empresa = Empresa.getInstance();
 		
 		Disponibilidad turnoManana = new TurnoManana();
 		
@@ -51,15 +52,15 @@ public class Main {
 				
 	
 		
-		controlador.agendarInstalacion(cliente1, tecnico1, fecha1);
-		controlador.agendarInstalacion(cliente1, tecnico1, fecha2);
-		controlador.agendarInstalacion(cliente1, tecnico1, fecha3);
-		controlador.agendarInstalacion(cliente1, tecnico1, fecha4);
-		controlador.agendarInstalacion(cliente1, tecnico1, fecha5);
-		controlador.agendarInstalacion(cliente1, tecnico1, fecha6);
-		controlador.agendarInstalacion(cliente1, tecnico1, fecha7);
-		controlador.agendarInstalacion(cliente1, tecnico1, fecha8);
-		controlador.agendarInstalacion(cliente1, tecnico1, fecha9);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha1);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha2);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha3);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha4);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha5);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha6);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha7);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha8);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha9);
 		
 
 		
@@ -70,25 +71,19 @@ public class Main {
 		cliente1.getAgenda().imprimirTurnos();
 		
 		
-		Inventario inventario = new Inventario();
-		
-		inventario.setStock(new Evaporadora(), 50);
-		inventario.setStock(new Condensadora(), 20);
-		inventario.setStock(new KitDeInstalacion(), 5);
-		
-		inventario.quitarProducto(new Evaporadora());
-		inventario.quitarProducto(new Condensadora());
-		inventario.quitarProducto(new KitDeInstalacion());
+		empresa.setStockProducto(new Evaporadora(), 50);
+		empresa.setStockProducto(new Condensadora(), 20);
+		empresa.setStockProducto(new KitDeInstalacion(), 5);
+		empresa.setPrecioProducto(new Evaporadora(), 50);
+		empresa.setPrecioProducto(new Condensadora(), 78);
+		empresa.setPrecioProducto(new KitDeInstalacion(), 40);
+		empresa.imprimirInventario();
 		
 		
+		VentanaLogin ventana = new VentanaLogin();
+		ventana.setVisible(true);
 		
 		
-		inventario.setPrecioProducto(new Evaporadora(), 500);
-		inventario.setPrecioProducto(new Condensadora(), 780);
-		inventario.setPrecioProducto(new KitDeInstalacion(), 200);
-		
-		
-		System.out.println(inventario.toString());
 		
 		/*
 		CrearClienteVista vista = new CrearClienteVista(400,300);
