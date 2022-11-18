@@ -43,7 +43,7 @@ public class VentanaLogin extends JFrame {
 		public VentanaLogin(ControladorLogin controlador) {
 			setTitle("Sistema de Gestion de Instalaciones");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(100, 100, 774, 621);
+			setBounds(100, 100, 716, 642);
 			this.setLocationRelativeTo(null);
 			contentPane = new JPanel();
 			contentPane.setBackground(new Color(255, 255, 255));
@@ -110,7 +110,7 @@ public class VentanaLogin extends JFrame {
 			tipoDeUsuarioLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			panelCentralDatos.add(tipoDeUsuarioLabel);
 			
-			
+		
 			String [] tiposEmpleado = {"Seleccione","Operador","Administrativo", "Administrador", "Tecnico"};
 			JComboBox<String> tipoDeUsuarioComboBox = new JComboBox<String>(tiposEmpleado);
 			

@@ -10,6 +10,7 @@ import modelos.Empresa;
 import modelos.Instalacion;
 import modelos.Tecnico;
 import modelos.Turno;
+import vistas.AgendarInstalacionDialog;
 import vistas.VentanaLogin;
 
 public class ControladorLogin {
@@ -20,6 +21,9 @@ public class ControladorLogin {
 	public void inciarVentanaLogin() {
 		this.ventanaLogin =  new VentanaLogin(this);
 		ventanaLogin.setVisible(true);
+		AgendarInstalacionDialog agendarInstalacion = new AgendarInstalacionDialog();
+		agendarInstalacion.setVisible(true);
+		
 	}
 	
 	public void login(String usuario, String contrasena, String tipoUsuario) {

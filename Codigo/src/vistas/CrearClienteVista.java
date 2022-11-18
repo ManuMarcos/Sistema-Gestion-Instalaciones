@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.github.lgooddatepicker.components.DatePicker;
+
 import modelos.TipoCliente;
 
 public class CrearClienteVista extends JFrame{
@@ -35,8 +37,9 @@ public class CrearClienteVista extends JFrame{
 	private JPanel panelDatos;
 	private JPanel panelRadioButtons;
 	private JPanel panelButtons;
-	
 
+
+	
 	public CrearClienteVista(int ancho, int alto) {
 		super("Crear cliente");
 		setSize(ancho,alto);
@@ -81,6 +84,7 @@ public class CrearClienteVista extends JFrame{
 		Container cp = this.getContentPane();
 		cp.add(this.panelDatos, BorderLayout.CENTER);
 		cp.add(this.panelButtons, BorderLayout.SOUTH);
+		
 
 	}
 	
