@@ -19,8 +19,8 @@ public class Main {
 		
 		Disponibilidad turnoManana = new TurnoManana();
 		
-		ExperienciaLaboral junior = new Junior(100);
-		ExperienciaLaboral semisenior = new SemiSenior(200);
+		ExperienciaLaboral junior = new Junior();
+		ExperienciaLaboral semisenior = new SemiSenior();
 
 		Tecnico tecnico1 = new Tecnico("Nahuel Damiano", "Los Indios 254", new TurnoManana(), "tecnico", "tecnico", junior);
 		Tecnico tecnico2 = new Tecnico("Roberto Robertson", "Los Indios 123", new TurnoManana(), "tecnico", "tecnico", semisenior);
