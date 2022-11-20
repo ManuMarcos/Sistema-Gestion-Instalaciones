@@ -108,18 +108,27 @@ public class Main {
 //		System.out.println("VALOR POR HORA TECNICO 2 SIENDO SEMI SENIOR DESPUES DEL CAMBIO EN SSR");
 //		System.out.println(tecnico2.getExperienciaLaboral().getCostoHora());
 		
-		empresa.setStockProducto(new Evaporadora(), 50);
-		empresa.setStockProducto(new Condensadora(), 20);
-		empresa.setStockProducto(new KitDeInstalacion(), 5);
-		empresa.setPrecioProducto(new Evaporadora(), 50);
-		empresa.setPrecioProducto(new Condensadora(), 78);
-		empresa.setPrecioProducto(new KitDeInstalacion(), 40);
+		Producto evaporadora = new Evaporadora();
+		Producto condensadora = new Condensadora();
+		Producto kitDeInstalacion = new KitDeInstalacion();
+		
+		empresa.setStockProducto(evaporadora, 50);
+		empresa.setStockProducto(condensadora, 20);
+		empresa.setStockProducto(kitDeInstalacion, 5);
+		empresa.setPrecioProducto(evaporadora, 50);
+		empresa.setPrecioProducto(condensadora, 78);
+		empresa.setPrecioProducto(kitDeInstalacion, 40);
+		
 		empresa.imprimirInventario();
+				
+		empresa.removerUnidadProducto(evaporadora);
 		
+		empresa.imprimirInventario();
+
 		
-		ControladorLogin controlador = new ControladorLogin();
-		controlador.inciarVentanaLogin();
-		
+//		ControladorLogin controlador = new ControladorLogin();
+//		controlador.inciarVentanaLogin();
+//		
 
 		
 		
