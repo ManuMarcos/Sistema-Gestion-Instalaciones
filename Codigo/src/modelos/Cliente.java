@@ -13,6 +13,7 @@ public class Cliente extends Persona{
 	
 	//Methods
 	
+	
 	//Constructor
 
 	public Cliente(String nombre, String direccion, long cuitCuil, TipoCliente tipoCliente, String correoElectronico) {

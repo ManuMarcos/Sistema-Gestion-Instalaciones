@@ -119,8 +119,12 @@ public class Empresa {
 		this.inventario.setPrecioProducto(producto, precio);
 	}
 	
-	public Producto obtenerProducto(Producto producto) {
+	public Producto removerUnidadProducto(Producto producto) {
 		return this.inventario.quitarProducto(producto);
+	}
+	
+	public Producto obtenerProducto(Producto producto) {
+		return this.inventario.buscarProducto(producto);
 	}
 	
 	public void imprimirInventario() {

@@ -90,7 +90,7 @@ public class Inventario {
 	 * @param producto
 	 * @return Producto
 	 */
-	private Producto buscarProducto(Producto producto) {
+	public Producto buscarProducto(Producto producto) {
 		for (Producto pi : this.productos.keySet()) {
 			if (pi.getClass().isInstance(producto)) {
 				return pi;
