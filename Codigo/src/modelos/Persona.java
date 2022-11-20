@@ -12,7 +12,9 @@ public abstract class Persona {
 		this.direccion = direccion;
 	}
 	
-	
+	public String getNombre() {
+		return this.nombre;
+	}
 	
 	
 }

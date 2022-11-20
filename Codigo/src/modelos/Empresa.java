@@ -105,6 +105,22 @@ public class Empresa {
 		this.empleados.add(empleado);
 	};
 	
+	public ArrayList<Cliente> getClientes(){
+		return this.clientes;
+	}
+	
+	public ArrayList<String> getNombresClientes(){
+		ArrayList<String> nombreClientes = new ArrayList<String>();
+		for (Cliente cliente : this.clientes) {
+			nombreClientes.add(cliente.getNombre());
+		}
+		return nombreClientes;
+	}
+	
+	
+	public void agregarCliente(Cliente cliente) {
+		this.clientes.add(cliente);
+	}
 	
 	
 	

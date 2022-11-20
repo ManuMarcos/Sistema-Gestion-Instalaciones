@@ -87,7 +87,7 @@ public class VentanaLogin extends JFrame {
 			panelCentralDatos.setLayout(new GridLayout(0, 2, 50, 50));
 			
 			JLabel usuarioLabel = new JLabel("Usuario");
-			usuarioLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
+			usuarioLabel.setFont(new Font(VistaConfig.labelFamilyFont, Font.BOLD, 20));
 			usuarioLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			panelCentralDatos.add(usuarioLabel);
 			
@@ -96,7 +96,7 @@ public class VentanaLogin extends JFrame {
 			panelCentralDatos.add(usuarioTextField);
 			
 			JLabel contrasenaLabel = new JLabel("Contraseña");
-			contrasenaLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
+			contrasenaLabel.setFont(new Font(VistaConfig.labelFamilyFont, Font.BOLD, 20));
 			contrasenaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			panelCentralDatos.add(contrasenaLabel);
 			
@@ -106,7 +106,7 @@ public class VentanaLogin extends JFrame {
 			panelCentralDatos.add(contrasenaField);
 			
 			JLabel tipoDeUsuarioLabel = new JLabel("Tipo de Usuario");
-			tipoDeUsuarioLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
+			tipoDeUsuarioLabel.setFont(new Font(VistaConfig.labelFamilyFont, Font.BOLD, 20));
 			tipoDeUsuarioLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			panelCentralDatos.add(tipoDeUsuarioLabel);
 			
@@ -132,10 +132,9 @@ public class VentanaLogin extends JFrame {
 					}
 				}
 			});
-			ingresarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			VistaConfig.setButtonStyle(ingresarButton);
 			ingresarButton.setPreferredSize(new Dimension(200, 50));
-			ingresarButton.setBackground(Color.BLACK);
-			ingresarButton.setForeground(UIManager.getColor("Button.focus"));
+			
 			panelInferiorBoton.add(ingresarButton);
 		}
 

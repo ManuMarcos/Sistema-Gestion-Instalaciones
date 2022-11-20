@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 import modelos.*;
 import vistas.AgendarInstalacionDialog;
 import vistas.CrearClienteVista;
-import vistas.PanelLogin;
+
 import vistas.VentanaLogin;
 
 public class Main {

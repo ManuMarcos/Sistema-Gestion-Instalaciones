@@ -11,6 +11,7 @@ import modelos.Instalacion;
 import modelos.Tecnico;
 import modelos.Turno;
 import vistas.AgendarInstalacionDialog;
+import vistas.VentanaAgendarInstalacion;
 import vistas.VentanaLogin;
 
 public class ControladorLogin {
@@ -21,7 +22,7 @@ public class ControladorLogin {
 	public void inciarVentanaLogin() {
 		this.ventanaLogin =  new VentanaLogin(this);
 		ventanaLogin.setVisible(true);
-		AgendarInstalacionDialog agendarInstalacion = new AgendarInstalacionDialog();
+		VentanaAgendarInstalacion agendarInstalacion = new VentanaAgendarInstalacion();
 		agendarInstalacion.setVisible(true);
 		
 	}
