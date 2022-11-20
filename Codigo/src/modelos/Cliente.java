@@ -3,7 +3,7 @@ package modelos;
 public class Cliente extends Persona{
 
 	//Attributes
-	private int cuitCuil;
+	private long cuitCuil;
 	private Agenda agenda;
 	private TipoCliente tipoCliente;
 	private String correoElectronico;
@@ -15,7 +15,7 @@ public class Cliente extends Persona{
 	
 	//Constructor
 
-	public Cliente(String nombre, String direccion, int cuitCuil, TipoCliente tipoCliente, String correoElectronico) {
+	public Cliente(String nombre, String direccion, long cuitCuil, TipoCliente tipoCliente, String correoElectronico) {
 		super(nombre, direccion);
 		this.cuitCuil = cuitCuil;
 		this.tipoCliente = tipoCliente;
@@ -23,7 +23,7 @@ public class Cliente extends Persona{
 		this.agenda = new Agenda();
 	}
 	
-	public boolean tengoElCuitCuil(int cuitCuil) {
+	public boolean tengoElCuitCuil(long cuitCuil) {
 		if (this.cuitCuil == cuitCuil) {
 			return true;
 		} 
@@ -32,6 +32,18 @@ public class Cliente extends Persona{
 	
 	public Agenda getAgenda() {
 		return this.agenda;
+	}
+	
+	public long getCuitCuil() {
+		return this.cuitCuil;
+	}
+	
+	public String getCorreoElectronico() {
+		return this.correoElectronico;
+	}
+	
+	public TipoCliente getTipoCliente() {
+		return this.tipoCliente;
 	}
 	
 	

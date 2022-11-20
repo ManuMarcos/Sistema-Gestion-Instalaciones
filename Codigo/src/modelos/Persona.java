@@ -16,5 +16,9 @@ public abstract class Persona {
 		return this.nombre;
 	}
 	
+	public String getDireccion() {
+		return this.direccion;
+	}
+	
 	
 }

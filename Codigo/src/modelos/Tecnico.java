@@ -50,6 +50,8 @@ public class Tecnico extends Empleado {
 		this.setExperienciaLaboral(experiencia);
 	}
 	
+	
+	
 
 	
 	public String toString() {

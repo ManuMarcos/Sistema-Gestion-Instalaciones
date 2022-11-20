@@ -9,6 +9,7 @@ import vistas.AgendarInstalacionDialog;
 import vistas.CrearClienteVista;
 
 import vistas.VentanaLogin;
+import vistas.pruebaVistas;
 
 public class Main {
 
@@ -26,12 +27,18 @@ public class Main {
 		Tecnico tecnico2 = new Tecnico("Roberto Robertson", "Los Indios 123", new TurnoManana(), "tecnico", "tecnico", semisenior);
 
 		Operador operador = new Operador("Sebastian Robles", "Casullo 182", "operador", "operador");
-		Cliente cliente1 = new Cliente("Manuel Marcos", "Rivadavia 2589", 2041510275, TipoCliente.INDIVIDUO, 
+		
+		
+		Cliente cliente1 = new Cliente("Manuel Marcos", "Rivadavia 2589",20419150275L, TipoCliente.INDIVIDUO, 
 				"manuelignaciomarcos@gmail.com");
+		
+		
+		Cliente cliente2 = new Cliente("Burger King", "Colonia 329", 20206958745L, TipoCliente.EMPRESA, "burgerking@gmail.com");
 		
 		empresa.agregarEmpleado(operador);
 		empresa.agregarEmpleado(tecnico1);
-		
+		empresa.agregarCliente(cliente1);
+		empresa.agregarCliente(cliente2);
 		
 		
 		System.out.println(tecnico1.toString());
@@ -119,6 +126,7 @@ public class Main {
 		
 		ControladorLogin controlador = new ControladorLogin();
 		controlador.inciarVentanaLogin();
+		
 		
 
 		

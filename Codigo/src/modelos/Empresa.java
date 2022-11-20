@@ -2,6 +2,7 @@ package modelos;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Random;
 
 public class Empresa {
 
@@ -28,7 +29,7 @@ public class Empresa {
 		return instance;
 	}
 	
-	public boolean crearCliente(String nombre, String direccion, int cuitCuil, TipoCliente tipoCliente, String correoElectronico) {
+	public boolean crearCliente(String nombre, String direccion, long cuitCuil, TipoCliente tipoCliente, String correoElectronico) {
 		if (!existeCliente(cuitCuil)) {
 			Cliente nuevoCliente = new Cliente(nombre, direccion, cuitCuil, tipoCliente, correoElectronico);
 			this.clientes.add(nuevoCliente);
@@ -37,7 +38,7 @@ public class Empresa {
 		return false;
 	}
 	
-	public boolean existeCliente(int cuitCuil) {
+	public boolean existeCliente(long cuitCuil) {
 		for (Cliente cliente : this.clientes) {
 			if (cliente.tengoElCuitCuil(cuitCuil)) {
 				return true;
@@ -46,7 +47,7 @@ public class Empresa {
 		return false;
 	}
 	
-	public Cliente buscarCliente(int cuitCuil) {
+	public Cliente buscarCliente(long cuitCuil) {
 		for (Cliente cliente : this.clientes) {
 			if (cliente.tengoElCuitCuil(cuitCuil)) {
 				return cliente;
@@ -55,7 +56,24 @@ public class Empresa {
 		return null;
 	}
 	
-	public boolean agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
+	
+	public ArrayList<Tecnico> obtenerTecnicosDisponibles(Calendar fecha) {
+		ArrayList<Tecnico> tecnicosDisponibles = new ArrayList<Tecnico>();
+		for (Empleado empleado : this.empleados) {
+			if (empleado.getClass().getSimpleName().equals("Tecnico")) {
+				Tecnico tecnico = (Tecnico) empleado;
+				if (tecnico.getAgenda().estaDisponible(new Turno(fecha))) {
+					tecnicosDisponibles.add(tecnico);
+				}
+			}
+		}
+		return tecnicosDisponibles;
+	}
+	
+	
+	
+	
+	public boolean esPosibleAgendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
 		Agenda agendaCliente = cliente.getAgenda();
 		Agenda agendaTecnico = tecnico.getAgenda();
 		Turno turno = new Turno(fecha);
@@ -63,17 +81,35 @@ public class Empresa {
 		if (agendaCliente.estaDisponible(turno) && agendaTecnico.estaDisponible(turno)){
 			agendaCliente.agendarTurno(turno);
 			agendaTecnico.agendarTurno(turno);
-			
+			/*
 			Instalacion instalacion = new Instalacion(cliente, tecnico);
 			turno.setInstalacion(instalacion);
 			this.instalaciones.add(instalacion);
 			System.out.println("Se agendo con exito la instalacion para la fecha " + fecha.getTime());
+			*/
 			return true;
 		}
 		System.out.println("No se agendo la instalacion para la fecha " + fecha.getTime());
 		
 		return false;
 	}
+	
+	
+	public boolean agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
+		if (this.esPosibleAgendarInstalacion(cliente, tecnico, fecha)) {
+			Turno turno = new Turno(fecha);
+			cliente.getAgenda().agendarTurno(turno);
+			tecnico.getAgenda().agendarTurno(turno);
+			Instalacion instalacion = new Instalacion(cliente, tecnico);
+			turno.setInstalacion(instalacion);
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	
 	
 	public void setStockProducto(Producto producto, int cantidadStock) {
 		this.inventario.setStock(producto, cantidadStock);
@@ -117,6 +153,15 @@ public class Empresa {
 		return nombreClientes;
 	}
 	
+	public ArrayList<String> getNombresTecnicos(ArrayList<Tecnico> tecnicos) {
+		ArrayList<String> nombres = new ArrayList<String>();
+		for (int i = 0; i < tecnicos.size(); i++) {
+			nombres.add(tecnicos.get(i).getNombre());
+		}
+		return nombres;
+	}
+	
+	
 	
 	public void agregarCliente(Cliente cliente) {
 		this.clientes.add(cliente);
@@ -127,7 +172,7 @@ public class Empresa {
 	
 	
 	public void agregarProducto() {};
-	public void agregarCliente() {};
+	
 	
 	public void agregarCalendario() {};
 	

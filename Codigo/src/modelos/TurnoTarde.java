@@ -12,8 +12,8 @@ public class TurnoTarde extends Disponibilidad{
 	private static int[] diasNoLaborales = {Calendar.SATURDAY, Calendar.SUNDAY};
 	
 	static {
-		horaInicio.set(0, 0, 0, 8, 0);
-		horaFin.set(0, 0, 0, 14, 0);
+		horaInicio.set(0, 0, 0, 14, 0);
+		horaFin.set(0, 0, 0, 20, 0);
 	}
 	
 	//Methods

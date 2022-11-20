@@ -12,8 +12,8 @@ public class TurnoCompleto extends Disponibilidad{
 	private static int[] diasNoLaborales = {Calendar.SUNDAY};
 	
 	static {
-		horaInicio.set(0, 0, 0, 0, 0);
-		horaFin.set(0, 0, 0, 23, 59);
+		horaInicio.set(0, 0, 0, 8, 0);
+		horaFin.set(0, 0, 0, 20, 0);
 	}
 	
 	//Methods
@@ -30,6 +30,7 @@ public class TurnoCompleto extends Disponibilidad{
 	}
 	
 	public boolean esDiaLaboral(Calendar fecha) {
+		System.out.println(fecha.getTime());
 		for (int i = 0; i < diasNoLaborales.length; i++) {
 			if (fecha.get(Calendar.DAY_OF_WEEK) == diasNoLaborales[i]) {
 				return false;

@@ -56,20 +56,15 @@ public class AgendarInstalacionDialog extends JFrame {
 		
 		
 		
-		
+		/*
 		this.dateTimePicker = new DateTimePicker();
-		
-		
+		panel.add(dateTimePicker);
+		dateTimePicker.getDatePicker().setDateToToday();
+		dateTimePicker.getTimePicker().setTimeToNow();
+		*/
 		}
 	
-	public Calendar getFechaSeleccionada() {
-		LocalDate fechaSeleccionada = dateTimePicker.getDatePicker().getDate();
-		LocalTime horaSeleccionada = dateTimePicker.getTimePicker().getTime();
-		Calendar fechaEnFormatoCalendar = new GregorianCalendar();
-		fechaEnFormatoCalendar.set(fechaSeleccionada.getYear(), fechaSeleccionada.getMonthValue(), fechaSeleccionada.getDayOfMonth(), 
-		horaSeleccionada.getHour(), horaSeleccionada.getMinute(), 0);
-		return fechaEnFormatoCalendar;
-	}
+	
 	
 	
 	

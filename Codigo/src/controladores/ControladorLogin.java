@@ -22,8 +22,7 @@ public class ControladorLogin {
 	public void inciarVentanaLogin() {
 		this.ventanaLogin =  new VentanaLogin(this);
 		ventanaLogin.setVisible(true);
-		VentanaAgendarInstalacion agendarInstalacion = new VentanaAgendarInstalacion();
-		agendarInstalacion.setVisible(true);
+		ControladorAgendarInstalacion controladorInstalacion = new ControladorAgendarInstalacion();
 		
 	}
 	
