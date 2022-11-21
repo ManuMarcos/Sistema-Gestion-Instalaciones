@@ -11,8 +11,6 @@ public class Inventario {
 	//Attributes
 	private HashMap<Producto, Integer> productos;
 	
-	//Methods
-	
 	//Constructor
 	public Inventario() {
 		this.productos = new HashMap<Producto, Integer>();
@@ -70,6 +68,25 @@ public class Inventario {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Verifica si hay un stock mínimo disponible de productos (1x Evaporadora, 1x Kit, 1x Condesadora) 
+	 * @param void
+	 * @return boolean
+	 */	
+	public boolean hayStockDisponibleParaAgendar() {
+		if (this.productos.size() == 0) {
+			return false;
+		} else {
+			for (Producto p : this.productos.keySet()) {
+				if ((p.getClass().getSimpleName().equals("Evaporadora") || p.getClass().getSimpleName().equals("Condensadora") || p.getClass().getSimpleName().equals("KitDeInstalacion")) && this.hayStock(p) == false) {
+					System.out.println("No hay stock de: " + p.getClass().getSimpleName());
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 	
 	/**

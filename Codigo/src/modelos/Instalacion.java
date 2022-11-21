@@ -152,22 +152,12 @@ public class Instalacion {
 	public void setCostoDeViaje(float costoDeViaje) {
 		this.costoDeViaje = costoDeViaje;
 	}
-	
-	//Constructor
-	public Instalacion(Cliente cliente, Tecnico tecnico, boolean necesitaSoportePared, boolean necesitaSeguro) {
-		//Acá tiene que haber dos validaciones: disponibilidad de técnico y existencia de cliente.
+
+	public Instalacion(Cliente cliente, Tecnico tecnico, boolean necesitaSeguro, boolean necesitaSoportePared) {
 		this.setCliente(cliente);
 		this.setTecnico(tecnico);
-		this.setEstado(Estado.PROGRAMADA);
 		this.setNecesitaSeguro(necesitaSeguro);
 		this.setNecesitaSoportePared(necesitaSoportePared);
-	}
-
-	//Tiene que existir un constructor que no contemple si el usuario necesita soporte o seguro para que esto lo pueda definir a posteriori el tecnico
-	public Instalacion(Cliente cliente, Tecnico tecnico) {
-		//Acá tiene que haber dos validaciones: disponibilidad de técnico y existencia de cliente.
-		this.setCliente(cliente);
-		this.setTecnico(tecnico);
 		this.setEstado(Estado.PROGRAMADA);
 	}
 

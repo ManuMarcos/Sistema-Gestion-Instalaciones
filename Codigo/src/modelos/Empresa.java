@@ -79,15 +79,12 @@ public class Empresa {
 		return tecnicosDisponibles;
 	}
 	
-	
-	
-	
 	public boolean esPosibleAgendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
 		Agenda agendaCliente = cliente.getAgenda();
 		Agenda agendaTecnico = tecnico.getAgenda();
 		Turno turno = new Turno(fecha);
 		
-		if (agendaCliente.estaDisponible(turno) && agendaTecnico.estaDisponible(turno)){
+		if (agendaCliente.estaDisponible(turno) && agendaTecnico.estaDisponible(turno) && inventario.hayStockDisponibleParaAgendar()){
 			agendaCliente.agendarTurno(turno);
 			agendaTecnico.agendarTurno(turno);
 			/*
@@ -104,12 +101,12 @@ public class Empresa {
 	}
 	
 	
-	public Instalacion agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
+	public Instalacion agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha, boolean necesitaSeguro, boolean necesitaSoportePared) {
 		if (this.esPosibleAgendarInstalacion(cliente, tecnico, fecha)) {
 			Turno turno = new Turno(fecha);
 			cliente.getAgenda().agendarTurno(turno);
 			tecnico.getAgenda().agendarTurno(turno);
-			Instalacion instalacion = new Instalacion(cliente, tecnico);
+			Instalacion instalacion = new Instalacion(cliente, tecnico, necesitaSeguro, necesitaSoportePared);
 			turno.setInstalacion(instalacion);
 			return instalacion;
 		}
@@ -170,17 +167,13 @@ public class Empresa {
 		return nombres;
 	}
 	
-	
-	
 	public void agregarCliente(Cliente cliente) {
 		this.clientes.add(cliente);
 	}
 	
-	
-	
-	
-	
-	public void agregarProducto() {};
+	public void agregarProducto(Producto producto, int cantidad) {
+		this.inventario.setStock(producto, cantidad);
+	};
 	
 	
 	public void agregarCalendario() {};
