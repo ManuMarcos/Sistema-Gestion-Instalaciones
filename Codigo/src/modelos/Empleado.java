@@ -28,6 +28,9 @@ public abstract class Empleado extends Persona{
 		return this.contrasena;
 	}
 	
+	public int getId() {
+		return this.id;
+	}
 	
 	
 	

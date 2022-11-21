@@ -2,7 +2,7 @@ package modelos;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Random;
+
 
 public class Empresa {
 
@@ -56,6 +56,15 @@ public class Empresa {
 		return null;
 	}
 	
+	public Empleado buscarEmpleado(int id) {
+		for (Empleado empleado : this.empleados) {
+			if (empleado.getId() == id) {
+				return empleado;
+			}
+		}
+		return null;
+	}
+	
 	
 	public ArrayList<Tecnico> obtenerTecnicosDisponibles(Calendar fecha) {
 		ArrayList<Tecnico> tecnicosDisponibles = new ArrayList<Tecnico>();
@@ -95,21 +104,17 @@ public class Empresa {
 	}
 	
 	
-	public boolean agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
+	public Instalacion agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
 		if (this.esPosibleAgendarInstalacion(cliente, tecnico, fecha)) {
 			Turno turno = new Turno(fecha);
 			cliente.getAgenda().agendarTurno(turno);
 			tecnico.getAgenda().agendarTurno(turno);
 			Instalacion instalacion = new Instalacion(cliente, tecnico);
 			turno.setInstalacion(instalacion);
-			return true;
+			return instalacion;
 		}
-		return false;
+		return null;
 	}
-	
-	
-	
-	
 	
 	public void setStockProducto(Producto producto, int cantidadStock) {
 		this.inventario.setStock(producto, cantidadStock);

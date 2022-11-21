@@ -16,23 +16,24 @@ import vistas.VentanaLogin;
 
 public class ControladorLogin {
 
-	private VentanaLogin ventanaLogin;
+	private VentanaLogin vista;
+	private Empresa modelo;
 	
 	
 	public void inciarVentanaLogin() {
-		this.ventanaLogin =  new VentanaLogin(this);
-		ventanaLogin.setVisible(true);
+		this.vista =  new VentanaLogin(this);
+		vista.setVisible(true);
+		this.modelo = Empresa.getInstance();
 		ControladorAgendarInstalacion controladorInstalacion = new ControladorAgendarInstalacion();
-		
 	}
 	
 	public void login(String usuario, String contrasena, String tipoUsuario) {
 		Empresa empresa = Empresa.getInstance();
 		if (empresa.esUsuarioValido(usuario, contrasena, tipoUsuario)) {
-			ventanaLogin.mostrarMensajeExitoso("Usuario valido !!");
+			vista.mostrarMensajeExitoso("Usuario valido !!");
 		}
 		else {
-			ventanaLogin.mostrarMensajeDeError("Usuario invalido");
+			vista.mostrarMensajeDeError("Usuario invalido");
 		}
 	}
 	

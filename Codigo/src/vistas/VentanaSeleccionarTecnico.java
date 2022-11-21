@@ -7,28 +7,37 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controladores.ControladorAgendarInstalacion;
+import modelos.EmpleadoVO;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
-public class VentanaSeleccionarTecnico extends JFrame {
+public class VentanaSeleccionarTecnico extends JDialog {
 
 	private JPanel contentPane;
-	private JComboBox<String> comboBoxTecnicos;
+	private JComboBox<EmpleadoVO> comboBoxTecnicos;
+	private JButton buttonConfirmar;
 	
 	
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaSeleccionarTecnico() {
+	public VentanaSeleccionarTecnico(JFrame padre, boolean modal) {
+		super(padre,modal);
 		setTitle("Seleccionar Tecnico");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 420, 117);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -45,24 +54,28 @@ public class VentanaSeleccionarTecnico extends JFrame {
 		labelTecnicosDisponibles.setFont(new Font(VistaConfig.labelFamilyFont, Font.PLAIN, VistaConfig.labelFontSize));
 		panelCentral.add(labelTecnicosDisponibles);
 		
-		this.comboBoxTecnicos= new JComboBox<String>();
+		this.comboBoxTecnicos= new JComboBox<EmpleadoVO>();
 		panelCentral.add(comboBoxTecnicos);
 		
 		JPanel panelInferior = new JPanel();
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
 		
-		JButton buttonConfirmar = new JButton("Confirmar");
-		buttonConfirmar.setForeground(Color.BLACK);
-		buttonConfirmar.setFont(new Font(VistaConfig.buttonFamilyFont, VistaConfig.buttonFontStyle, VistaConfig.buttonFontSize));
-		buttonConfirmar.setActionCommand("CONFIRMAR");
+		this.buttonConfirmar= new JButton("Confirmar");
+		VistaConfig.setButtonStyle(buttonConfirmar);
+		buttonConfirmar.setActionCommand("CONFIRMAR_TECNICO");
 		panelInferior.add(buttonConfirmar);
 	}
 
-	public void setTecnicosDisponibles(ArrayList<String> tecnicosDisponibles) {
-		for (int i=0; i < tecnicosDisponibles.size() ; i++) {
-			this.comboBoxTecnicos.addItem(tecnicosDisponibles.get(i));
-		}
+	public void setTecnicosDisponibles(DefaultComboBoxModel<EmpleadoVO> comboBoxModel) {
+		this.comboBoxTecnicos.setModel(comboBoxModel);
 	}
 	
+	public void setControlador(ControladorAgendarInstalacion controlador) {
+		this.buttonConfirmar.addActionListener(controlador);
+	}
+	
+	public EmpleadoVO getTecnicoSeleccionado() {
+		return (EmpleadoVO)this.comboBoxTecnicos.getSelectedItem();
+	}
 	
 }

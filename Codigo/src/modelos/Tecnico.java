@@ -30,19 +30,10 @@ public class Tecnico extends Empleado {
 		return this.agenda;
 	}
 	
-	//Constructor
-	/**
-	 * Constructor de Tecnico
-	 * @param nombre
-	 * @param direccion
-	 * @param experienciaLaboral
-	 */
-	public Tecnico(String nombre, String direccion, ExperienciaLaboral experienciaLaboral, String usuario, String contrasena, ExperienciaLaboral experiencia) {
-		super(nombre, direccion, usuario, contrasena);
-		this.setExperienciaLaboral(experiencia);
-	}
 	
-	//Constructor para pruebas
+	
+	
+	//Constructor
 	public Tecnico(String nombre, String direccion, Disponibilidad turnoLaboral,String usuario, String contrasena, ExperienciaLaboral experiencia) {
 		super(nombre,direccion, usuario, contrasena);
 		this.turnoLaboral = turnoLaboral;

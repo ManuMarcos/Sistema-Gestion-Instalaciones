@@ -10,11 +10,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import modelos.Agenda;
 import modelos.Cliente;
+import modelos.Empleado;
+import modelos.EmpleadoVO;
 import modelos.Empresa;
+import modelos.Instalacion;
 import modelos.Persona;
 import modelos.Tecnico;
 import modelos.Turno;
@@ -23,6 +28,7 @@ import vistas.VentanaAgendarInstalacion;
 
 public class ControladorAgendarInstalacion implements ActionListener, KeyListener{
 
+	//Attributes
 	private VentanaAgendarInstalacion vista;
 	private Empresa modelo;
 	
@@ -39,16 +45,28 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String comandoAccionado = e.getActionCommand();
+		Cliente cliente;
+		Calendar fechaSeleccionada;
+		Tecnico tecnicoSeleccionado;
 		switch (comandoAccionado) {
 			case "AGENDAR":
 				if (this.esIdValido(vista.getIdCliente())) {
 					if (this.existeCliente(Long.parseLong(vista.getIdCliente()))){
-						Cliente cliente = modelo.buscarCliente(Long.parseLong(vista.getIdCliente()));
-						Calendar fechaSeleccionada = vista.getFechaSeleccionada();
+						cliente = modelo.buscarCliente(Long.parseLong(vista.getIdCliente()));
+						fechaSeleccionada = vista.getFechaSeleccionada();
 						if (cliente.getAgenda().estaDisponible(new Turno(fechaSeleccionada))) {
-							ArrayList<String> nombreTecnicosDisponibles = modelo.getNombresTecnicos(modelo.obtenerTecnicosDisponibles(fechaSeleccionada));
-							if (nombreTecnicosDisponibles.size() > 0) {
-								vista.mostrarTecnicosDisponibles(nombreTecnicosDisponibles);
+							ArrayList<Tecnico> tecnicosDisponibles = modelo.obtenerTecnicosDisponibles(fechaSeleccionada);
+							if (tecnicosDisponibles.size() > 0) {	
+								DefaultComboBoxModel<EmpleadoVO> comboBoxModel = new DefaultComboBoxModel<EmpleadoVO>();
+								for(Tecnico tecnico : tecnicosDisponibles) {
+									comboBoxModel.addElement(new EmpleadoVO(tecnico.getNombre(), tecnico.getId()));
+									System.out.println(tecnico.getNombre() + " - " + Integer.toString(tecnico.getId()));
+								}
+								vista.mostrarTecnicosDisponibles(comboBoxModel, this);
+								
+								
+								
+								
 							}
 							else {
 								vista.mostrarMensajeDeError("Tecnicos no disponibles", "No hay tecnicos disponibles para el horario seleccionado");
@@ -61,7 +79,17 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 				}
 				break;
 			case "CANCELAR":
-				System.out.println("CANCELAR");
+				this.vista.setVisible(false);
+				break;
+			case "CONFIRMAR_TECNICO":
+				tecnicoSeleccionado = (Tecnico) modelo.buscarEmpleado(vista.getIdTecnicoSeleccionado());
+				cliente = modelo.buscarCliente(Long.parseLong(vista.getIdCliente()));
+				fechaSeleccionada = vista.getFechaSeleccionada();
+				Instalacion instalacion = modelo.agendarInstalacion(cliente, tecnicoSeleccionado, fechaSeleccionada);
+				String mensaje = "Se agendo con exito la instalacion \nCliente:  " + cliente.getNombre() + "\nTecnico:  " + tecnicoSeleccionado.getNombre() +
+						"\nHorario: " + Agenda.formatearFecha(fechaSeleccionada);
+				vista.mostrarMensajeInformativo("Instalacion agendada con exito" , mensaje);
+				this.vista.setVisible(false);
 				break;
 		}
 		
@@ -116,6 +144,8 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		}
 		return true;
 	}
+	
+	
 	
 	
 	

@@ -1,5 +1,8 @@
 package modelos;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -140,6 +143,11 @@ public class Agenda{
 		
 	}
 
+	public static String formatearFecha(Calendar fecha) {
+		DateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		String fechaFormateada = formatoFecha.format(fecha.getTime());
+		return fechaFormateada;
+	}
 	
 	
 	

@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import com.github.lgooddatepicker.components.DateTimePicker;
 
 import controladores.ControladorAgendarInstalacion;
+import modelos.EmpleadoVO;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,6 +29,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+
 import java.awt.FlowLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -37,6 +40,7 @@ import javax.swing.SwingConstants;
 
 public class VentanaAgendarInstalacion extends JFrame {
 
+	private VentanaSeleccionarTecnico ventanaSeleccionarTecnico;
 	private JPanel contentPane;
 	private DateTimePicker dateTimePicker; 
 	private JTextField idClienteTextField;
@@ -50,7 +54,7 @@ public class VentanaAgendarInstalacion extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaAgendarInstalacion() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 795, 221);
 		this.setTitle("Agendar Instalacion");
 		contentPane = new JPanel();
@@ -163,9 +167,22 @@ public class VentanaAgendarInstalacion extends JFrame {
 		JOptionPane.showMessageDialog(contentPane, mensaje, mensaje, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-	public void mostrarTecnicosDisponibles(ArrayList<String> tecnicosDisponibles) {
-		VentanaSeleccionarTecnico seleccionarTecnico = new VentanaSeleccionarTecnico();
-		seleccionarTecnico.setVisible(true);
-		seleccionarTecnico.setTecnicosDisponibles(tecnicosDisponibles);
+	public void mostrarTecnicosDisponibles(DefaultComboBoxModel<EmpleadoVO> comboBoxModel, ControladorAgendarInstalacion controlador) {
+		this.ventanaSeleccionarTecnico = new VentanaSeleccionarTecnico(this, true);
+		this.ventanaSeleccionarTecnico.setControlador(controlador);
+		this.ventanaSeleccionarTecnico.setTecnicosDisponibles(comboBoxModel);
+		this.ventanaSeleccionarTecnico.setLocationRelativeTo(this);
+		this.ventanaSeleccionarTecnico.setVisible(true);
 	}
+	
+	public int getIdTecnicoSeleccionado() {
+		return this.ventanaSeleccionarTecnico.getTecnicoSeleccionado().getId();
+	}
+	
+	public void mostrarMensajeInformativo(String titulo, String mensaje) {
+		JOptionPane.showMessageDialog(this.ventanaSeleccionarTecnico, mensaje, titulo, JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	
+	
 }

@@ -32,10 +32,10 @@ public class TurnoTarde extends Disponibilidad{
 	public boolean esDiaLaboral(Calendar fecha) {
 		for (int i = 0; i < diasNoLaborales.length; i++) {
 			if (fecha.get(Calendar.DAY_OF_WEEK) == diasNoLaborales[i]) {
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	public boolean esHorarioLaboral(Turno turno) {

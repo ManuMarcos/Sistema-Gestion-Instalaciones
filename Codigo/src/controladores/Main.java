@@ -25,6 +25,7 @@ public class Main {
 
 		Tecnico tecnico1 = new Tecnico("Nahuel Damiano", "Los Indios 254", new TurnoManana(), "tecnico", "tecnico", junior);
 		Tecnico tecnico2 = new Tecnico("Roberto Robertson", "Los Indios 123", new TurnoManana(), "tecnico", "tecnico", semisenior);
+		Tecnico tecnico3 = new Tecnico("Raul Batista", "Callao 203", new TurnoTarde(), "tecnico3", "tecnico3", junior);
 
 		Operador operador = new Operador("Sebastian Robles", "Casullo 182", "operador", "operador");
 		
@@ -37,6 +38,8 @@ public class Main {
 		
 		empresa.agregarEmpleado(operador);
 		empresa.agregarEmpleado(tecnico1);
+		empresa.agregarEmpleado(tecnico2);
+		empresa.agregarEmpleado(tecnico3);
 		empresa.agregarCliente(cliente1);
 		empresa.agregarCliente(cliente2);
 		
@@ -92,7 +95,6 @@ public class Main {
 		System.out.println("-----------------------------Agenda Cliente-----------------------------");
 		cliente1.getAgenda().imprimirTurnos();
 		
-		
 //		System.out.println("VALOR POR HORA TECNICO 1 SIENDO JUNIOR");
 //		System.out.println(tecnico1.getExperienciaLaboral().getCostoHora());
 //		
@@ -133,16 +135,19 @@ public class Main {
 		empresa.imprimirInventario();
 
 		
-<<<<<<< HEAD
+		
 		ControladorLogin controlador = new ControladorLogin();
 		controlador.inciarVentanaLogin();
 		
 		
-=======
+		
+		
+		
+		
 //		ControladorLogin controlador = new ControladorLogin();
 //		controlador.inciarVentanaLogin();
 //		
->>>>>>> a7452f61f1b6b171bae8900559ce0c975b5943d5
+
 
 		
 		
