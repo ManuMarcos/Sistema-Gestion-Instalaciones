@@ -82,18 +82,31 @@ public class Main {
 		fecha8.set(2022, 10, 26, 12, 30);
 		
 		fecha9.set(2022, 10, 17, 11, 0, 0);
-				
-	
 		
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha1);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha2);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha3);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha4);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha5);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha6);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha7);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha8);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha9);
+		
+		//Se agrega el stock antes de agendar instalaciones
+		Producto evaporadora = new Evaporadora();
+		Producto condensadora = new Condensadora();
+		Producto kitDeInstalacion = new KitDeInstalacion();
+		
+		empresa.setStockProducto(evaporadora, 50);
+		empresa.setStockProducto(condensadora, 20);
+		empresa.setStockProducto(kitDeInstalacion, 23);
+		empresa.setPrecioProducto(evaporadora, 50);
+		empresa.setPrecioProducto(condensadora, 78);
+		empresa.setPrecioProducto(kitDeInstalacion, 40);
+		
+		empresa.imprimirInventario();
+							
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha1, true, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha2, true, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha3, false, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha4, true, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha5, false, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha6, true, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha7, false, true);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha8, false, true);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha9, true, false);
 		
 
 		
@@ -124,23 +137,6 @@ public class Main {
 //		
 //		System.out.println("VALOR POR HORA TECNICO 2 SIENDO SEMI SENIOR DESPUES DEL CAMBIO EN SSR");
 //		System.out.println(tecnico2.getExperienciaLaboral().getCostoHora());
-		
-		Producto evaporadora = new Evaporadora();
-		Producto condensadora = new Condensadora();
-		Producto kitDeInstalacion = new KitDeInstalacion();
-		
-		empresa.setStockProducto(evaporadora, 50);
-		empresa.setStockProducto(condensadora, 20);
-		empresa.setStockProducto(kitDeInstalacion, 5);
-		empresa.setPrecioProducto(evaporadora, 50);
-		empresa.setPrecioProducto(condensadora, 78);
-		empresa.setPrecioProducto(kitDeInstalacion, 40);
-		
-		empresa.imprimirInventario();
-				
-		empresa.removerUnidadProducto(evaporadora);
-		
-		empresa.imprimirInventario();
 
 		
 		
