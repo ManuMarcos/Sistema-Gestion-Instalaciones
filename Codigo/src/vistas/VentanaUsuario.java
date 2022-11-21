@@ -23,18 +23,19 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.SystemColor;
 import java.awt.FlowLayout;
+import javax.swing.JInternalFrame;
 
 public class VentanaUsuario extends JFrame {
 
 	private JPanel contentPane;
 	private JTable tableDatosOperador;
 	private JScrollPane scrollPaneTableDatosOperador;
-	private JLabel iconoUsuario;
-	private JPanel panelDatosOperador;
 	private JLabel datoUsuario;
 	private JLabel datoNombreApellido;
 	private JLabel datoNroLegajo;
 	private JPanel panelCentral;
+	private JInternalFrame internalFrame;
+	private JLabel labelIconoUsuario;
 
 	
 	/**
@@ -50,24 +51,6 @@ public class VentanaUsuario extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panelSuperior = new JPanel();
-		panelSuperior.setOpaque(false);
-		contentPane.add(panelSuperior, BorderLayout.NORTH);
-		panelSuperior.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panelIcono = new JPanel();
-		panelIcono.setOpaque(false);
-		panelSuperior.add(panelIcono, BorderLayout.WEST);
-		
-		this.iconoUsuario = new JLabel();
-		this.iconoUsuario.setIcon(iconoUsuario);
-		panelIcono.add(this.iconoUsuario);
-		
-		this.panelDatosOperador = new JPanel();
-		panelDatosOperador.setOpaque(false);
-		panelSuperior.add(panelDatosOperador, BorderLayout.CENTER);
-		panelDatosOperador.setLayout(new GridLayout(2, 1, 0, 0));
 		/*
 		tableDatosOperador = new JTable();
 		this.scrollPaneTableDatosOperador = new JScrollPane(tableDatosOperador);
@@ -82,10 +65,16 @@ public class VentanaUsuario extends JFrame {
 		
 		
 		
+		
+		
 		JPanel panelIzquierdo = new JPanel();
 		panelIzquierdo.setOpaque(false);
 		contentPane.add(panelIzquierdo, BorderLayout.WEST);
 		panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+		
+		this.labelIconoUsuario = new JLabel(iconoUsuario);
+		this.labelIconoUsuario.setBorder(new EmptyBorder(0,0,10,0));
+		panelIzquierdo.add(labelIconoUsuario);
 		
 		JLabel labelUsuario = new JLabel("Usuario");
 		labelUsuario.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -143,7 +132,6 @@ public class VentanaUsuario extends JFrame {
 	
 	public void setPanelCentral(JPanel nuevoPanelCentral) {
 		this.panelCentral.add(nuevoPanelCentral);
-		this.pack();
 	}
 	
 

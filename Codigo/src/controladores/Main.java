@@ -79,9 +79,10 @@ public class Main {
 		
 		//Sabado 26/11/2022
 		fecha7.set(2022, 10, 26, 8, 00);
-		fecha8.set(2022, 10, 26, 12, 30);
+		fecha8.set(2022, 10, 22, 12, 30);
 		
-		fecha9.set(2022, 10, 17, 11, 0, 0);
+		
+		fecha9.set(2022, 10, 22, 11, 0, 0);
 		
 		
 		//Se agrega el stock antes de agendar instalaciones
@@ -142,13 +143,6 @@ public class Main {
 		
 		ControladorLogin controlador = new ControladorLogin();
 		controlador.inciarVentanaLogin();
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		

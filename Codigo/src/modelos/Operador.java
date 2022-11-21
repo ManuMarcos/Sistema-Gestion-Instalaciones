@@ -24,9 +24,9 @@ public class Operador extends Empleado{
 		return empresa.existeCliente(cuitCuil);
 	}
 	
-	public void agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
+	public void agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha, boolean necesitaSeguro, boolean necesitaSoportePared) {
 		Empresa empresa = Empresa.getInstance();
-		empresa.agendarInstalacion(cliente, tecnico, fecha);
+		empresa.agendarInstalacion(cliente, tecnico, fecha, necesitaSeguro, necesitaSoportePared);
 	}
 	
 	public Cliente buscarCliente(int cuitCuil) {

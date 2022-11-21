@@ -23,16 +23,17 @@ import modelos.Instalacion;
 import modelos.Persona;
 import modelos.Tecnico;
 import modelos.Turno;
+import vistas.PanelAgendarInstalacion;
 import vistas.VentanaAgendarInstalacion;
 
 public class ControladorAgendarInstalacion implements ActionListener, KeyListener{
 
 	//Attributes
-	private VentanaAgendarInstalacion vista;
+	private PanelAgendarInstalacion vista;
 	private Empresa modelo;
 	
 	public ControladorAgendarInstalacion() {
-		//this.vista = new VentanaAgendarInstalacion();
+		this.vista = new PanelAgendarInstalacion();
 		this.modelo = Empresa.getInstance();
 		this.vista.setVisible(true);
 		this.vista.setControladorDeEventos(this);
@@ -73,18 +74,15 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 					}
 				}
 				break;
-			case "CANCELAR":
-				this.vista.setVisible(false);
-				break;
 			case "CONFIRMAR_TECNICO":
 				tecnicoSeleccionado = (Tecnico) modelo.buscarEmpleado(vista.getIdTecnicoSeleccionado());
 				cliente = modelo.buscarCliente(Long.parseLong(vista.getIdCliente()));
 				fechaSeleccionada = vista.getFechaSeleccionada();
-				Instalacion instalacion = modelo.agendarInstalacion(cliente, tecnicoSeleccionado, fechaSeleccionada);
+				Instalacion instalacion = modelo.agendarInstalacion(cliente, tecnicoSeleccionado, fechaSeleccionada, true, true);
 				String mensaje = "Se agendo con exito la instalacion \nCliente:  " + cliente.getNombre() + "\nTecnico:  " + tecnicoSeleccionado.getNombre() +
 						"\nHorario: " + Agenda.formatearFecha(fechaSeleccionada);
 				vista.mostrarMensajeInformativo("Instalacion agendada con exito" , mensaje);
-				this.vista.setVisible(false);
+				this.vista.resetearPanel();
 				break;
 		}
 		
@@ -140,6 +138,9 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		return true;
 	}
 	
+	public PanelAgendarInstalacion getVista() {
+		return this.vista;
+	}
 	
 	
 	

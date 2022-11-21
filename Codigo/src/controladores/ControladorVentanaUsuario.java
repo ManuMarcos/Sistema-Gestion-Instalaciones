@@ -45,8 +45,7 @@ public class ControladorVentanaUsuario {
 		switch (empleado.getClass().getSimpleName()) {
 			case "Operador":
 				Operador operador = (Operador) empleado;
-				this.vista = new VentanaUsuario(new ImageIcon("operadorCallCenter.png"), "Operador");
-				
+				this.iniciarVistaOperador(operador);
 				break;
 			case "Tecnico":
 				Tecnico tecnico = (Tecnico) empleado;
@@ -62,6 +61,13 @@ public class ControladorVentanaUsuario {
 				break;
 				
 		}
+	}
+	
+	public void iniciarVistaOperador(Operador operador) {
+		ControladorAgendarInstalacion agendarInstalacion = new ControladorAgendarInstalacion();
+		
+		this.vista = new VentanaUsuario(new ImageIcon("operadorCallCenter.png"), "Operador");
+		this.vista.setPanelCentral(agendarInstalacion.getVista());
 	}
 	
 	

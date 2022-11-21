@@ -45,30 +45,34 @@ public class PanelAgendarInstalacion extends JPanel {
 	 */
 	public PanelAgendarInstalacion() {
 		//this.ventanaUsuario= ventanaUsuario;
-		this.panel = new JPanel();
-		panel.setLayout(new GridLayout(2, 1, 0, 0));
-		
+		setLayout(new GridLayout(2, 1, 0, 0));
+		this.setOpaque(false);
 		
 		this.panelPrincipal = new JPanel();
-		this.panel.add(panelPrincipal);
+		panelPrincipal.setOpaque(false);
+		add(panelPrincipal);
 		
 		
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panelPrincipal.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCentral = new JPanel();
+		panelCentral.setOpaque(false);
 		panelPrincipal.add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new GridLayout(1, 1, 0, 0));
 		
 		JPanel panelDatos = new JPanel();
+		panelDatos.setOpaque(false);
 		panelCentral.add(panelDatos);
 		panelDatos.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelBuscarCliente = new JPanel();
+		panelBuscarCliente.setOpaque(false);
 		panelDatos.add(panelBuscarCliente, BorderLayout.CENTER);
 		panelBuscarCliente.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelBuscarClienteDatos = new JPanel();
+		panelBuscarClienteDatos.setOpaque(false);
 		FlowLayout flowLayout_1 = (FlowLayout) panelBuscarClienteDatos.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panelBuscarCliente.add(panelBuscarClienteDatos, BorderLayout.NORTH);
@@ -82,15 +86,18 @@ public class PanelAgendarInstalacion extends JPanel {
 		panelBuscarClienteDatos.add(idClienteTextField);
 		
 		JPanel panelDatosCliente = new JPanel();
+		panelDatosCliente.setOpaque(false);
 		panelBuscarCliente.add(panelDatosCliente, BorderLayout.CENTER);
 		panelDatosCliente.setLayout(new BorderLayout(0, 0));
 		
 		
 		tablaDatosCliente = new JTable();
 		this.tablaScrollPane= new JScrollPane(tablaDatosCliente);
+		tablaScrollPane.setOpaque(false);
 		panelDatosCliente.add(tablaScrollPane);
 		
 		JPanel panelSeleccionarFecha = new JPanel();
+		panelSeleccionarFecha.setOpaque(false);
 		FlowLayout flowLayout = (FlowLayout) panelSeleccionarFecha.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panelDatos.add(panelSeleccionarFecha, BorderLayout.SOUTH);
@@ -100,6 +107,7 @@ public class PanelAgendarInstalacion extends JPanel {
 		panelSeleccionarFecha.add(labelSeleccionarFecha);
 		
 		JPanel panelInferior = new JPanel();
+		panelInferior.setOpaque(false);
 		panelPrincipal.add(panelInferior, BorderLayout.SOUTH);
 		panelInferior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -130,6 +138,15 @@ public class PanelAgendarInstalacion extends JPanel {
 	public void mostrarDatosCliente(DefaultTableModel datosTableModel) {
 		this.tablaDatosCliente.setModel(datosTableModel);
 		this.tablaDatosCliente.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+	}
+	
+	private void limpiarDatosCliente() {
+		this.tablaDatosCliente.setModel(new DefaultTableModel());
+	}
+	
+	private void resetearFecha() {
+		this.dateTimePicker.getDatePicker().setDateToToday();
+		this.dateTimePicker.getTimePicker().setTimeToNow();
 	}
 	
 	public Calendar getFechaSeleccionada() {
@@ -170,6 +187,14 @@ public class PanelAgendarInstalacion extends JPanel {
 		this.ventanaSeleccionarTecnico.setVisible(true);
 	}
 	
+	public void resetearPanel() {
+		this.ventanaSeleccionarTecnico.setVisible(false);
+		this.idClienteTextField.setText(null);
+		this.limpiarDatosCliente();
+		this.resetearFecha();
+	}
+	
+	
 	public int getIdTecnicoSeleccionado() {
 		return this.ventanaSeleccionarTecnico.getTecnicoSeleccionado().getId();
 	}
@@ -177,6 +202,7 @@ public class PanelAgendarInstalacion extends JPanel {
 	public void mostrarMensajeInformativo(String titulo, String mensaje) {
 		JOptionPane.showMessageDialog(this.ventanaSeleccionarTecnico, mensaje, titulo, JOptionPane.PLAIN_MESSAGE);
 	}
+	
 	
 
 }
