@@ -23,12 +23,13 @@ public class Main {
 		ExperienciaLaboral junior = new Junior();
 		ExperienciaLaboral semisenior = new SemiSenior();
 
-		Tecnico tecnico1 = new Tecnico("Nahuel Damiano", "Los Indios 254", new TurnoManana(), "tecnico", "tecnico", junior);
-		Tecnico tecnico2 = new Tecnico("Roberto Robertson", "Los Indios 123", new TurnoManana(), "tecnico", "tecnico", semisenior);
+		Tecnico tecnico1 = new Tecnico("Nahuel Damiano", "Los Indios 254", new TurnoManana(), "tecnico1", "tecnico1", junior);
+		Tecnico tecnico2 = new Tecnico("Roberto Robertson", "Los Indios 123", new TurnoManana(), "tecnico2", "tecnico2", semisenior);
 		Tecnico tecnico3 = new Tecnico("Raul Batista", "Callao 203", new TurnoTarde(), "tecnico3", "tecnico3", junior);
 
 		Operador operador = new Operador("Sebastian Robles", "Casullo 182", "operador", "operador");
-		
+		Administrador administrador = new Administrador("admin","Sarmiento 201", "admin", "admin");
+		Administrativo administrativo = new Administrativo("Jesus Lopez", "Arenales 874", "administrativo", "administrativo123");
 		
 		Cliente cliente1 = new Cliente("Manuel Marcos", "Rivadavia 2589",20419150275L, TipoCliente.INDIVIDUO, 
 				"manuelignaciomarcos@gmail.com");
@@ -42,7 +43,8 @@ public class Main {
 		empresa.agregarEmpleado(tecnico3);
 		empresa.agregarCliente(cliente1);
 		empresa.agregarCliente(cliente2);
-		
+		empresa.agregarEmpleado(administrador);
+		empresa.agregarEmpleado(administrativo);
 		
 		System.out.println(tecnico1.toString());
 		

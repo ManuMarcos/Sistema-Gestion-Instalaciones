@@ -1,17 +1,8 @@
 package controladores;
 
-import java.util.Calendar;
-
-import javax.swing.JFrame;
-
-import modelos.Agenda;
-import modelos.Cliente;
+import modelos.Empleado;
 import modelos.Empresa;
-import modelos.Instalacion;
-import modelos.Tecnico;
-import modelos.Turno;
-import vistas.AgendarInstalacionDialog;
-import vistas.VentanaAgendarInstalacion;
+
 import vistas.VentanaLogin;
 
 public class ControladorLogin {
@@ -22,15 +13,15 @@ public class ControladorLogin {
 	
 	public void inciarVentanaLogin() {
 		this.vista =  new VentanaLogin(this);
-		vista.setVisible(true);
+		this.vista.setVisible(true);
 		this.modelo = Empresa.getInstance();
-		ControladorAgendarInstalacion controladorInstalacion = new ControladorAgendarInstalacion();
 	}
 	
 	public void login(String usuario, String contrasena, String tipoUsuario) {
-		Empresa empresa = Empresa.getInstance();
-		if (empresa.esUsuarioValido(usuario, contrasena, tipoUsuario)) {
+		Empleado empleado = this.modelo.esUsuarioValido(usuario, contrasena, tipoUsuario);
+		if (empleado != null) {
 			vista.mostrarMensajeExitoso("Usuario valido !!");
+			ControladorVentanaUsuario controladorVentanaUsuario = new ControladorVentanaUsuario(empleado);
 		}
 		else {
 			vista.mostrarMensajeDeError("Usuario invalido");
