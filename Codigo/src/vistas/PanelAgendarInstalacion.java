@@ -1,11 +1,15 @@
 package vistas;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import com.github.lgooddatepicker.components.DateTimePicker;
 
@@ -13,58 +17,47 @@ import controladores.ControladorAgendarInstalacion;
 import modelos.EmpleadoVO;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-
-import java.awt.FlowLayout;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
-import javax.swing.SwingConstants;
-
-public class VentanaAgendarInstalacion extends JFrame {
+public class PanelAgendarInstalacion extends JPanel {
 
 	private VentanaSeleccionarTecnico ventanaSeleccionarTecnico;
-	private JPanel contentPane;
+	private VentanaUsuario ventanaUsuario;
+	private JPanel panelPrincipal;
+	private JPanel panel;
 	private DateTimePicker dateTimePicker; 
 	private JTextField idClienteTextField;
 	private JTable tablaDatosCliente;
 	private JScrollPane tablaScrollPane;
 	private JButton buttonCancelar;
 	private JButton buttonAgendar;
-
-
+	
+	
+	
 	/**
-	 * Create the frame.
+	 * Create the panel.
 	 */
-	public VentanaAgendarInstalacion() {
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 795, 221);
-		this.setTitle("Agendar Instalacion");
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+	public PanelAgendarInstalacion() {
+		//this.ventanaUsuario= ventanaUsuario;
+		this.panel = new JPanel();
+		panel.setLayout(new GridLayout(2, 1, 0, 0));
 		
+		
+		this.panelPrincipal = new JPanel();
+		this.panel.add(panelPrincipal);
+		
+		
+		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panelPrincipal.setLayout(new BorderLayout(0, 0));
+
 		JPanel panelCentral = new JPanel();
-		contentPane.add(panelCentral, BorderLayout.CENTER);
+		panelPrincipal.add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new GridLayout(1, 1, 0, 0));
 		
 		JPanel panelDatos = new JPanel();
@@ -107,7 +100,8 @@ public class VentanaAgendarInstalacion extends JFrame {
 		panelSeleccionarFecha.add(labelSeleccionarFecha);
 		
 		JPanel panelInferior = new JPanel();
-		contentPane.add(panelInferior, BorderLayout.SOUTH);
+		panelPrincipal.add(panelInferior, BorderLayout.SOUTH);
+		panelInferior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		this.buttonAgendar= new JButton("Agendar");
 		this.buttonAgendar.setActionCommand("AGENDAR");
@@ -126,8 +120,9 @@ public class VentanaAgendarInstalacion extends JFrame {
 		panelSeleccionarFecha.add(dateTimePicker);
 		dateTimePicker.getDatePicker().setDateToToday();
 		dateTimePicker.getTimePicker().setTimeToNow();
+		
+		
 	}
-	
 	public String getIdCliente() {
 		return this.idClienteTextField.getText();
 	}
@@ -155,20 +150,20 @@ public class VentanaAgendarInstalacion extends JFrame {
 	}
 	
 	public void mostrarMensajeDeError(String mensaje) {
-		JOptionPane.showMessageDialog(contentPane, mensaje, mensaje, JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(panelPrincipal, mensaje, mensaje, JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public void mostrarMensajeDeError(String titulo, String mensaje) {
-		JOptionPane.showMessageDialog(contentPane, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(panelPrincipal, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
 	}
 	
 	
 	public void mostrarMensajeExitoso(String mensaje) {
-		JOptionPane.showMessageDialog(contentPane, mensaje, mensaje, JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(panelPrincipal, mensaje, mensaje, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public void mostrarTecnicosDisponibles(DefaultComboBoxModel<EmpleadoVO> comboBoxModel, ControladorAgendarInstalacion controlador) {
-		this.ventanaSeleccionarTecnico = new VentanaSeleccionarTecnico(this, true);
+		this.ventanaSeleccionarTecnico = new VentanaSeleccionarTecnico(this.ventanaUsuario, true);
 		this.ventanaSeleccionarTecnico.setControlador(controlador);
 		this.ventanaSeleccionarTecnico.setTecnicosDisponibles(comboBoxModel);
 		this.ventanaSeleccionarTecnico.setLocationRelativeTo(this);
@@ -183,6 +178,5 @@ public class VentanaAgendarInstalacion extends JFrame {
 		JOptionPane.showMessageDialog(this.ventanaSeleccionarTecnico, mensaje, titulo, JOptionPane.PLAIN_MESSAGE);
 	}
 	
-	
-	
+
 }

@@ -51,7 +51,7 @@ public class VentanaSeleccionarTecnico extends JDialog {
 		
 		JLabel labelTecnicosDisponibles = new JLabel("Tecnicos Disponibles");
 		labelTecnicosDisponibles.setHorizontalAlignment(SwingConstants.CENTER);
-		labelTecnicosDisponibles.setFont(new Font(VistaConfig.labelFamilyFont, Font.PLAIN, VistaConfig.labelFontSize));
+		labelTecnicosDisponibles.setFont(new Font(VistaConfig.labelFontFamily, Font.PLAIN, VistaConfig.labelFontSize));
 		panelCentral.add(labelTecnicosDisponibles);
 		
 		this.comboBoxTecnicos= new JComboBox<EmpleadoVO>();

@@ -10,6 +10,9 @@ import modelos.Empleado;
 import modelos.Empresa;
 import modelos.Operador;
 import modelos.Tecnico;
+import vistas.PanelAgendarInstalacion;
+import vistas.PruebaPanel;
+import vistas.VentanaAgendarInstalacion;
 import vistas.VentanaUsuario;
 
 public class ControladorVentanaUsuario {
@@ -29,10 +32,13 @@ public class ControladorVentanaUsuario {
 	}
 	
 	public void setDatosUsuario(Empleado empleado) {
+		/*
 		String [] columnas = {"Usuario", "Nombre y Apellido", "Legajo"};
 		String [][] datosEmpleado = {{empleado.getUsuario(), empleado.getNombre(), Integer.toString(empleado.getId())}};
 		DefaultTableModel tableModel = new DefaultTableModel(datosEmpleado, columnas);
 		vista.setDatosUsuario(tableModel);
+		*/
+		vista.setDatosUsuario(empleado.getUsuario(), Integer.toString(empleado.getId()), empleado.getNombre());
 	}
 	
 	public void iniciarVista(Empleado empleado) {
@@ -40,6 +46,7 @@ public class ControladorVentanaUsuario {
 			case "Operador":
 				Operador operador = (Operador) empleado;
 				this.vista = new VentanaUsuario(new ImageIcon("operadorCallCenter.png"), "Operador");
+				
 				break;
 			case "Tecnico":
 				Tecnico tecnico = (Tecnico) empleado;
