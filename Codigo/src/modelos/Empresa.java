@@ -11,9 +11,11 @@ public class Empresa {
 	private ArrayList<Empleado> empleados;
 	private ArrayList<Cliente> clientes;
 	private Inventario inventario;
+	private ArrayList<Factura> facturas;
 	private static Empresa instance;
-	
-	
+	private static double precioSeguro;
+	private static double precioSoportePared;
+
 	//Methods
 	private Empresa() {
 		this.instalaciones = new ArrayList<Instalacion>();
@@ -167,6 +169,22 @@ public class Empresa {
 		return nombres;
 	}
 	
+	public static double getPrecioSeguro() {
+		return precioSeguro;
+	}
+
+	public static void setPrecioSeguro(double precioSeguro) {
+		Empresa.precioSeguro = precioSeguro;
+	}
+
+	public static double getPrecioSoportePared() {
+		return precioSoportePared;
+	}
+
+	public static void setPrecioSoportePared(double precioSoportePared) {
+		Empresa.precioSoportePared = precioSoportePared;
+	}
+	
 	public void agregarCliente(Cliente cliente) {
 		this.clientes.add(cliente);
 	}
@@ -176,7 +194,16 @@ public class Empresa {
 	};
 	
 	
-	public void agregarCalendario() {};
+	public void agregarCalendario() {}
+
+	public ArrayList<Factura> getFacturas() {
+		return facturas;
+	}
+
+	public void agregarFacturas(Factura factura) {
+		this.facturas.add(factura);
+	};
+	
 	
 	
 	

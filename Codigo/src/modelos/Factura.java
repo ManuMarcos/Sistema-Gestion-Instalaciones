@@ -29,11 +29,9 @@ public class Factura {
 	}
 	
 	//Constructor
-	protected Factura(Instalacion instalacion, float iva) {
+	protected Factura(double precioProvisorio, double iva) {
 		this.numero = generador;
 		generador ++;
-		double precioHoras = instalacion.getTecnico().getExperienciaLaboral().getCostoHora() * 1.5;
-		this.precioTotal = precioHoras;
 	}
 	
 }
