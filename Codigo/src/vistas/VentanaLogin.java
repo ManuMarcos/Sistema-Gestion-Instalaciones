@@ -54,7 +54,7 @@ public class VentanaLogin extends JFrame {
 			
 			JPanel panelPrincipal = new JPanel();
 			panelPrincipal.setForeground(new Color(255, 255, 255));
-			panelPrincipal.setBackground(new Color(173, 216, 230));
+			panelPrincipal.setBackground(VistaConfig.celeste);
 			contentPane.add(panelPrincipal, BorderLayout.CENTER);
 			panelPrincipal.setLayout(new BorderLayout(0, 0));
 			
@@ -87,7 +87,7 @@ public class VentanaLogin extends JFrame {
 			panelCentralDatos.setLayout(new GridLayout(0, 2, 50, 50));
 			
 			JLabel usuarioLabel = new JLabel("Usuario");
-			usuarioLabel.setFont(new Font(VistaConfig.labelFamilyFont, Font.BOLD, 20));
+			usuarioLabel.setFont(new Font(VistaConfig.labelFontFamily, Font.BOLD, 20));
 			usuarioLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			panelCentralDatos.add(usuarioLabel);
 			
@@ -96,7 +96,7 @@ public class VentanaLogin extends JFrame {
 			panelCentralDatos.add(usuarioTextField);
 			
 			JLabel contrasenaLabel = new JLabel("Contraseña");
-			contrasenaLabel.setFont(new Font(VistaConfig.labelFamilyFont, Font.BOLD, 20));
+			contrasenaLabel.setFont(new Font(VistaConfig.labelFontFamily, Font.BOLD, 20));
 			contrasenaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			panelCentralDatos.add(contrasenaLabel);
 			
@@ -106,7 +106,7 @@ public class VentanaLogin extends JFrame {
 			panelCentralDatos.add(contrasenaField);
 			
 			JLabel tipoDeUsuarioLabel = new JLabel("Tipo de Usuario");
-			tipoDeUsuarioLabel.setFont(new Font(VistaConfig.labelFamilyFont, Font.BOLD, 20));
+			tipoDeUsuarioLabel.setFont(new Font(VistaConfig.labelFontFamily, Font.BOLD, 20));
 			tipoDeUsuarioLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			panelCentralDatos.add(tipoDeUsuarioLabel);
 			

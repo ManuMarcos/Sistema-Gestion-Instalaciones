@@ -23,7 +23,6 @@ import modelos.Instalacion;
 import modelos.Persona;
 import modelos.Tecnico;
 import modelos.Turno;
-import vistas.AgendarInstalacionDialog;
 import vistas.VentanaAgendarInstalacion;
 
 public class ControladorAgendarInstalacion implements ActionListener, KeyListener{
@@ -33,7 +32,7 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 	private Empresa modelo;
 	
 	public ControladorAgendarInstalacion() {
-		this.vista = new VentanaAgendarInstalacion();
+		//this.vista = new VentanaAgendarInstalacion();
 		this.modelo = Empresa.getInstance();
 		this.vista.setVisible(true);
 		this.vista.setControladorDeEventos(this);
@@ -63,10 +62,6 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 									System.out.println(tecnico.getNombre() + " - " + Integer.toString(tecnico.getId()));
 								}
 								vista.mostrarTecnicosDisponibles(comboBoxModel, this);
-								
-								
-								
-								
 							}
 							else {
 								vista.mostrarMensajeDeError("Tecnicos no disponibles", "No hay tecnicos disponibles para el horario seleccionado");

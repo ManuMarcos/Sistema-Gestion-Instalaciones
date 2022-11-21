@@ -1,13 +1,19 @@
 package controladores;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Frame;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import modelos.*;
-import vistas.AgendarInstalacionDialog;
-import vistas.CrearClienteVista;
+import javax.swing.JFrame;
 
+import modelos.*;
+
+import vistas.PanelAgendarInstalacion;
+import vistas.PruebaPanel;
 import vistas.VentanaLogin;
 import vistas.pruebaVistas;
 
@@ -142,18 +148,6 @@ public class Main {
 		
 		
 		
-//		ControladorLogin controlador = new ControladorLogin();
-//		controlador.inciarVentanaLogin();
-//		
-
-
-		
-		
-		/*
-		CrearClienteVista vista = new CrearClienteVista(400,300);
-		
-		vista.setVisible(true);
-		*/
 		
 		
 		
