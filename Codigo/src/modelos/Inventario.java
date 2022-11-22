@@ -37,6 +37,7 @@ public class Inventario {
 	 * @param producto
 	 * @param cantidad
 	 */
+	
 	public void setStock(Producto producto, int cantidad) {
 		productos.put(producto, cantidad);
 	}

@@ -11,10 +11,11 @@ public class Empresa {
 	private ArrayList<Empleado> empleados;
 	private ArrayList<Cliente> clientes;
 	private Inventario inventario;
-	private ArrayList<Factura> facturas;
+	private ArrayList<Factura> facturas = new ArrayList<Factura>();
 	private static Empresa instance;
-	private static double precioSeguro;
-	private static double precioSoportePared;
+	private static double precioSeguro = 100;
+	private static double precioSoportePared = 50;
+	private static double precioTransporte = 20;
 
 	//Methods
 	private Empresa() {
@@ -24,6 +25,14 @@ public class Empresa {
 		this.inventario = new Inventario();
 	}
 	
+	public static double getPrecioTransporte() {
+		return precioTransporte;
+	}
+
+	public static void setPrecioTransporte(double precioTransporte) {
+		Empresa.precioTransporte = precioTransporte;
+	}
+
 	public static Empresa getInstance() {
 		if (instance == null) {
 			instance = new Empresa();
@@ -110,11 +119,20 @@ public class Empresa {
 			tecnico.getAgenda().agendarTurno(turno);
 			Instalacion instalacion = new Instalacion(cliente, tecnico, necesitaSeguro, necesitaSoportePared);
 			turno.setInstalacion(instalacion);
+			this.agregarInstalaciones(instalacion);
 			return instalacion;
 		}
 		return null;
 	}
 	
+	public ArrayList<Instalacion> getInstalaciones() {
+		return instalaciones;
+	}
+
+	public void agregarInstalaciones(Instalacion instalacion) {
+		this.instalaciones.add(instalacion);
+	}
+
 	public void setStockProducto(Producto producto, int cantidadStock) {
 		this.inventario.setStock(producto, cantidadStock);
 	}

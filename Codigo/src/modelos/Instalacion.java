@@ -12,7 +12,7 @@ public class Instalacion {
 	private Estado estado;
 	private Calendar horaInicio;
 	private Calendar horaFinalizacion;
-	private ArrayList<Producto> elementos;
+	private ArrayList<Producto> elementos = new ArrayList<Producto>();
 	private Tecnico tecnico;
 	private Cliente cliente;
 	private Factura factura;

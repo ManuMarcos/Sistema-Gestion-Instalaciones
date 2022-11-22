@@ -39,11 +39,13 @@ public class Administrativo extends Empleado{
 			}
 			
 			Factura factura = new Factura(precio, iva);
-			
+						
 			empresa.agregarFacturas(factura);
+		} else {
+			System.out.println("No se pueden facturar instalaciones no finalizadas");
 		}
 	};
 	
-	public void modificarInstalacion(Instalacion instalacion, boolean necesitaSoporte, boolean necesitaSeguro){};
+	public void modificarInstalacion(Instalacion instalacion){};
 	
 }
