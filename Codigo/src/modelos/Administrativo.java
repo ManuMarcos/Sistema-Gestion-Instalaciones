@@ -38,9 +38,21 @@ public class Administrativo extends Empleado{
 				precio = precio + Empresa.getPrecioSoportePared();
 			}
 			
+			double costoPorMinuto = (instalacion.getTecnico().getExperienciaLaboral().getCostoHora() / 60);
+			double manoDeObra = costoPorMinuto * instalacion.getTiempoTrabajado();
+			
+//			System.out.println("Tiempo trabajado en minutos: " + instalacion.getTiempoTrabajado());
+//			System.out.println("Costo por hora del técnico: " + instalacion.getTecnico().getExperienciaLaboral().getCostoHora());
+//			System.out.println("Costo por minuto del técnico: " + (instalacion.getTecnico().getExperienciaLaboral().getCostoHora() / 60));
+//			System.out.println("Costo por el tiempo trabajado: " + (instalacion.getTecnico().getExperienciaLaboral().getCostoHora() / 60) * instalacion.getTiempoTrabajado());
+//			System.out.println(manoDeObra);
+			
+			precio = precio + manoDeObra;
+			
 			Factura factura = new Factura(precio, iva);
 						
 			empresa.agregarFacturas(factura);
+			
 		} else {
 			System.out.println("No se pueden facturar instalaciones no finalizadas");
 		}
