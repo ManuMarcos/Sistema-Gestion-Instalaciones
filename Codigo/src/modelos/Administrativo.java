@@ -38,14 +38,62 @@ public class Administrativo extends Empleado{
 				precio = precio + Empresa.getPrecioSoportePared();
 			}
 			
+			double costoPorMinuto = (instalacion.getTecnico().getExperienciaLaboral().getCostoHora() / 60);
+			double manoDeObra = costoPorMinuto * instalacion.getTiempoTrabajado();
+			
+//			System.out.println("Tiempo trabajado en minutos: " + instalacion.getTiempoTrabajado());
+//			System.out.println("Costo por hora del técnico: " + instalacion.getTecnico().getExperienciaLaboral().getCostoHora());
+//			System.out.println("Costo por minuto del técnico: " + (instalacion.getTecnico().getExperienciaLaboral().getCostoHora() / 60));
+//			System.out.println("Costo por el tiempo trabajado: " + (instalacion.getTecnico().getExperienciaLaboral().getCostoHora() / 60) * instalacion.getTiempoTrabajado());
+//			System.out.println(manoDeObra);
+			
+			precio = precio + manoDeObra;
+			
 			Factura factura = new Factura(precio, iva);
 						
 			empresa.agregarFacturas(factura);
+			
 		} else {
 			System.out.println("No se pueden facturar instalaciones no finalizadas");
 		}
 	};
 	
-	public void modificarInstalacion(Instalacion instalacion){};
+	public void modificarNecesitaSeguro(Instalacion instalacion, boolean necesita){
+		instalacion.setNecesitaSeguro(necesita);
+	};
+	
+	public void modificarNecesitaSoportePared(Instalacion instalacion, boolean necesita) {
+		instalacion.setNecesitaSoportePared(necesita);
+	};
+	
+	public void agregarElementoAInstalacion(Instalacion instalacion, Producto producto) {
+		instalacion.agregarElementos(producto);
+	};
+	
+	public void modificarAlmuerzo(Instalacion instalacion, boolean almorzo) {
+		instalacion.setAlmuerzo(almorzo);
+	};
+	
+	public void modificarEstado(Instalacion instalacion, Estado estado) {
+		instalacion.setEstado(estado);
+	};
+	
+	public void modificarCliente(Instalacion instalacion, Cliente cliente) {
+		instalacion.setCliente(cliente);
+	};
+	
+	public void modificarHoraInicio(Instalacion instalacion, Calendar horaInicio) {
+		instalacion.setHoraInicio(horaInicio);
+	};
+	
+	public void modificarHoraFinalizacion(Instalacion instalacion, Calendar horaFinalizacion) {
+		instalacion.setHoraFinalizacion(horaFinalizacion);
+	};
+	
+	public void modificarFactura(Instalacion instalacion, Factura factura) {
+		instalacion.setFactura(factura);
+	};
+	
+	
 	
 }
