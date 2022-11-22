@@ -46,6 +46,42 @@ public class Administrativo extends Empleado{
 		}
 	};
 	
-	public void modificarInstalacion(Instalacion instalacion){};
+	public void modificarNecesitaSeguro(Instalacion instalacion, boolean necesita){
+		instalacion.setNecesitaSeguro(necesita);
+	};
+	
+	public void modificarNecesitaSoportePared(Instalacion instalacion, boolean necesita) {
+		instalacion.setNecesitaSoportePared(necesita);
+	};
+	
+	public void agregarElementoAInstalacion(Instalacion instalacion, Producto producto) {
+		instalacion.agregarElementos(producto);
+	};
+	
+	public void modificarAlmuerzo(Instalacion instalacion, boolean almorzo) {
+		instalacion.setAlmuerzo(almorzo);
+	};
+	
+	public void modificarEstado(Instalacion instalacion, Estado estado) {
+		instalacion.setEstado(estado);
+	};
+	
+	public void modificarCliente(Instalacion instalacion, Cliente cliente) {
+		instalacion.setCliente(cliente);
+	};
+	
+	public void modificarHoraInicio(Instalacion instalacion, Calendar horaInicio) {
+		instalacion.setHoraInicio(horaInicio);
+	};
+	
+	public void modificarHoraFinalizacion(Instalacion instalacion, Calendar horaFinalizacion) {
+		instalacion.setHoraFinalizacion(horaFinalizacion);
+	};
+	
+	public void modificarFactura(Instalacion instalacion, Factura factura) {
+		instalacion.setFactura(factura);
+	};
+	
+	
 	
 }

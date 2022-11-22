@@ -69,7 +69,7 @@ public class Main {
 		Calendar fecha9 = new GregorianCalendar();
 	
 		
-		fecha1.set(2022, 10, 22, 8, 0, 0);
+		fecha1.set(2022, 10, 23, 8, 0, 0);
 		fecha2.set(2022, 10, 17, 11, 0, 0);
 		fecha3.set(2022, 10, 17, 11, 20, 0);
 		fecha4.set(2022, 10, 17, 16, 0, 0);
@@ -145,6 +145,7 @@ public class Main {
 		controlador.inciarVentanaLogin();
 		
 		
+		//Ejemplo de gestion
 		for (Instalacion i : empresa.getInstalaciones()) {
 			System.out.println("ID: " + i.getId() + " " + "Cliente: " + i.getCliente().getNombre());
 			//Agregamos en empresa? O en inventario?
@@ -152,17 +153,13 @@ public class Main {
 			tecnico1.agregarElementoUtilizado(i, evaporadora);
 			tecnico1.agregarElementoUtilizado(i, condensadora);
 			Calendar fechaFinalizacion = new GregorianCalendar();
-			fechaFinalizacion.set(2022, 10, 22, 9, 30, 0);
+			fechaFinalizacion.set(2022, 10, 23, 9, 30, 0);
 			tecnico1.completarInstalacion(i, fecha1, fechaFinalizacion, false);
 			administrativo.facturarInstalacion(i, 1.21);
 			for (Factura f : empresa.getFacturas()) {
 				System.out.println("PRECIO TOTAL: " + f.getPrecioTotal());
 			}
 		}
-		
-//		for (Factura f : empresa.getFacturas()) {
-//			System.out.println("ID Factura: " + f.getNumero() + "Precio final: " + f.getPrecioTotal());
-//		}
 		
 	}
 
