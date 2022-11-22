@@ -4,16 +4,16 @@ public class Factura {
 
 	//Attributes
 	private static int generador;
-	private static double iva;
+	private double iva;
 	private int numero;
 	private double precioTotal;
 	
 	//Methods
-	public static double getIva() {
-		return iva;
+	public double getIva() {
+		return this.iva;
 	}
-	public static void setIva(double iva) {
-		Factura.iva = iva;
+	public void setIva(double iva) {
+		this.iva = iva;
 	}
 	public int getNumero() {
 		return numero;
@@ -29,11 +29,10 @@ public class Factura {
 	}
 	
 	//Constructor
-	protected Factura(Instalacion instalacion, float iva) {
-		this.numero = generador;
+	public Factura(double precioProvisorio, double iva) {
+		this.setNumero(generador);
 		generador ++;
-		double precioHoras = instalacion.getTecnico().getExperienciaLaboral().getCostoHora() * 1.5;
-		this.precioTotal = precioHoras;
+		this.setPrecioTotal(precioProvisorio * iva);
 	}
 	
 }

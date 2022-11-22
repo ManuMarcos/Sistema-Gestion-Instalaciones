@@ -69,7 +69,7 @@ public class Main {
 		Calendar fecha9 = new GregorianCalendar();
 	
 		
-		fecha1.set(2022, 10, 17, 8, 0, 0);
+		fecha1.set(2022, 10, 22, 8, 0, 0);
 		fecha2.set(2022, 10, 17, 11, 0, 0);
 		fecha3.set(2022, 10, 17, 11, 20, 0);
 		fecha4.set(2022, 10, 17, 16, 0, 0);
@@ -100,14 +100,14 @@ public class Main {
 		empresa.imprimirInventario();
 							
 		empresa.agendarInstalacion(cliente1, tecnico1, fecha1, true, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha2, true, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha3, false, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha4, true, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha5, false, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha6, true, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha7, false, true);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha8, false, true);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha9, true, false);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha2, true, false);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha3, false, false);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha4, true, false);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha5, false, false);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha6, true, false);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha7, false, true);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha8, false, true);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha9, true, false);
 		
 
 		
@@ -145,6 +145,24 @@ public class Main {
 		controlador.inciarVentanaLogin();
 		
 		
+		for (Instalacion i : empresa.getInstalaciones()) {
+			System.out.println("ID: " + i.getId() + " " + "Cliente: " + i.getCliente().getNombre());
+			//Agregamos en empresa? O en inventario?
+			tecnico1.agregarElementoUtilizado(i, kitDeInstalacion);
+			tecnico1.agregarElementoUtilizado(i, evaporadora);
+			tecnico1.agregarElementoUtilizado(i, condensadora);
+			Calendar fechaFinalizacion = new GregorianCalendar();
+			fechaFinalizacion.set(2022, 10, 22, 9, 30, 0);
+			tecnico1.completarInstalacion(i, fecha1, fechaFinalizacion, false);
+			administrativo.facturarInstalacion(i, 1.21);
+			for (Factura f : empresa.getFacturas()) {
+				System.out.println("PRECIO TOTAL: " + f.getPrecioTotal());
+			}
+		}
+		
+//		for (Factura f : empresa.getFacturas()) {
+//			System.out.println("ID Factura: " + f.getNumero() + "Precio final: " + f.getPrecioTotal());
+//		}
 		
 	}
 

@@ -1,5 +1,6 @@
 package modelos;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Tecnico extends Empleado {
@@ -8,6 +9,7 @@ public class Tecnico extends Empleado {
 	private ExperienciaLaboral experienciaLaboral;
 	private Agenda agenda;
 	private Disponibilidad turnoLaboral;
+	Empresa empresa = Empresa.getInstance();
 
 	//Methods
 	public ExperienciaLaboral getExperienciaLaboral() {
@@ -30,8 +32,17 @@ public class Tecnico extends Empleado {
 		return this.agenda;
 	}
 	
+	public void completarInstalacion(Instalacion instalacion, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo) {
+		instalacion.setAlmuerzo(almuerzo);
+		instalacion.setHoraInicio(horaInicio);
+		instalacion.setHoraFinalizacion(horaFinalizacion);
+		instalacion.setEstado(Estado.FINALIZADA);
+	}
 	
-	
+	public void agregarElementoUtilizado(Instalacion instalacion, Producto producto) {
+		empresa.removerUnidadProducto(producto);
+		instalacion.agregarElementos(producto);
+	}
 	
 	//Constructor
 	public Tecnico(String nombre, String direccion, Disponibilidad turnoLaboral,String usuario, String contrasena, ExperienciaLaboral experiencia) {
@@ -40,10 +51,6 @@ public class Tecnico extends Empleado {
 		this.agenda = new Agenda(turnoLaboral);
 		this.setExperienciaLaboral(experiencia);
 	}
-	
-	
-	
-
 	
 	public String toString() {
 		return "Id: " + this.id + "\nNombre: " + this.nombre +  "\nDireccion: " + this.direccion +"\n";

@@ -12,15 +12,14 @@ public class Instalacion {
 	private Estado estado;
 	private Calendar horaInicio;
 	private Calendar horaFinalizacion;
-	private ArrayList<Producto> elementos;
+	private ArrayList<Producto> elementos = new ArrayList<Producto>();
 	private Tecnico tecnico;
 	private Cliente cliente;
 	private Factura factura;
-	private Calendar tiempoTrabajado;
+	private long tiempoTrabajado;
 	private boolean necesitaSeguro;
 	private boolean necesitaSoportePared;
 	private boolean almuerzo;
-	private float costoDeViaje;
 	
 	
 	//Methods
@@ -61,6 +60,7 @@ public class Instalacion {
 
 	public void setHoraFinalizacion(Calendar horaFinalizacion) {
 		this.horaFinalizacion = horaFinalizacion;
+		this.setTiempoTrabajado(this.getHoraFinalizacion().getTimeInMillis() - this.getHoraInicio().getTimeInMillis());
 	}
 
 
@@ -104,17 +104,17 @@ public class Instalacion {
 	}
 
 
-	public Calendar getTiempoTrabajado() {
+	public long getTiempoTrabajado() {
 		return tiempoTrabajado;
 	}
 
 
-	public void setTiempoTrabajado(Calendar tiempoTrabajado) {
-		this.tiempoTrabajado = tiempoTrabajado;
+	public void setTiempoTrabajado(long tiempoTrabajado) {
+		this.tiempoTrabajado = ((tiempoTrabajado / 1000) / 60) ;
 	}
 
 
-	public boolean isNecesitaSeguro() {
+	public boolean getNecesitaSeguro() {
 		return necesitaSeguro;
 	}
 
@@ -124,7 +124,7 @@ public class Instalacion {
 	}
 
 
-	public boolean isNecesitaSoportePared() {
+	public boolean getNecesitaSoportePared() {
 		return necesitaSoportePared;
 	}
 
@@ -134,32 +134,26 @@ public class Instalacion {
 	}
 
 
-	public boolean isAlmuerzo() {
+	public boolean almorzoElTecninco() {
 		return almuerzo;
 	}
-
 
 	public void setAlmuerzo(boolean almuerzo) {
 		this.almuerzo = almuerzo;
 	}
 
-
-	public float getCostoDeViaje() {
-		return costoDeViaje;
-	}
-
-
-	public void setCostoDeViaje(float costoDeViaje) {
-		this.costoDeViaje = costoDeViaje;
-	}
-
 	public Instalacion(Cliente cliente, Tecnico tecnico, boolean necesitaSeguro, boolean necesitaSoportePared) {
 		this.setCliente(cliente);
 		this.setTecnico(tecnico);
+		this.setId(generador);
+		generador++;
 		this.setNecesitaSeguro(necesitaSeguro);
 		this.setNecesitaSoportePared(necesitaSoportePared);
 		this.setEstado(Estado.PROGRAMADA);
 	}
+
+
+
 
 
 	

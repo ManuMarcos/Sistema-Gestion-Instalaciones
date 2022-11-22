@@ -1,11 +1,13 @@
 package modelos;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Administrativo extends Empleado{
 
 	//Attributes
 	private ArrayList<Factura> facturas;
+	Empresa empresa = Empresa.getInstance();
 
 	//Methods
 	public ArrayList<Factura> verFacturas() {
@@ -23,11 +25,27 @@ public class Administrativo extends Empleado{
 	}
 	
 
-	public void facturarInstalacion() {};
-	private void emitirFactura() {};
-	private void enviarFactura() {};
-	public void modificarInstalacion(Instalacion instalacion, boolean necesitaSoporte, boolean necesitaSeguro){};
-	public void imprimirFactura() {};
-	public void getFacturasEmitidas() {};
+	public void facturarInstalacion(Instalacion instalacion, double iva) {
+		if (instalacion.getEstado() == Estado.FINALIZADA) {
+			double precio = 0;
+			for (Producto p : instalacion.getElementos()) {
+				precio = precio + p.getPrecio();
+			}
+			if (instalacion.getNecesitaSeguro()) {
+				precio = precio + Empresa.getPrecioSeguro();
+			}
+			if (instalacion.getNecesitaSoportePared()) {
+				precio = precio + Empresa.getPrecioSoportePared();
+			}
+			
+			Factura factura = new Factura(precio, iva);
+						
+			empresa.agregarFacturas(factura);
+		} else {
+			System.out.println("No se pueden facturar instalaciones no finalizadas");
+		}
+	};
+	
+	public void modificarInstalacion(Instalacion instalacion){};
 	
 }
