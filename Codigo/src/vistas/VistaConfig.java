@@ -11,7 +11,7 @@ public class VistaConfig {
 	
 	//Configuracion de las etiquetas
 	public static final String labelFontFamily = "Times New Roman";
-	public static final int labelFontStyle = Font.BOLD;
+	public static final int labelFontStyle = Font.PLAIN;
 	public static final int labelFontSize = 20;
 	
 	//Paleta de color
@@ -45,6 +45,10 @@ public class VistaConfig {
 	
 	public static void setLabelStyle(JLabel label) {
 		label.setFont(new Font(labelFontFamily, labelFontStyle, labelFontSize));
+	}
+	
+	public static Font getLabelFont() {
+		return new Font(labelFontFamily, labelFontStyle, labelFontSize);
 	}
 	
 }

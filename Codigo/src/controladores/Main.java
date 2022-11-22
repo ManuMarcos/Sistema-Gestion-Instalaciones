@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 
 import modelos.*;
 
-import vistas.PanelAgendarInstalacion;
+import vistas.PanelOperador;
 import vistas.PruebaPanel;
 import vistas.VentanaLogin;
 import vistas.pruebaVistas;

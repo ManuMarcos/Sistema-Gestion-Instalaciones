@@ -1,5 +1,6 @@
 package vistas;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -8,12 +9,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.lgooddatepicker.components.DateTimePicker;
 
-import controladores.ControladorAgendarInstalacion;
+import controladores.ControladorOperador;
 import modelos.EmpleadoVO;
 
 import java.awt.BorderLayout;
@@ -24,12 +27,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.awt.Color;
+import javax.swing.JRadioButton;
 
-public class PanelAgendarInstalacion extends JPanel {
+public class PanelOperador extends JPanel {
 
 	private VentanaSeleccionarTecnico ventanaSeleccionarTecnico;
 	private VentanaUsuario ventanaUsuario;
-	private JPanel panelPrincipal;
+	private JPanel panelAgendarInstalacion;
 	private JPanel panel;
 	private DateTimePicker dateTimePicker; 
 	private JTextField idClienteTextField;
@@ -37,28 +42,32 @@ public class PanelAgendarInstalacion extends JPanel {
 	private JScrollPane tablaScrollPane;
 	private JButton buttonCancelar;
 	private JButton buttonAgendar;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
 	
 	
 	
 	/**
 	 * Create the panel.
 	 */
-	public PanelAgendarInstalacion() {
+	public PanelOperador() {
 		//this.ventanaUsuario= ventanaUsuario;
 		setLayout(new GridLayout(2, 1, 0, 0));
 		this.setOpaque(false);
 		
-		this.panelPrincipal = new JPanel();
-		panelPrincipal.setOpaque(false);
-		add(panelPrincipal);
+		this.panelAgendarInstalacion = new JPanel();
+		this.setearBordePanel(panelAgendarInstalacion, "Agendar Instalacion");
+		add(panelAgendarInstalacion);
 		
 		
-		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panelPrincipal.setLayout(new BorderLayout(0, 0));
+		
+		panelAgendarInstalacion.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelCentral = new JPanel();
 		panelCentral.setOpaque(false);
-		panelPrincipal.add(panelCentral, BorderLayout.CENTER);
+		panelAgendarInstalacion.add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new GridLayout(1, 1, 0, 0));
 		
 		JPanel panelDatos = new JPanel();
@@ -92,6 +101,7 @@ public class PanelAgendarInstalacion extends JPanel {
 		
 		
 		tablaDatosCliente = new JTable();
+		this.tablaDatosCliente.setEnabled(false);
 		this.tablaScrollPane= new JScrollPane(tablaDatosCliente);
 		tablaScrollPane.setOpaque(false);
 		panelDatosCliente.add(tablaScrollPane);
@@ -108,7 +118,7 @@ public class PanelAgendarInstalacion extends JPanel {
 		
 		JPanel panelInferior = new JPanel();
 		panelInferior.setOpaque(false);
-		panelPrincipal.add(panelInferior, BorderLayout.SOUTH);
+		panelAgendarInstalacion.add(panelInferior, BorderLayout.SOUTH);
 		panelInferior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		this.buttonAgendar= new JButton("Agendar");
@@ -126,6 +136,75 @@ public class PanelAgendarInstalacion extends JPanel {
 		
 		this.dateTimePicker = new DateTimePicker();
 		panelSeleccionarFecha.add(dateTimePicker);
+		
+		JPanel panelCrearCliente = new JPanel();
+		panelCrearCliente.setOpaque(false);
+		this.setearBordePanel(panelCrearCliente, "Crear Cliente");
+		add(panelCrearCliente);
+		panelCrearCliente.setLayout(new GridLayout(6, 0, 0, 0));
+		
+		JPanel panel_1 = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panel_1.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		panelCrearCliente.add(panel_1);
+		
+		JLabel lblNewLabel = new JLabel("Nombre y Apellido");
+		panel_1.add(lblNewLabel);
+		
+		textField = new JTextField();
+		panel_1.add(textField);
+		textField.setColumns(10);
+		
+		JPanel panel_2 = new JPanel();
+		panelCrearCliente.add(panel_2);
+		
+		JLabel lblNewLabel_1 = new JLabel("Direccion");
+		panel_2.add(lblNewLabel_1);
+		
+		textField_1 = new JTextField();
+		panel_2.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JPanel panel_3 = new JPanel();
+		panelCrearCliente.add(panel_3);
+		
+		JLabel lblNewLabel_2 = new JLabel("Cuit/Cuil");
+		panel_3.add(lblNewLabel_2);
+		
+		textField_2 = new JTextField();
+		panel_3.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JPanel panel_4 = new JPanel();
+		panelCrearCliente.add(panel_4);
+		
+		JLabel lblNewLabel_3 = new JLabel("Tipo de Cliente");
+		panel_4.add(lblNewLabel_3);
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("New radio button");
+		panel_4.add(rdbtnNewRadioButton);
+		
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("New radio button");
+		panel_4.add(rdbtnNewRadioButton_1);
+		
+		JPanel panel_5 = new JPanel();
+		panelCrearCliente.add(panel_5);
+		
+		JLabel lblNewLabel_4 = new JLabel("Correo Electronico");
+		panel_5.add(lblNewLabel_4);
+		
+		textField_3 = new JTextField();
+		panel_5.add(textField_3);
+		textField_3.setColumns(10);
+		
+		JPanel panel_6 = new JPanel();
+		panelCrearCliente.add(panel_6);
+		
+		JButton btnNewButton = new JButton("Crear cliente");
+		panel_6.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Cancelar");
+		panel_6.add(btnNewButton_1);
 		dateTimePicker.getDatePicker().setDateToToday();
 		dateTimePicker.getTimePicker().setTimeToNow();
 		
@@ -160,26 +239,30 @@ public class PanelAgendarInstalacion extends JPanel {
 	
 
 	
-	public void setControladorDeEventos(ControladorAgendarInstalacion controlador) {
+	public void setControladorDeEventos(ControladorOperador controlador) {
 		this.idClienteTextField.addKeyListener(controlador);
 		this.buttonAgendar.addActionListener(controlador);
 		this.buttonCancelar.addActionListener(controlador);
 	}
 	
 	public void mostrarMensajeDeError(String mensaje) {
-		JOptionPane.showMessageDialog(panelPrincipal, mensaje, mensaje, JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(panelAgendarInstalacion, mensaje, mensaje, JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public void mostrarMensajeDeError(String titulo, String mensaje) {
-		JOptionPane.showMessageDialog(panelPrincipal, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(panelAgendarInstalacion, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
 	}
 	
 	
 	public void mostrarMensajeExitoso(String mensaje) {
-		JOptionPane.showMessageDialog(panelPrincipal, mensaje, mensaje, JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(panelAgendarInstalacion, mensaje, mensaje, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-	public void mostrarTecnicosDisponibles(DefaultComboBoxModel<EmpleadoVO> comboBoxModel, ControladorAgendarInstalacion controlador) {
+	public void mostrarMensajeInformativo(String titulo, String mensaje) {
+		JOptionPane.showMessageDialog(this.ventanaSeleccionarTecnico, mensaje, titulo, JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	public void mostrarTecnicosDisponibles(DefaultComboBoxModel<EmpleadoVO> comboBoxModel, ControladorOperador controlador) {
 		this.ventanaSeleccionarTecnico = new VentanaSeleccionarTecnico(this.ventanaUsuario, true);
 		this.ventanaSeleccionarTecnico.setControlador(controlador);
 		this.ventanaSeleccionarTecnico.setTecnicosDisponibles(comboBoxModel);
@@ -199,8 +282,12 @@ public class PanelAgendarInstalacion extends JPanel {
 		return this.ventanaSeleccionarTecnico.getTecnicoSeleccionado().getId();
 	}
 	
-	public void mostrarMensajeInformativo(String titulo, String mensaje) {
-		JOptionPane.showMessageDialog(this.ventanaSeleccionarTecnico, mensaje, titulo, JOptionPane.PLAIN_MESSAGE);
+	public void setearBordePanel(JPanel panel, String titulo) {
+		panel.setBackground(Color.BLACK);
+		panel.setOpaque(false);
+		Border borde = BorderFactory.createRaisedBevelBorder();
+		panel.setBorder(BorderFactory.createTitledBorder(borde, titulo, TitledBorder.CENTER, 
+				TitledBorder.CENTER, VistaConfig.getLabelFont(), Color.BLACK));
 	}
 	
 	

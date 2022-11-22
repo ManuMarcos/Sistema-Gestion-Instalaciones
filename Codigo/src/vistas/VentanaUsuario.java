@@ -51,11 +51,7 @@ public class VentanaUsuario extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		/*
-		tableDatosOperador = new JTable();
-		this.scrollPaneTableDatosOperador = new JScrollPane(tableDatosOperador);
-		panelDatosOperador.add(scrollPaneTableDatosOperador);
-		*/
+		
 		
 		this.panelCentral = new JPanel();
 		panelCentral.setBackground(Color.LIGHT_GRAY);
@@ -79,7 +75,7 @@ public class VentanaUsuario extends JFrame {
 		JLabel labelUsuario = new JLabel("Usuario");
 		labelUsuario.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		labelUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		labelUsuario.setFont(new Font(VistaConfig.labelFontFamily, VistaConfig.labelFontStyle, 14));
+		labelUsuario.setFont(new Font(VistaConfig.labelFontFamily, Font.BOLD, 14));
 		labelUsuario.setBackground(VistaConfig.celeste);
 		labelUsuario.setOpaque(true);
 		panelIzquierdo.add(labelUsuario);
@@ -93,7 +89,7 @@ public class VentanaUsuario extends JFrame {
 		JLabel labelNombreApellido = new JLabel("Nombre Apellido");
 		labelNombreApellido.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		labelNombreApellido.setHorizontalAlignment(SwingConstants.CENTER);
-		labelNombreApellido.setFont(new Font(VistaConfig.labelFontFamily, VistaConfig.labelFontStyle, 14));
+		labelNombreApellido.setFont(new Font(VistaConfig.labelFontFamily, Font.BOLD, 14));
 		labelNombreApellido.setBackground(VistaConfig.celeste);
 		labelNombreApellido.setOpaque(true);
 		panelIzquierdo.add(labelNombreApellido);
@@ -107,7 +103,7 @@ public class VentanaUsuario extends JFrame {
 		JLabel labelLegajo = new JLabel("Nro de Legajo");
 		labelLegajo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		labelLegajo.setHorizontalAlignment(SwingConstants.CENTER);
-		labelLegajo.setFont(new Font(VistaConfig.labelFontFamily, VistaConfig.labelFontStyle, 14));
+		labelLegajo.setFont(new Font(VistaConfig.labelFontFamily, Font.BOLD, 14));
 		labelLegajo.setBackground(VistaConfig.celeste);
 		labelLegajo.setOpaque(true);
 		panelIzquierdo.add(labelLegajo);

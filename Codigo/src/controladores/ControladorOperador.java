@@ -23,17 +23,18 @@ import modelos.Instalacion;
 import modelos.Persona;
 import modelos.Tecnico;
 import modelos.Turno;
-import vistas.PanelAgendarInstalacion;
-import vistas.VentanaAgendarInstalacion;
+import vistas.PanelOperador;
 
-public class ControladorAgendarInstalacion implements ActionListener, KeyListener{
+
+
+public class ControladorOperador implements ActionListener, KeyListener{
 
 	//Attributes
-	private PanelAgendarInstalacion vista;
+	private PanelOperador vista;
 	private Empresa modelo;
 	
-	public ControladorAgendarInstalacion() {
-		this.vista = new PanelAgendarInstalacion();
+	public ControladorOperador() {
+		this.vista = new PanelOperador();
 		this.modelo = Empresa.getInstance();
 		this.vista.setVisible(true);
 		this.vista.setControladorDeEventos(this);
@@ -138,7 +139,7 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		return true;
 	}
 	
-	public PanelAgendarInstalacion getVista() {
+	public PanelOperador getVista() {
 		return this.vista;
 	}
 	

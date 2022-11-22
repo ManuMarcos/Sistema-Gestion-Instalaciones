@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controladores.ControladorAgendarInstalacion;
+import controladores.ControladorOperador;
 import modelos.EmpleadoVO;
 
 import java.awt.BorderLayout;
@@ -70,7 +70,7 @@ public class VentanaSeleccionarTecnico extends JDialog {
 		this.comboBoxTecnicos.setModel(comboBoxModel);
 	}
 	
-	public void setControlador(ControladorAgendarInstalacion controlador) {
+	public void setControlador(ControladorOperador controlador) {
 		this.buttonConfirmar.addActionListener(controlador);
 	}
 	

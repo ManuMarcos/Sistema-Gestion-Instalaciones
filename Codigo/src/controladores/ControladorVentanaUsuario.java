@@ -10,9 +10,9 @@ import modelos.Empleado;
 import modelos.Empresa;
 import modelos.Operador;
 import modelos.Tecnico;
-import vistas.PanelAgendarInstalacion;
+import vistas.PanelOperador;
 import vistas.PruebaPanel;
-import vistas.VentanaAgendarInstalacion;
+
 import vistas.VentanaUsuario;
 
 public class ControladorVentanaUsuario {
@@ -64,7 +64,7 @@ public class ControladorVentanaUsuario {
 	}
 	
 	public void iniciarVistaOperador(Operador operador) {
-		ControladorAgendarInstalacion agendarInstalacion = new ControladorAgendarInstalacion();
+		ControladorOperador agendarInstalacion = new ControladorOperador();
 		
 		this.vista = new VentanaUsuario(new ImageIcon("operadorCallCenter.png"), "Operador");
 		this.vista.setPanelCentral(agendarInstalacion.getVista());
