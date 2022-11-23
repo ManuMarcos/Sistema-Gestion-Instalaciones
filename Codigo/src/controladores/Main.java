@@ -160,6 +160,15 @@ public class Main {
 			}
 		}
 		
+		
+		//Prueba agendar instalacion sin stock
+		/*
+		empresa.getInventario().setStock(new Condensadora(), 0);
+		empresa.getInventario().setStock(new Evaporadora(), 1);
+		empresa.getInventario().setStock(new KitDeInstalacion(), 0);
+		*/
 	}
+	
+	
 
 }

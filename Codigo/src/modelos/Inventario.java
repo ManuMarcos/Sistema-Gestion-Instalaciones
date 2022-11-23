@@ -39,7 +39,13 @@ public class Inventario {
 	 */
 	
 	public void setStock(Producto producto, int cantidad) {
-		productos.put(producto, cantidad);
+		Producto productoBuscado = this.buscarProducto(producto);
+		if (productoBuscado != null) {
+			productos.put(productoBuscado, cantidad);
+		}
+		else {
+			productos.put(producto, cantidad);
+		}
 	}
 	
 	
@@ -71,24 +77,6 @@ public class Inventario {
 		return false;
 	}
 	
-	/**
-	 * Verifica si hay un stock mínimo disponible de productos (1x Evaporadora, 1x Kit, 1x Condesadora) 
-	 * @param void
-	 * @return boolean
-	 */	
-	public boolean hayStockDisponibleParaAgendar() {
-		if (this.productos.size() == 0) {
-			return false;
-		} else {
-			for (Producto p : this.productos.keySet()) {
-				if ((p.getClass().getSimpleName().equals("Evaporadora") || p.getClass().getSimpleName().equals("Condensadora") || p.getClass().getSimpleName().equals("KitDeInstalacion")) && this.hayStock(p) == false) {
-					System.out.println("No hay stock de: " + p.getClass().getSimpleName());
-					return false;
-				}
-			}
-			return true;
-		}
-	}
 	
 	/**
 	 * Devuelve el producto buscado, decrementando el stock en 1. Si no hay stock o no existe en el inventario, devuelve null

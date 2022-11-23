@@ -23,6 +23,19 @@ public class Instalacion {
 	
 	
 	//Methods
+	
+	//Constructor
+	public Instalacion(Cliente cliente, Tecnico tecnico, boolean necesitaSeguro, boolean necesitaSoportePared) {
+		this.setCliente(cliente);
+		this.setTecnico(tecnico);
+		this.setId(generador);
+		generador++;
+		this.setNecesitaSeguro(necesitaSeguro);
+		this.setNecesitaSoportePared(necesitaSoportePared);
+		this.setEstado(Estado.PROGRAMADA);
+	}
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -142,15 +155,7 @@ public class Instalacion {
 		this.almuerzo = almuerzo;
 	}
 
-	public Instalacion(Cliente cliente, Tecnico tecnico, boolean necesitaSeguro, boolean necesitaSoportePared) {
-		this.setCliente(cliente);
-		this.setTecnico(tecnico);
-		this.setId(generador);
-		generador++;
-		this.setNecesitaSeguro(necesitaSeguro);
-		this.setNecesitaSoportePared(necesitaSoportePared);
-		this.setEstado(Estado.PROGRAMADA);
-	}
+	
 
 
 

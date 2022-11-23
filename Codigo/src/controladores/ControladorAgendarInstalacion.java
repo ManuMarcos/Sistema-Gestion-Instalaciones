@@ -44,28 +44,33 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		Tecnico tecnicoSeleccionado;
 		switch (comandoAccionado) {
 			case "AGENDAR":
-				if (this.esIdValido(vista.getIdCliente())) {
-					if (this.existeCliente(Long.parseLong(vista.getIdCliente()))){
-						cliente = modelo.buscarCliente(Long.parseLong(vista.getIdCliente()));
-						fechaSeleccionada = vista.getFechaSeleccionada();
-						if (cliente.getAgenda().estaDisponible(new Turno(fechaSeleccionada))) {
-							ArrayList<Tecnico> tecnicosDisponibles = modelo.obtenerTecnicosDisponibles(fechaSeleccionada);
-							if (tecnicosDisponibles.size() > 0) {	
-								DefaultComboBoxModel<EmpleadoVO> comboBoxModel = new DefaultComboBoxModel<EmpleadoVO>();
-								for(Tecnico tecnico : tecnicosDisponibles) {
-									comboBoxModel.addElement(new EmpleadoVO(tecnico.getNombre(), tecnico.getId()));
-									System.out.println(tecnico.getNombre() + " - " + Integer.toString(tecnico.getId()));
+				if (modelo.hayStockDisponibleParaAgendar()) {
+					if (this.esIdValido(vista.getIdCliente())) {
+						if (this.existeCliente(Long.parseLong(vista.getIdCliente()))){
+							cliente = modelo.buscarCliente(Long.parseLong(vista.getIdCliente()));
+							fechaSeleccionada = vista.getFechaSeleccionada();
+							if (cliente.getAgenda().estaDisponible(new Turno(fechaSeleccionada))) {
+								ArrayList<Tecnico> tecnicosDisponibles = modelo.obtenerTecnicosDisponibles(fechaSeleccionada);
+								if (tecnicosDisponibles.size() > 0) {	
+									DefaultComboBoxModel<EmpleadoVO> comboBoxModel = new DefaultComboBoxModel<EmpleadoVO>();
+									for(Tecnico tecnico : tecnicosDisponibles) {
+										comboBoxModel.addElement(new EmpleadoVO(tecnico.getNombre(), tecnico.getId()));
+										System.out.println(tecnico.getNombre() + " - " + Integer.toString(tecnico.getId()));
+									}
+									vista.mostrarTecnicosDisponibles(comboBoxModel, this);
 								}
-								vista.mostrarTecnicosDisponibles(comboBoxModel, this);
+								else {
+									vista.mostrarMensajeDeError("Tecnicos no disponibles", "No hay tecnicos disponibles para el horario seleccionado");
+								}
 							}
 							else {
-								vista.mostrarMensajeDeError("Tecnicos no disponibles", "No hay tecnicos disponibles para el horario seleccionado");
+								vista.mostrarMensajeDeError("No se pudo agendar la instalacion");
 							}
 						}
-						else {
-							vista.mostrarMensajeDeError("No se pudo agendar la instalacion");
-						}
 					}
+				}
+				else {
+					vista.mostrarMensajeDeError("Falta de Stock", "No hay stock de productos, se necesitan: (1 Evaporadora, 1 Kit, 1 Condesadora)");
 				}
 				break;
 			case "CONFIRMAR_TECNICO":

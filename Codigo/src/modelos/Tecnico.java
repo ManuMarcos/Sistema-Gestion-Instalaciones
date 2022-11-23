@@ -12,6 +12,16 @@ public class Tecnico extends Empleado {
 	Empresa empresa = Empresa.getInstance();
 
 	//Methods
+	
+	//Constructor
+	public Tecnico(String nombre, String direccion, Disponibilidad turnoLaboral,String usuario, String contrasena, ExperienciaLaboral experiencia) {
+		super(nombre,direccion, usuario, contrasena);
+		this.turnoLaboral = turnoLaboral;
+		this.agenda = new Agenda(turnoLaboral);
+		this.setExperienciaLaboral(experiencia);
+	}
+	
+	
 	public ExperienciaLaboral getExperienciaLaboral() {
 		return this.experienciaLaboral;
 	}
@@ -44,13 +54,7 @@ public class Tecnico extends Empleado {
 		instalacion.agregarElementos(producto);
 	}
 	
-	//Constructor
-	public Tecnico(String nombre, String direccion, Disponibilidad turnoLaboral,String usuario, String contrasena, ExperienciaLaboral experiencia) {
-		super(nombre,direccion, usuario, contrasena);
-		this.turnoLaboral = turnoLaboral;
-		this.agenda = new Agenda(turnoLaboral);
-		this.setExperienciaLaboral(experiencia);
-	}
+	
 	
 	public String toString() {
 		return "Id: " + this.id + "\nNombre: " + this.nombre +  "\nDireccion: " + this.direccion +"\n";

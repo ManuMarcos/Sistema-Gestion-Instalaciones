@@ -95,7 +95,7 @@ public class Empresa {
 		Agenda agendaTecnico = tecnico.getAgenda();
 		Turno turno = new Turno(fecha);
 		
-		if (agendaCliente.estaDisponible(turno) && agendaTecnico.estaDisponible(turno) && inventario.hayStockDisponibleParaAgendar()){
+		if (agendaCliente.estaDisponible(turno) && agendaTecnico.estaDisponible(turno) && this.hayStockDisponibleParaAgendar()){
 			agendaCliente.agendarTurno(turno);
 			agendaTecnico.agendarTurno(turno);
 			/*
@@ -120,6 +120,13 @@ public class Empresa {
 			Instalacion instalacion = new Instalacion(cliente, tecnico, necesitaSeguro, necesitaSoportePared);
 			turno.setInstalacion(instalacion);
 			this.agregarInstalaciones(instalacion);
+			
+			//Se quitan los productos necesarios para una instalacion y se imprime como queda el inventario
+			this.inventario.quitarProducto(new Condensadora());
+			this.inventario.quitarProducto(new Evaporadora());
+			this.inventario.quitarProducto(new KitDeInstalacion());
+			System.out.println(this.inventario.toString());
+			
 			return instalacion;
 		}
 		return null;
@@ -221,6 +228,18 @@ public class Empresa {
 	public void agregarFacturas(Factura factura) {
 		this.facturas.add(factura);
 	};
+	
+	public Inventario getInventario() {
+		return this.inventario;
+	}
+	
+	public boolean hayStockDisponibleParaAgendar() {
+		if (this.inventario.hayStock(new Evaporadora()) && this.inventario.hayStock(new Condensadora()) && this.inventario.hayStock(new KitDeInstalacion())) {
+			return true;
+		}
+		return false;
+	}
+	
 	
 	
 	
