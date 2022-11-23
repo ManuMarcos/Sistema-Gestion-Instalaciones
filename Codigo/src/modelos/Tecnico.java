@@ -9,7 +9,7 @@ public class Tecnico extends Empleado {
 	private ExperienciaLaboral experienciaLaboral;
 	private Agenda agenda;
 	private Disponibilidad turnoLaboral;
-	Empresa empresa = Empresa.getInstance();
+	private Empresa empresa = Empresa.getInstance();
 
 	//Methods
 	

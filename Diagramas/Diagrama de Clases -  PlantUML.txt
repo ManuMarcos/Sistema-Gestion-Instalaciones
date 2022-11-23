@@ -45,10 +45,16 @@ class Operador{
 class Tecnico{
 - experienciaLaboral : ExperienciaLaboral
 - agenda : Agenda
-- turnoLaboral : TurnoLaboral
-+ Tecnico(nombre : String, direccion : String, experienciaLaboral : ExperienciaLaboral, turnoLaboral : TurnoLaboral)
-+ Tecnico(nombre : String, direccion : String, turnoLaboral : turnoLaboral)
+- turnoLaboral : Disponibilidad
+- empresa : Empresa
++ Tecnico(nombre : String, direccion : String, experienciaLaboral : ExperienciaLaboral, turnoLaboral : Disponibilidad)
++ getExperienciaLaboral() : ExperienciaLaboral
++ setExperienciaLaboral(ExperienciaLaboral) : void
++ getTurnoLaboral() : Disponibilidad
++ setTurnoLaboral(turnoLaboral : Disponibilidad) : void
 + getAgenda() : Agenda
++ completarInstalacion(Instalacion instalacion, horaInicio : Calendar, horaFinalizacion : Calendar, almuerzo : Boolean) : void
++ agregarElementoUtilizado(instalacion : Instalacion, producto : Producto) : void
 + toString() : String
 }
 
@@ -97,6 +103,7 @@ class Administrador{
 
 class Inventario{
 - productos : HashMap<Producto, stock : Integer>
++ Inventario()
 + obtenerStock(Producto) : int
 + setStock(Producto, stock : int) : void
 + setPrecioProducto(Producto, precio : float) : boolean
@@ -149,8 +156,8 @@ FINALIZADA
 
 class Agenda{
 - dias : ArrayList<Dia>
-- turnoLaboral : TurnoLaboral
-+ Agenda(turnoLaboral : TurnoLaboral)
+- Disponibilidad : Disponibilidad
++ Agenda(Disponibilidad : Disponibilidad)
 + agendarInstalacion(instalacion : Instalacion, fecha : Calendar)
 + imprimirTurnosPorFecha(fecha : Calendar)
 - existeDia(fecha : Calendar) : Dia
@@ -162,7 +169,7 @@ class Dia{
 - fecha : Calendar
 - turnos : ArrayList<Turno>
 + Dia(fecha : Calendar)
-+ agregarTurno(turno : Turno, turnoLaboral : TurnoLaboral) : boolean
++ agregarTurno(turno : Turno, Disponibilidad : Disponibilidad) : boolean
 + imprimirTurnos() : void
 + estaDisponible(fecha : Calendar) : boolean
 + soyLaFecha(fecha : Calendar) : boolean
@@ -175,16 +182,17 @@ class Turno{
 - horaInicio : Calendar
 - horaFinalizacion : Calendar
 - instalacion : Instalacion
-+ Turno(fecha : Calendar, instalacion Instalacion)
-- asignarHoraFinalizacion(fecha : Calendar) : void
++ Turno(horaInicio: Calendar)
+- asignarHoraFinalizacion(horaInicio : Calendar) : void
 + toString() : String
-+ estaEnMiRangoHorario(fecha : Calendar) : boolean
++ estoyOcupando(Turno) : boolean
 + getHoraInicio() : Calendar
 + getHoraFinalizacion() : Calendar
 + getInstalacion() : Instalacion
++ setInstalacion(Instalacion instalacion) : void
 }
 
-abstract class TurnoLaboral{
+abstract class Disponibilidad{
 # {abstract} esHorarioLaboral(turno : Turno) : boolean
 # {abstract} getHoraInicio() : Calendar
 # {abstract} getHoraFin() : Calendar
@@ -213,13 +221,26 @@ class TurnoTarde{
 + esHorarioLaboral(turno : Turno) : boolean
 }
 
+class TurnoCompleto{
+- {static} horaInicio : Calendar
+- {static} horaFin : Calendar
+- {diasNoLaborales} : int[]
++ TurnoCompleto()
++ getHoraInicio() : Calendar
++ getHoraFin() : Calendar
++ esDiaLaboral(fecha : Calendar) : boolean
++ esHorarioLaboral(turno : Turno) : boolean
+}
+
+
 
 Agenda *-- Dia
-Agenda *-- TurnoLaboral
+Agenda *-- Disponibilidad
 Dia *-- Turno
 
-TurnoLaboral <|-- TurnoManana
-TurnoLaboral <|-- TurnoTarde
+Disponibilidad <|-- TurnoManana
+Disponibilidad <|-- TurnoTarde
+Disponibilidad <|-- TurnoCompleto
 
 Persona <|-- Cliente
 Persona <|-- Empleado
