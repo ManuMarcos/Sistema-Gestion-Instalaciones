@@ -24,38 +24,32 @@ public class ControladorVentanaUsuario {
 	public ControladorVentanaUsuario(Empleado empleado){
 		this.usuario = empleado;
 		this.modelo = Empresa.getInstance();
-		this.iniciarVista(empleado);
-		this.setDatosUsuario(empleado);
+		this.iniciarVista();
+		this.setDatosUsuario(this.usuario);
 		this.vista.setLocationRelativeTo(null);
 		this.vista.setVisible(true);
 	}
 	
-	public void setDatosUsuario(Empleado empleado) {
-		/*
-		String [] columnas = {"Usuario", "Nombre y Apellido", "Legajo"};
-		String [][] datosEmpleado = {{empleado.getUsuario(), empleado.getNombre(), Integer.toString(empleado.getId())}};
-		DefaultTableModel tableModel = new DefaultTableModel(datosEmpleado, columnas);
-		vista.setDatosUsuario(tableModel);
-		*/
-		vista.setDatosUsuario(empleado.getUsuario(), Integer.toString(empleado.getId()), empleado.getNombre());
+	public void setDatosUsuario(Empleado usuario) {
+		vista.setDatosUsuario(this.usuario.getUsuario(), Integer.toString(this.usuario.getId()), this.usuario.getNombre());
 	}
 	
-	public void iniciarVista(Empleado empleado) {
-		switch (empleado.getClass().getSimpleName()) {
+	public void iniciarVista() {
+		switch (this.usuario.getClass().getSimpleName()) {
 			case "Operador":
-				Operador operador = (Operador) empleado;
+				Operador operador = (Operador) usuario;
 				this.iniciarVistaOperador(operador);
 				break;
 			case "Tecnico":
-				Tecnico tecnico = (Tecnico) empleado;
+				Tecnico tecnico = (Tecnico) usuario;
 				this.vista = new VentanaUsuario(new ImageIcon("tecnico.png"), "Tecnico",1,1);
 				break;
 			case "Administrativo":
-				Administrativo administrativo = (Administrativo) empleado;
+				Administrativo administrativo = (Administrativo) usuario;
 				this.vista =  new VentanaUsuario(new ImageIcon("administrativo.png"), "Administrativo",1,1);
 				break;
 			case "Administrador":
-				Administrador administrador = (Administrador) empleado;
+				Administrador administrador = (Administrador) usuario;
 				this.vista =  new VentanaUsuario(new ImageIcon("administrador.png"), "Administrador",1,1);
 				break;
 				

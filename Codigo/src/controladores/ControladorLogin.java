@@ -20,7 +20,6 @@ public class ControladorLogin {
 	public void login(String usuario, String contrasena, String tipoUsuario) {
 		Empleado empleado = this.modelo.esUsuarioValido(usuario, contrasena, tipoUsuario);
 		if (empleado != null) {
-			//vista.mostrarMensajeExitoso("Usuario valido !!");
 			ControladorVentanaUsuario controladorVentanaUsuario = new ControladorVentanaUsuario(empleado);
 		}
 		else {

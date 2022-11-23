@@ -167,6 +167,7 @@ public class Main {
 		empresa.getInventario().setStock(new Evaporadora(), 1);
 		empresa.getInventario().setStock(new KitDeInstalacion(), 0);
 		*/
+		
 	}
 	
 	

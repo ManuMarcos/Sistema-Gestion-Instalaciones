@@ -18,7 +18,7 @@ import modelos.Instalacion;
 import modelos.Tecnico;
 import modelos.Turno;
 import vistas.PanelAgendarInstalacion;
-import vistas.PanelOperador;
+
 
 public class ControladorAgendarInstalacion implements ActionListener, KeyListener{
 
@@ -28,7 +28,8 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 	
 	public ControladorAgendarInstalacion(){
 		this.vista = new PanelAgendarInstalacion();
-		this.vista.setControladorDeEventos(this);
+		this.vista.setActionListener(this);
+		this.vista.setKeyListener(this);
 		this.modelo = Empresa.getInstance();
 	}
 	
@@ -42,6 +43,8 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		Cliente cliente;
 		Calendar fechaSeleccionada;
 		Tecnico tecnicoSeleccionado;
+		boolean necesitaSoporte;
+		boolean necesitaSeguro;
 		switch (comandoAccionado) {
 			case "AGENDAR":
 				if (modelo.hayStockDisponibleParaAgendar()) {
@@ -77,9 +80,12 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 				tecnicoSeleccionado = (Tecnico) modelo.buscarEmpleado(vista.getIdTecnicoSeleccionado());
 				cliente = modelo.buscarCliente(Long.parseLong(vista.getIdCliente()));
 				fechaSeleccionada = vista.getFechaSeleccionada();
-				Instalacion instalacion = modelo.agendarInstalacion(cliente, tecnicoSeleccionado, fechaSeleccionada, this.vista.necesitaSeguro(), this.vista.necesitaSoporte());
+				necesitaSeguro= this.vista.necesitaSeguro();
+				necesitaSoporte = this.vista.necesitaSoporte();
+				
+				Instalacion instalacion = modelo.agendarInstalacion(cliente, tecnicoSeleccionado, fechaSeleccionada, necesitaSeguro, necesitaSoporte);
 				String mensaje = "Se agendo con exito la instalacion \nCliente:  " + cliente.getNombre() + "\nTecnico:  " + tecnicoSeleccionado.getNombre() +
-						"\nHorario: " + Agenda.formatearFecha(fechaSeleccionada);
+						"\nHorario: " + Agenda.formatearFecha(fechaSeleccionada) + "\nSeguro: " + booleanToString(necesitaSeguro) + "\nSoporte Pared: " + booleanToString(necesitaSoporte);
 				vista.mostrarMensajeInformativo("Instalacion agendada con exito" , mensaje);
 				this.vista.cerrarVentanasEmergentes();
 				this.vista.resetearPanel();
@@ -89,6 +95,14 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		}	
 	}
 
+	
+	public String booleanToString(boolean booleano) {
+		if (booleano) {
+			return "Si";
+		}
+		return "No";
+	}
+	
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -122,7 +136,7 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 	
 	public boolean esIdValido(String idCliente) {
 		try {
-			long idClienteToLong = Long.parseLong(vista.getIdCliente());
+			Long.parseLong(vista.getIdCliente());
 			return true;
 		}
 		catch (Exception excepcion){

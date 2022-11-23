@@ -25,6 +25,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Calendar;
@@ -189,10 +191,13 @@ public class PanelAgendarInstalacion extends Panel {
 	
 
 	
-	public void setControladorDeEventos(ControladorAgendarInstalacion controlador) {
-		this.idClienteTextField.addKeyListener(controlador);
+	public void setActionListener(ActionListener controlador) {
 		this.buttonAgendar.addActionListener(controlador);
 		this.buttonCancelar.addActionListener(controlador);
+	}
+	
+	public void setKeyListener(KeyListener controlador) {
+		this.idClienteTextField.addKeyListener(controlador);
 	}
 	
 	

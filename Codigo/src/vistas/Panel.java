@@ -2,6 +2,8 @@ package vistas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.text.ParseException;
 
 import javax.swing.BorderFactory;
@@ -19,6 +21,8 @@ public abstract class Panel extends JPanel{
 
 	
 	public abstract void resetearPanel();
+	public abstract void setActionListener(ActionListener controlador);
+	public abstract void setKeyListener(KeyListener controlador);
 	
 	public void mostrarMensajeDeError(String mensaje) {
 		JOptionPane.showMessageDialog(this, mensaje, mensaje, JOptionPane.ERROR_MESSAGE);
