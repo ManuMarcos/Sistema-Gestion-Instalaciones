@@ -12,7 +12,7 @@ public class VistaConfig {
 	//Configuracion de las etiquetas
 	public static final String labelFontFamily = "Times New Roman";
 	public static final int labelFontStyle = Font.PLAIN;
-	public static final int labelFontSize = 20;
+	public static final int labelFontSize = 18;
 	
 	//Paleta de color
 	public static final Color celeste = new Color(173, 216, 230);
@@ -36,19 +36,18 @@ public class VistaConfig {
 	public static final int buttonFontStyle = Font.PLAIN;
 	public static final int buttonFontSize = 16;
 	
+	public static JButton getBotonFormateado(String titulo, String comando) {
+		JButton boton = new JButton(titulo);
+		boton.setActionCommand(comando);
+		setFormatoBoton(boton);
+		return boton;
+	}
 	
-	public static void setButtonStyle(JButton boton) {
+	public static void setFormatoBoton(JButton boton) {
 		boton.setForeground(new Color(255, 255, 255));
 		boton.setFont(new Font(VistaConfig.buttonFamlabelFontFamily, VistaConfig.buttonFontStyle, VistaConfig.buttonFontSize));
 		boton.setBackground(Color.BLACK);
 	}
 	
-	public static void setLabelStyle(JLabel label) {
-		label.setFont(new Font(labelFontFamily, labelFontStyle, labelFontSize));
-	}
-	
-	public static Font getLabelFont() {
-		return new Font(labelFontFamily, labelFontStyle, labelFontSize);
-	}
 	
 }

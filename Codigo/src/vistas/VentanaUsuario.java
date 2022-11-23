@@ -41,9 +41,9 @@ public class VentanaUsuario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaUsuario(Icon iconoUsuario, String titulo) {
+	public VentanaUsuario(Icon iconoUsuario, String titulo, int filas, int columnas) {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 867, 528);
+		setBounds(100, 100, 928, 570);
 		this.setTitle(titulo);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -54,14 +54,13 @@ public class VentanaUsuario extends JFrame {
 		
 		
 		this.panelCentral = new JPanel();
-		panelCentral.setBackground(Color.LIGHT_GRAY);
+		this.panelCentral.setBorder(new EmptyBorder(0,5,0,5));
+		panelCentral.setBackground(Color.WHITE);
 		panelCentral.setOpaque(false);
 		contentPane.add(panelCentral, BorderLayout.CENTER);
-		panelCentral.setLayout(new BorderLayout(0, 0));
 		
-		
-		
-		
+		//Setear cantidad de columnas y filas
+		panelCentral.setLayout(new GridLayout(filas, columnas, 5, 5));
 		
 		JPanel panelIzquierdo = new JPanel();
 		panelIzquierdo.setOpaque(false);
@@ -117,6 +116,8 @@ public class VentanaUsuario extends JFrame {
 		JPanel panelInferior = new JPanel();
 		panelInferior.setOpaque(false);
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
+		
+		
 	}
 	
 	public void setDatosUsuario(String usuario, String nroLegajo, String nombreApellido) {
@@ -126,8 +127,8 @@ public class VentanaUsuario extends JFrame {
 		
 	}
 	
-	public void setPanelCentral(JPanel nuevoPanelCentral) {
-		this.panelCentral.add(nuevoPanelCentral);
+	public void agregarModulo(JPanel panel) {
+		this.panelCentral.add(panel);
 	}
 	
 

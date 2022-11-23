@@ -10,8 +10,7 @@ import modelos.Empleado;
 import modelos.Empresa;
 import modelos.Operador;
 import modelos.Tecnico;
-import vistas.PanelOperador;
-import vistas.PruebaPanel;
+import vistas.PanelAgendarInstalacion;
 
 import vistas.VentanaUsuario;
 
@@ -49,47 +48,33 @@ public class ControladorVentanaUsuario {
 				break;
 			case "Tecnico":
 				Tecnico tecnico = (Tecnico) empleado;
-				this.vista = new VentanaUsuario(new ImageIcon("tecnico.png"), "Tecnico");
+				this.vista = new VentanaUsuario(new ImageIcon("tecnico.png"), "Tecnico",1,1);
 				break;
 			case "Administrativo":
 				Administrativo administrativo = (Administrativo) empleado;
-				this.vista =  new VentanaUsuario(new ImageIcon("administrativo.png"), "Administrativo");
+				this.vista =  new VentanaUsuario(new ImageIcon("administrativo.png"), "Administrativo",1,1);
 				break;
 			case "Administrador":
 				Administrador administrador = (Administrador) empleado;
-				this.vista =  new VentanaUsuario(new ImageIcon("administrador.png"), "Administrador");
+				this.vista =  new VentanaUsuario(new ImageIcon("administrador.png"), "Administrador",1,1);
 				break;
 				
 		}
 	}
 	
 	public void iniciarVistaOperador(Operador operador) {
-		ControladorOperador agendarInstalacion = new ControladorOperador();
+		ControladorAgendarInstalacion controladorAgendarInstalacion = new ControladorAgendarInstalacion();
+		ControladorCrearCliente controladorCrearCliente = new ControladorCrearCliente();
 		
-		this.vista = new VentanaUsuario(new ImageIcon("operadorCallCenter.png"), "Operador");
-		this.vista.setPanelCentral(agendarInstalacion.getVista());
+		this.vista = new VentanaUsuario(new ImageIcon("operadorCallCenter.png"), "Operador", 2, 1);
+		this.vista.agregarModulo(controladorAgendarInstalacion.getVista());
+		this.vista.agregarModulo(controladorCrearCliente.getVista());
+		
 	}
 	
 	
 	
-	/*
-	switch (tipoUsuario.toUpperCase()) {
-	case "OPERADOR":
-			Operador operador = (Operador) empleado;
-			ControladorVentanaUsuario controladorVentanaUsuario = new ControladorVentanaUsuario();
-			vista.setVisible(false);
-			break;
-		case "ADMINISTRADOR":
-			vista.mostrarMensajeExitoso("Seccion de Administrador en desarrollo");
-			break;
-		case "ADMINISTRATIVO":
-			vista.mostrarMensajeExitoso("Seccion de Administrativo en desarrollo");
-			break;
-		case "TECNICO":
-			vista.mostrarMensajeExitoso("Seccion de Tecnico en desarrollo");
-			break;
-	}
-	*/
+	
 	
 	
 	

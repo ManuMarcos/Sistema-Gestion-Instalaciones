@@ -132,7 +132,7 @@ public class VentanaLogin extends JFrame {
 					}
 				}
 			});
-			VistaConfig.setButtonStyle(ingresarButton);
+			VistaConfig.setFormatoBoton(ingresarButton);
 			ingresarButton.setPreferredSize(new Dimension(200, 50));
 			
 			panelInferiorBoton.add(ingresarButton);
