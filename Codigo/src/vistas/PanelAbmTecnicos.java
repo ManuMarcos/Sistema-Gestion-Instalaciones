@@ -171,6 +171,9 @@ public class PanelAbmTecnicos extends Panel {
 		return this.dialogoDatosTecnico.getTurnoLaboral();
 	}
 	
+	public String getId() {
+		return this.dialogoDatosTecnico.getId();
+	}
 
 	@Override
 	public void resetearPanel() {

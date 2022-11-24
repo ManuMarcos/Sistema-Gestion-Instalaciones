@@ -113,6 +113,7 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String comandoAccionado = e.getActionCommand();
+		System.out.println(comandoAccionado);
 		switch (comandoAccionado) {
 			case "NUEVO_TECNICO":
 				this.vista.pedirDatosTecnico();
@@ -128,8 +129,14 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 				this.vista.cerrarDialogoDatosTecnico();
 				this.cargarListadoTecnicos();
 				break;
+			case "MODIFICAR_TECNICO":
+				this.modelo.modificarTecnico(Integer.parseInt(this.vista.getId()), this.vista.getNombreTecnico() , this.vista.getDireccionTecnico(), 
+						this.vista.getTurnoLaboral(), this.vista.getUsuarioTecnico(), this.vista.getContrasenaTecnico(), this.vista.getExpLaboral());
+				this.vista.cerrarDialogoDatosTecnico();
+				this.cargarListadoTecnicos();
 			case "CANCELAR":
 				this.vista.cerrarDialogoDatosTecnico();
+				break;
 		}
 	}
 	

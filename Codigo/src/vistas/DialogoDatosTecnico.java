@@ -122,7 +122,7 @@ public class DialogoDatosTecnico extends JDialog {
 	}
 	
 	private void agregarBotones() {
-		this.buttonConfirmar= VistaConfig.crearBotonFormateado("Confirmar", "CREAR_TECNICO");
+		this.buttonConfirmar= VistaConfig.crearBotonFormateado("Confirmar", "DINAMICO");
 		panelBotones.add(buttonConfirmar);
 	
 		this.buttonCancelar = VistaConfig.crearBotonFormateado("Cancelar", "CANCELAR");
@@ -142,6 +142,7 @@ public class DialogoDatosTecnico extends JDialog {
 		this.comboBoxTurnoLaboral.setSelectedItem(turnoLaboral);
 		this.comboBoxExpLaboral.setSelectedItem(expLaboral);
 		this.buttonEliminar.setVisible(true);
+		this.buttonConfirmar.setActionCommand("MODIFICAR_TECNICO");
 		this.setVisible(true);
 	}
 	
@@ -185,6 +186,7 @@ public class DialogoDatosTecnico extends JDialog {
 	}
 	
 	public void pedirDatosTecnico() {
+		this.buttonConfirmar.setActionCommand("CREAR_TECNICO");
 		this.limpiarDatos();
 		this.setVisible(true);
 	}
@@ -258,7 +260,9 @@ public class DialogoDatosTecnico extends JDialog {
 		return this.comboBoxExpLaboral.getSelectedItem().toString();
 	}
 
-	
+	public String getId() {
+		return this.textFieldId.getText();
+	}
 	
 	
 	

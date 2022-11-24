@@ -299,7 +299,15 @@ public class Empresa {
 		return tecnico.toView();
 	}
 	
-	
+	public void modificarTecnico(int id, String nombre, String direccion, String turnoLaboral, String usuario, String contrasena, String expLaboral) {
+		Tecnico tecnico = (Tecnico) this.buscarEmpleado(id);
+		tecnico.setNombre(nombre);
+		tecnico.setDireccion(direccion);
+		tecnico.setTurnoLaboral(this.crearTurnoLaboral(turnoLaboral));
+		tecnico.setExperienciaLaboral(this.crearExpLaboral(expLaboral));
+		tecnico.setUsuario(usuario);
+		tecnico.setContrasena(contrasena);
+	}
 	
 	
 }

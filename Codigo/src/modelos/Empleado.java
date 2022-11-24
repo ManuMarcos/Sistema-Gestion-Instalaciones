@@ -31,6 +31,14 @@ public abstract class Empleado extends Persona{
 	public int getId() {
 		return this.id;
 	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
 	
 	
 	
