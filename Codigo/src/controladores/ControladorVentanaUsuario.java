@@ -72,7 +72,8 @@ public class ControladorVentanaUsuario {
 		ControladorCrearCliente controladorCrearCliente = new ControladorCrearCliente();
 		
 		//Se crear el panel modular
-		this.crearPanelModular(new ImageIcon("administrador.png"), "Administrador",2,1);
+		this.vista = new VentanaUsuario(new ImageIcon("administrador.png"), "Administrador",2,1);
+		//this.crearPanelModular(new ImageIcon("administrador.png"), "Administrador",2,1);
 		//Se le agregan los modulos creados
 		this.vista.agregarModulo(controladorAbmTecnicos.getVista());
 		this.vista.agregarModulo(controladorAbmInventario.getVista());

@@ -257,8 +257,47 @@ public class Empresa {
 		return this.inventario.getProductos();
 	}
 	
+	public TecnicoView getTecnicoView(int id) {
+		for (Empleado empleado : this.empleados) {
+			if (empleado.getClass().equals(Tecnico.class) && empleado.getId() == id) {
+				Tecnico tecnico = (Tecnico) empleado;
+				return tecnico.toView();
+			}
+		}
+		return null;
+	}
 	
+	public Disponibilidad crearTurnoLaboral(String turno) {
+		switch (turno) {
+			case "TurnoManana":
+				return new TurnoManana();
+			case "TurnoTarde":
+				return new TurnoTarde();
+			case "TurnoCompleto":
+				return new TurnoCompleto();
+			default:
+				return null;
+		}
+	}
 	
+	public ExperienciaLaboral crearExpLaboral(String expLaboral) {
+		switch (expLaboral) {
+		case "Junior":
+			return new Junior();
+		case "SemiSenior":
+			return new Senior();
+		case "Senior":
+			return new Senior();
+		default:
+			return null;
+		}
+	}
+	
+	public TecnicoView crearTecnico(String nombre, String direccion, String turnoLaboral, String usuario, String contrasena, String experiencia) {
+		Tecnico tecnico = new Tecnico(nombre,direccion, this.crearTurnoLaboral(turnoLaboral),usuario,contrasena, this.crearExpLaboral(experiencia));
+		this.empleados.add(tecnico);
+		return tecnico.toView();
+	}
 	
 	
 	

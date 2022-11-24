@@ -34,8 +34,8 @@ public class DialogoSeleccionarTecnico extends JDialog {
 	/**
 	 * Create the frame.
 	 */
-	public DialogoSeleccionarTecnico(JFrame padre, boolean modal) {
-		super(padre,modal);
+	public DialogoSeleccionarTecnico(JFrame padre, boolean esModal) {
+		super(padre,esModal);
 		setTitle("Seleccionar Tecnico");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 420, 117);
@@ -60,9 +60,7 @@ public class DialogoSeleccionarTecnico extends JDialog {
 		JPanel panelInferior = new JPanel();
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
 		
-		this.buttonConfirmar= new JButton("Confirmar");
-		VistaConfig.setFormatoBoton(buttonConfirmar);
-		buttonConfirmar.setActionCommand("CONFIRMAR_TECNICO");
+		this.buttonConfirmar = VistaConfig.crearBotonFormateado("Confirmar", "CONFIRMAR_TECNICO");
 		panelInferior.add(buttonConfirmar);
 	}
 
@@ -77,5 +75,8 @@ public class DialogoSeleccionarTecnico extends JDialog {
 	public EmpleadoView getTecnicoSeleccionado() {
 		return (EmpleadoView)this.comboBoxTecnicos.getSelectedItem();
 	}
+	
+
+	
 	
 }
