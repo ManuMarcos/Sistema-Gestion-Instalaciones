@@ -41,11 +41,11 @@ public abstract class Panel extends JPanel{
 		JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.PLAIN_MESSAGE);
 	}
 	
-	public void setBordePanel(JPanel panel, String titulo) {
-		panel.setBackground(Color.BLACK);
-		panel.setOpaque(false);
+	public void setBordePanel(String titulo) {
+		this.setBackground(Color.BLACK);
+		this.setOpaque(false);
 		Border borde = BorderFactory.createRaisedBevelBorder();
-		panel.setBorder(BorderFactory.createTitledBorder(borde, titulo, TitledBorder.CENTER, 
+		this.setBorder(BorderFactory.createTitledBorder(borde, titulo, TitledBorder.CENTER, 
 				TitledBorder.CENTER, new Font(VistaConfig.labelFontFamily, Font.BOLD, 20), Color.BLACK));
 	}
 	

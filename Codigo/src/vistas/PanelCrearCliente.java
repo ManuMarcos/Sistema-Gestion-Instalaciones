@@ -77,7 +77,7 @@ public class PanelCrearCliente extends Panel {
 		//Panel Principal
 		this.panelCrearCliente= new JPanel();
 		panelCrearCliente.setOpaque(false);
-		this.setBordePanel(panelCrearCliente, "Crear Cliente");
+		this.setBordePanel("Crear Cliente");
 		add(panelCrearCliente);
 		panelCrearCliente.setLayout(new GridLayout(6, 0, 0, 0));
 		

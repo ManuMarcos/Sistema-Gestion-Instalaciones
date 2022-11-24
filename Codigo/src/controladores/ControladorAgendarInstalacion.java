@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 import modelos.Agenda;
 import modelos.Cliente;
-import modelos.EmpleadoVO;
+import modelos.EmpleadoView;
 import modelos.Empresa;
 import modelos.Instalacion;
 import modelos.Tecnico;
@@ -55,9 +55,9 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 							if (cliente.getAgenda().estaDisponible(new Turno(fechaSeleccionada))) {
 								ArrayList<Tecnico> tecnicosDisponibles = modelo.obtenerTecnicosDisponibles(fechaSeleccionada);
 								if (tecnicosDisponibles.size() > 0) {	
-									DefaultComboBoxModel<EmpleadoVO> comboBoxModel = new DefaultComboBoxModel<EmpleadoVO>();
+									DefaultComboBoxModel<EmpleadoView> comboBoxModel = new DefaultComboBoxModel<EmpleadoView>();
 									for(Tecnico tecnico : tecnicosDisponibles) {
-										comboBoxModel.addElement(new EmpleadoVO(tecnico.getNombre(), tecnico.getId()));
+										comboBoxModel.addElement(new EmpleadoView(tecnico.getNombre(), tecnico.getId()));
 										System.out.println(tecnico.getNombre() + " - " + Integer.toString(tecnico.getId()));
 									}
 									vista.mostrarTecnicosDisponibles(comboBoxModel, this);

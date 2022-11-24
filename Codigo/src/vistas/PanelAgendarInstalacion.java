@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import com.github.lgooddatepicker.components.DateTimePicker;
 
 import controladores.ControladorAgendarInstalacion;
-import modelos.EmpleadoVO;
+import modelos.EmpleadoView;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -63,7 +63,7 @@ public class PanelAgendarInstalacion extends Panel {
 		
 		this.panelAgendarInstalacion = new JPanel();
 		panelAgendarInstalacion.setOpaque(false);
-		this.setBordePanel(panelAgendarInstalacion, "Agendar Instalacion");
+		this.setBordePanel("Agendar Instalacion");
 		add(panelAgendarInstalacion);
 		
 		
@@ -202,7 +202,7 @@ public class PanelAgendarInstalacion extends Panel {
 	
 	
 	
-	public void mostrarTecnicosDisponibles(DefaultComboBoxModel<EmpleadoVO> comboBoxModel, ControladorAgendarInstalacion controlador) {
+	public void mostrarTecnicosDisponibles(DefaultComboBoxModel<EmpleadoView> comboBoxModel, ControladorAgendarInstalacion controlador) {
 		JFrame framePadre =  (JFrame) SwingUtilities.getWindowAncestor(this);
 		this.ventanaSeleccionarTecnico = new DialogoSeleccionarTecnico(framePadre, true);
 		this.ventanaSeleccionarTecnico.setControlador(controlador);

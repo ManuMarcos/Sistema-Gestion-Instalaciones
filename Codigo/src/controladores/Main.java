@@ -168,6 +168,17 @@ public class Main {
 		empresa.getInventario().setStock(new KitDeInstalacion(), 0);
 		*/
 		
+		
+		
+		Tecnico tecnico4 = new Tecnico("Eden Hazard", "Collins Av", new TurnoTarde(), "eden", "eden", new Junior());
+		
+		empresa.agregarEmpleado(tecnico4);
+		
+		
+		
+		
+		
+		
 	}
 	
 	

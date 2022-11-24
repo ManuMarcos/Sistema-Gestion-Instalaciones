@@ -5,8 +5,8 @@ public abstract class Empleado extends Persona{
 	//Attributes
 	protected static int generador = 1;
 	protected float sueldo;
-	private String usuario;
-	private String contrasena;
+	protected String usuario;
+	protected String contrasena;
 	
 	
 	//Methods

@@ -49,5 +49,8 @@ public class TurnoManana extends Disponibilidad{
 		return false;
 	}
 	
-	
+	public String toString() {
+		return "Mañana (" + Integer.toString(this.getHoraInicio().get(Calendar.HOUR_OF_DAY)) + "-" + 
+				Integer.toString(this.getHoraFin().get(Calendar.HOUR_OF_DAY)) + ")";
+	}
 }

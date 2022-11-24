@@ -50,13 +50,13 @@ public class ControladorVentanaUsuario {
 				break;
 			case "Administrador":
 				Administrador administrador = (Administrador) usuario;
-				this.vista =  new VentanaUsuario(new ImageIcon("administrador.png"), "Administrador",1,1);
+				this.iniciarVistaAdministrador(administrador);
 				break;
 				
 		}
 	}
 	
-	public void iniciarVistaOperador(Operador operador) {
+	private void iniciarVistaOperador(Operador operador) {
 		ControladorAgendarInstalacion controladorAgendarInstalacion = new ControladorAgendarInstalacion();
 		ControladorCrearCliente controladorCrearCliente = new ControladorCrearCliente();
 		
@@ -66,7 +66,21 @@ public class ControladorVentanaUsuario {
 		
 	}
 	
+	private void iniciarVistaAdministrador(Administrador administrador) {
+		ControladorAbmTecnicos controladorAbmTecnicos = new ControladorAbmTecnicos();
+		ControladorAbmInventario controladorAbmInventario = new ControladorAbmInventario();
+		ControladorCrearCliente controladorCrearCliente = new ControladorCrearCliente();
+		
+		//Se crear el panel modular
+		this.crearPanelModular(new ImageIcon("administrador.png"), "Administrador",2,1);
+		//Se le agregan los modulos creados
+		this.vista.agregarModulo(controladorAbmTecnicos.getVista());
+		this.vista.agregarModulo(controladorAbmInventario.getVista());
+	}
 	
+	private void crearPanelModular(ImageIcon icono, String titulo, int filas, int columnas) {
+		this.vista = new VentanaUsuario(icono, titulo, filas, columnas);
+	}
 	
 	
 	

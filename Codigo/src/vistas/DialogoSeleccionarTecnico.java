@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controladores.ControladorAgendarInstalacion;
-import modelos.EmpleadoVO;
+import modelos.EmpleadoView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,7 +26,7 @@ import javax.swing.JButton;
 public class DialogoSeleccionarTecnico extends JDialog {
 
 	private JPanel contentPane;
-	private JComboBox<EmpleadoVO> comboBoxTecnicos;
+	private JComboBox<EmpleadoView> comboBoxTecnicos;
 	private JButton buttonConfirmar;
 	
 	
@@ -54,7 +54,7 @@ public class DialogoSeleccionarTecnico extends JDialog {
 		labelTecnicosDisponibles.setFont(new Font(VistaConfig.labelFontFamily, Font.PLAIN, VistaConfig.labelFontSize));
 		panelCentral.add(labelTecnicosDisponibles);
 		
-		this.comboBoxTecnicos= new JComboBox<EmpleadoVO>();
+		this.comboBoxTecnicos= new JComboBox<EmpleadoView>();
 		panelCentral.add(comboBoxTecnicos);
 		
 		JPanel panelInferior = new JPanel();
@@ -66,7 +66,7 @@ public class DialogoSeleccionarTecnico extends JDialog {
 		panelInferior.add(buttonConfirmar);
 	}
 
-	public void setTecnicosDisponibles(DefaultComboBoxModel<EmpleadoVO> comboBoxModel) {
+	public void setTecnicosDisponibles(DefaultComboBoxModel<EmpleadoView> comboBoxModel) {
 		this.comboBoxTecnicos.setModel(comboBoxModel);
 	}
 	
@@ -74,8 +74,8 @@ public class DialogoSeleccionarTecnico extends JDialog {
 		this.buttonConfirmar.addActionListener(controlador);
 	}
 	
-	public EmpleadoVO getTecnicoSeleccionado() {
-		return (EmpleadoVO)this.comboBoxTecnicos.getSelectedItem();
+	public EmpleadoView getTecnicoSeleccionado() {
+		return (EmpleadoView)this.comboBoxTecnicos.getSelectedItem();
 	}
 	
 }

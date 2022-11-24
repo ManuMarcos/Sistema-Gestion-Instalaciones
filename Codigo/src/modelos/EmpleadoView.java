@@ -1,6 +1,6 @@
 package modelos;
 
-public class EmpleadoVO {
+public class EmpleadoView {
 	
 	//Attributes
 	private String nombre;
@@ -8,7 +8,7 @@ public class EmpleadoVO {
 	
 	
 	//Methods
-	public EmpleadoVO(String nombre, int id) {
+	public EmpleadoView(String nombre, int id) {
 		this.nombre = nombre;
 		this.id = id;
 	}

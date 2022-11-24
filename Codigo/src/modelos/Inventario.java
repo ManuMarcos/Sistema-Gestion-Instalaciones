@@ -105,6 +105,15 @@ public class Inventario {
 		return null;
 	}
 	
+	public ArrayList<ProductoView> getProductos() {
+		ArrayList<ProductoView> productosView = new ArrayList<ProductoView>();
+		for (Producto pi : this.productos.keySet()) {
+			productosView.add(new ProductoView(pi.getId(),pi.getPrecio(), (int) this.productos.get(pi), pi.getClass().getSimpleName()));
+		}
+		return productosView;
+	}
+	
+	
 	
 	/**
 	 * Devuelve un String con todos los productos en el inventario con su Nombre, Stock y Precio

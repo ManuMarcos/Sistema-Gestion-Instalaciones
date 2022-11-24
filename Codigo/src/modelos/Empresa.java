@@ -194,6 +194,19 @@ public class Empresa {
 		return nombres;
 	}
 	
+	public ArrayList<TecnicoView> getTecnicosView(){
+		ArrayList<TecnicoView> tecnicos = new ArrayList<TecnicoView>();
+		for (Empleado empleado : this.empleados) {
+			if (empleado.getClass().equals(Tecnico.class)){
+				TecnicoView tecnicoView = ((Tecnico) empleado).toView();
+				tecnicos.add(tecnicoView);
+			}
+		}
+		return tecnicos;
+	}
+	
+	
+	
 	public static double getPrecioSeguro() {
 		return precioSeguro;
 	}
@@ -240,6 +253,9 @@ public class Empresa {
 		return false;
 	}
 	
+	public ArrayList<ProductoView> getProductosView(){
+		return this.inventario.getProductos();
+	}
 	
 	
 	
