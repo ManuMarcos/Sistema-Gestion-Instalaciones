@@ -25,13 +25,12 @@ public class Operador extends Empleado{
 	}
 	
 	public void agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha, boolean necesitaSeguro, boolean necesitaSoportePared) {
-		Empresa empresa = Empresa.getInstance();
-		empresa.agendarInstalacion(cliente, tecnico, fecha, necesitaSeguro, necesitaSoportePared);
+		//No hace nada
 	}
 	
-	public Cliente buscarCliente(int cuitCuil) {
-		Empresa empresa = Empresa.getInstance();
-		return empresa.buscarCliente(cuitCuil);
+	public ClienteView buscarCliente(int cuitCuil) {
+		//NO HACE NADA
+		return null;
 	}
 	
 	

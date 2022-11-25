@@ -46,7 +46,7 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 		
 		ArrayList<TecnicoView> tecnicos = this.modelo.getTecnicosView();
 		for (TecnicoView tecnicoView : tecnicos) {
-			modeloTablaTecnicos.addRow(new Object[] {tecnicoView.getId(), tecnicoView.getNombreApellido(), tecnicoView.getDireccion(), tecnicoView.getTurnoLaboral(),
+			modeloTablaTecnicos.addRow(new Object[] {tecnicoView.getId(), tecnicoView.getNombre(), tecnicoView.getDireccion(), tecnicoView.getTurnoLaboral(),
 					tecnicoView.getExperienciaLaboral(),tecnicoView.getUsuario(), tecnicoView.getContrasena()});
 		}
 		this.vista.setListadoTecnicos(modeloTablaTecnicos);	
@@ -131,7 +131,7 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 	
 	private void mostrarDatosTecnico(int id) {
 		TecnicoView tecnico = modelo.getTecnicoView(id);
-		this.vista.mostrarDatosTecnico(tecnico.getId(), tecnico.getNombreApellido(), tecnico.getDireccion(), tecnico.getUsuario(), tecnico.getContrasena(), 
+		this.vista.mostrarDatosTecnico(tecnico.getId(), tecnico.getNombre(), tecnico.getDireccion(), tecnico.getUsuario(), tecnico.getContrasena(), 
 				tecnico.getTurnoLaboral(), tecnico.getExperienciaLaboral());
 	}
 	
@@ -154,7 +154,6 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 		System.out.println(this.vista.getTurnoLaboral());
 		this.vista.cerrarDialogoDatosTecnico();
 		this.cargarListadoTecnicos();
-		this.modelo.imprimirTecnicos();
 	}
 	
 	private void eliminarTecnico() {

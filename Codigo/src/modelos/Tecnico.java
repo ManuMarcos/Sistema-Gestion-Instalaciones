@@ -53,8 +53,8 @@ public class Tecnico extends Empleado {
 	}
 	
 	public TecnicoView toView() {
-		return new TecnicoView(this.id, this.nombre, this.getTurnoLaboral().getClass().getSimpleName(), this.experienciaLaboral.getClass().getSimpleName(), this.direccion,
-				this.usuario, this.contrasena);
+		return new TecnicoView(this.id, this.nombre, this.getTurnoLaboral().getClass().getSimpleName(), this.getExperienciaLaboral().getClass().getSimpleName(), 
+				this.direccion,this.usuario, this.contrasena, this.getClass().getSimpleName());
 	}
 	
 	

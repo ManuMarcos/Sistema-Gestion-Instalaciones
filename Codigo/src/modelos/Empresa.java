@@ -58,14 +58,24 @@ public class Empresa {
 		return false;
 	}
 	
-	public Cliente buscarCliente(long cuitCuil) {
+	public ClienteView buscarClienteToView(long cuitCuil) {
 		for (Cliente cliente : this.clientes) {
 			if (cliente.tengoElCuitCuil(cuitCuil)) {
+				return cliente.toView();
+			}
+		}
+		return null;
+	}
+	
+	private Cliente buscarCliente(long cuitCuil) {
+		for (Cliente cliente : this.clientes) {
+			if(cliente.tengoElCuitCuil(cuitCuil)) {
 				return cliente;
 			}
 		}
 		return null;
 	}
+	
 	
 	public Empleado buscarEmpleado(int id) {
 		for (Empleado empleado : this.empleados) {
@@ -77,15 +87,7 @@ public class Empresa {
 	}
 	
 	
-	public ArrayList<Tecnico> obtenerTecnicosDisponibles(Calendar fecha) {
-		ArrayList<Tecnico> tecnicosDisponibles = new ArrayList<Tecnico>();
-		for (Tecnico tecnico  : this.getTecnicos()) {
-			if (tecnico.getAgenda().estaDisponible(new Turno(fecha))) {
-				tecnicosDisponibles.add(tecnico);
-			}
-		}
-		return tecnicosDisponibles;
-	}
+	
 	
 	public boolean esPosibleAgendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
 		Agenda agendaCliente = cliente.getAgenda();
@@ -109,7 +111,10 @@ public class Empresa {
 	}
 	
 	
-	public Instalacion agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha, boolean necesitaSeguro, boolean necesitaSoportePared) {
+	public boolean agendarInstalacion(long idCliente, int idTecnico, Calendar fecha, boolean necesitaSeguro, boolean necesitaSoportePared) {
+		Cliente cliente = this.buscarCliente(idCliente);
+		Tecnico tecnico = (Tecnico) this.buscarEmpleado(idTecnico);
+		
 		if (this.esPosibleAgendarInstalacion(cliente, tecnico, fecha)) {
 			Turno turno = new Turno(fecha);
 			cliente.getAgenda().agendarTurno(turno);
@@ -124,9 +129,9 @@ public class Empresa {
 			this.inventario.quitarProducto(new KitDeInstalacion());
 			System.out.println(this.inventario.toString());
 			
-			return instalacion;
+			return true;
 		}
-		return null;
+		return false;
 	}
 	
 	public ArrayList<Instalacion> getInstalaciones() {
@@ -157,14 +162,20 @@ public class Empresa {
 		System.out.println(this.inventario.toString());
 	}
 	
-	public Empleado esUsuarioValido(String usuario, String contrasena, String tipoEmpleado) {
+	
+	
+	/*
+	 * Valida el usuario, contrasena y tipo de empleado. Si existe devuelve el id, caso contrario devuelve -1
+	 */
+	
+	public int esUsuarioValido(String usuario, String contrasena, String tipoEmpleado) {
 		for (Empleado empleado : this.empleados) {
 			if (empleado.getUsuario().equals(usuario) && empleado.getContrasena().equals(contrasena) 
 					&& empleado.getClass().getSimpleName().equals(tipoEmpleado)) {
-				return empleado;
+				return empleado.getId();
 			}
 		}
-		return null;
+		return -1;
 	}
 	
 	public void agregarEmpleado(Empleado empleado) {
@@ -202,6 +213,13 @@ public class Empresa {
 		return tecnicos;
 	}
 	
+	public ClienteView getClienteView(long idCliente) {
+		return this.buscarCliente(idCliente).toView();
+	}
+	
+	public String formatearFecha(Calendar fecha) {
+		return Agenda.formatearFecha(fecha);
+	}
 	
 	
 	public static double getPrecioSeguro() {
@@ -243,6 +261,66 @@ public class Empresa {
 		return this.inventario;
 	}
 	
+	public EmpleadoView getEmpleadoView(int id) {
+		Empleado empleado = this.buscarEmpleado(id);
+		if (empleado != null) {
+			return empleado.ToView();
+		}
+		return null;
+	}
+	
+	public ArrayList<EmpleadoView> getTecnicosDisponibles(Calendar fecha) {
+		ArrayList<EmpleadoView> tecnicosDisponibles = new ArrayList<EmpleadoView>();
+		for (Tecnico tecnico : this.getTecnicos()) {
+			if (tecnico.getAgenda().estaDisponible(new Turno(fecha))) {
+				tecnicosDisponibles.add(tecnico.ToView());
+			}
+		}
+		return tecnicosDisponibles;
+	}
+	
+	
+	private ArrayList<Tecnico> getTecnicos(){
+		ArrayList<Tecnico> tecnicos = new ArrayList<Tecnico>();
+		for (Empleado empleado : this.empleados) {
+			if (empleado.getClass().equals(Tecnico.class)) {
+				tecnicos.add((Tecnico) empleado);
+			}
+		}
+		return tecnicos;
+	}
+	
+	
+	/*
+	public ArrayList<Tecnico> obtenerTecnicosDisponibles(Calendar fecha) {
+		ArrayList<Tecnico> tecnicosDisponibles = new ArrayList<Tecnico>();
+		for (Tecnico tecnico  : this.getTecnicos()) {
+			if (tecnico.getAgenda().estaDisponible(new Turno(fecha))) {
+				tecnicosDisponibles.add(tecnico);
+			}
+		}
+		return tecnicosDisponibles;
+	}
+	*/
+	
+	/*
+	public boolean estaDisponibleTecnico(Calendar fecha, int id) {
+		Tecnico tecnico = (Tecnico) this.buscarEmpleado(id);
+		Turno turno = new Turno(fecha);
+		if (tecnico.getAgenda().estaDisponible(turno)) {
+			return true;
+		}
+		return false;
+	}
+	*/
+	public boolean estaDisponibleCliente(Calendar fecha, long cuitCuil) {
+		Cliente cliente = this.buscarCliente(cuitCuil);
+		Turno turno = new Turno(fecha);
+		if (cliente.getAgenda().estaDisponible(turno)) {
+			return true;
+		}
+		return false;
+	}
 	
 	
 	public boolean hayStockDisponibleParaAgendar() {
@@ -265,23 +343,16 @@ public class Empresa {
 		}
 		return null;
 	}
+	/*
 	
-	public ArrayList<Tecnico> getTecnicos(){
-		ArrayList<Tecnico> tecnicos = new ArrayList<Tecnico>();
-		for (Empleado empleado : this.empleados) {
-			if (empleado.getClass().equals(Tecnico.class)) {
-				tecnicos.add((Tecnico) empleado);
-			}
-		}
-		return tecnicos;
-	}
-	
+	*/
+	/*
 	public void imprimirTecnicos() {
 		for (Tecnico tecnico : this.getTecnicos()) {
 			System.out.println(tecnico.toString());
 		}
 	}
-	
+	*/
 	
 	
 	

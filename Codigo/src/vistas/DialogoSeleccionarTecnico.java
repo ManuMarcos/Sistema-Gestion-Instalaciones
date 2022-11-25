@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controladores.ControladorAgendarInstalacion;
+import modelos.ComboItem;
 import modelos.EmpleadoView;
 
 import java.awt.BorderLayout;
@@ -77,7 +78,7 @@ public class DialogoSeleccionarTecnico extends JDialog {
 	}
 	
 	public EmpleadoView getTecnicoSeleccionado() {
-		return (EmpleadoView)this.comboBoxTecnicos.getSelectedItem();
+		return (EmpleadoView) this.comboBoxTecnicos.getSelectedItem();
 	}
 	
 

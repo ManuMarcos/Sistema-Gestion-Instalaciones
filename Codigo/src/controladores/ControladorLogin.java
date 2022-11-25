@@ -18,9 +18,9 @@ public class ControladorLogin {
 	}
 	
 	public void login(String usuario, String contrasena, String tipoUsuario) {
-		Empleado empleado = this.modelo.esUsuarioValido(usuario, contrasena, tipoUsuario);
-		if (empleado != null) {
-			ControladorVentanaUsuario controladorVentanaUsuario = new ControladorVentanaUsuario(empleado);
+		int idUsuario = this.modelo.esUsuarioValido(usuario, contrasena, tipoUsuario);
+		if (idUsuario != -1) {
+			ControladorVentanaUsuario controladorVentanaUsuario = new ControladorVentanaUsuario(idUsuario);
 		}
 		else {
 			vista.mostrarMensajeDeError("Usuario invalido");

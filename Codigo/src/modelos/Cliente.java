@@ -47,6 +47,10 @@ public class Cliente extends Persona{
 		return this.tipoCliente;
 	}
 	
+	public ClienteView toView() {
+		return new ClienteView(this.cuitCuil, this.nombre, this.direccion, this.correoElectronico, this.getClass().getSimpleName());
+	}
+	
 	
 	
 	

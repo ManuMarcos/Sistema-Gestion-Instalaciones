@@ -98,7 +98,7 @@ public class Main {
 		
 		empresa.imprimirInventario();
 							
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha1, true, false);
+		//empresa.agendarInstalacion(cliente1, tecnico1, fecha1, true, false);
 //		empresa.agendarInstalacion(cliente1, tecnico1, fecha2, true, false);
 //		empresa.agendarInstalacion(cliente1, tecnico1, fecha3, false, false);
 //		empresa.agendarInstalacion(cliente1, tecnico1, fecha4, true, false);

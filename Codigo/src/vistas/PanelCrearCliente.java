@@ -53,23 +53,20 @@ public class PanelCrearCliente extends Panel {
 	private void agregarTextFields() {
 		
 		//Nombre apellido
-		this.textFieldNombreApellido = new JTextField();
+		this.textFieldNombreApellido = VistaConfig.crearTextFieldFormateado(40);
 		this.panelNombreApellido.add(textFieldNombreApellido);
-		this.textFieldNombreApellido.setColumns(40);
 		
 		//Direccion
-		this.textFieldDireccion = new JTextField();
+		this.textFieldDireccion = VistaConfig.crearTextFieldFormateado(40);
 		this.panelDireccion.add(textFieldDireccion);
-		this.textFieldDireccion.setColumns(40);
 		
 		//Cuit Cuil
-		this.textFieldCuitCuil= this.crearTextFieldFormatoTexto(11);
+		this.textFieldCuitCuil= VistaConfig.crearTextFieldFormateado(11);
 		this.panelCuitCuil.add(textFieldCuitCuil);
 		
 		//Correo Electronico
-		this.textFieldCorreo = new JTextField();
+		this.textFieldCorreo = VistaConfig.crearTextFieldFormateado(40);
 		this.panelCorreoElectronico.add(textFieldCorreo);
-		this.textFieldCorreo.setColumns(40);
 	}
 	
 	private void agregarPaneles() {
@@ -166,13 +163,18 @@ public class PanelCrearCliente extends Panel {
 		buttonGroupTipoCliente.add(radioButtonEmpresa);
 		panelTipoCliente.add(radioButtonEmpresa);
 		
-		this.buttonGroupTipoCliente.setSelected(this.radioButtonIndividuo.getModel(), true);
+		this.setearRadioButton();
+		
 	}
 	
 	@Override
 	public void setActionListener(ActionListener controlador) {
 		this.buttonCrearCliente.addActionListener(controlador);
 		this.buttonCancelar.addActionListener(controlador);
+	}
+	
+	private void setearRadioButton() {
+		this.buttonGroupTipoCliente.setSelected(this.radioButtonIndividuo.getModel(), true);
 	}
 	
 	
@@ -213,7 +215,7 @@ public class PanelCrearCliente extends Panel {
 		this.textFieldCuitCuil.setText(null);
 		this.textFieldDireccion.setText(null);
 		this.textFieldCorreo.setText(null);
-		this.buttonGroupTipoCliente.clearSelection();
+		this.setearRadioButton();
 	}
 
 
