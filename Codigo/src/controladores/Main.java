@@ -68,12 +68,12 @@ public class Main {
 		Calendar fecha9 = new GregorianCalendar();
 	
 		
-		fecha1.set(2022, 10, 25, 8, 0, 0);
-		fecha2.set(2022, 10, 17, 11, 0, 0);
-		fecha3.set(2022, 10, 17, 11, 20, 0);
-		fecha4.set(2022, 10, 17, 16, 0, 0);
-		fecha5.set(2022, 10, 18, 8, 0, 0);
-		fecha6.set(2022, 10, 18, 9, 30, 0);
+		fecha1.set(2022, 12, 25, 9, 0, 0);
+		fecha2.set(2022, 12, 17, 9, 0, 0);
+		fecha3.set(2022, 12, 19, 9, 20, 0);
+		fecha4.set(2022, 12, 11, 7, 0, 0);
+		fecha5.set(2022, 12, 18, 7, 0, 0);
+		fecha6.set(2022, 12, 18, 8, 30, 0);
 		
 		
 		//Sabado 26/11/2022
@@ -99,14 +99,14 @@ public class Main {
 		empresa.imprimirInventario();
 							
 		empresa.agendarInstalacion(cliente1, tecnico1, fecha1, true, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha2, true, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha3, false, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha4, true, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha5, false, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha6, true, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha7, false, true);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha8, false, true);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha9, true, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha2, true, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha3, false, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha4, true, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha5, false, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha6, true, false);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha7, false, true);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha8, false, true);
+		empresa.agendarInstalacion(cliente1, tecnico1, fecha9, true, false);
 		
 
 		

@@ -43,10 +43,7 @@ public class Tecnico extends Empleado {
 	}
 	
 	public void completarInstalacion(Instalacion instalacion, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, int cantidadEvaporadoras, int cantidadKitsDeInstalacion, int cantidadCondensadoras) {
-		instalacion.setAlmuerzo(almuerzo);
-		instalacion.setHoraInicio(horaInicio);
-		instalacion.setHoraFinalizacion(horaFinalizacion);
-		instalacion.setEstado(Estado.FINALIZADA);
+		empresa.completarInstalacion(instalacion, horaInicio, horaFinalizacion, almuerzo, cantidadEvaporadoras, cantidadKitsDeInstalacion, cantidadCondensadoras);
 	}
 	
 	public void agregarElementoUtilizado(Instalacion instalacion, Producto producto, int cantidad) {

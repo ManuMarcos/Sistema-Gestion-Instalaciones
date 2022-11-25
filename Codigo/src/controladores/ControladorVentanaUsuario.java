@@ -69,8 +69,11 @@ public class ControladorVentanaUsuario {
 	
 	private void iniciarVistaTecnico(Tecnico tecnico) {
 		ControladorModificarInstalacion controladorModificarInstalacion = new ControladorModificarInstalacion();
+		ControladorVerInstalaciones controladorVerInstalaciones = new ControladorVerInstalaciones();
 		this.vista = new VentanaUsuario(new ImageIcon("operadorCallCenter.png"), "Tecnico", 2, 1);
 		this.vista.agregarModulo(controladorModificarInstalacion.getVista());
+		this.vista.agregarModulo(controladorVerInstalaciones.getVista());
+
 		
 	}
 	

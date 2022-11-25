@@ -34,29 +34,18 @@ public class ControladorModificarInstalacion implements ActionListener, KeyListe
 		this.modelo = Empresa.getInstance();
 	}
 	
-	
-	
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String comandoAccionado = e.getActionCommand();
-		Instalacion instalacion;
 		switch (comandoAccionado) {
 			case "FINALIZAR":
 				
 				if (this.esIdValido(vista.getIdInstalacion())) {
-					
-					instalacion = modelo.buscarInstalacion(Integer.parseInt(vista.getIdInstalacion()));
-					
-					if (instalacion != null) {
-						if (!instalacion.getEstado().equals(Estado.FINALIZADA)) {
-							instalacion.getTecnico().completarInstalacion(instalacion, vista.getFechaInicioSeleccionada(), vista.getFechaFinalizacionSeleccionada(), vista.tecnicoAlmorzo());
-						} else {
-							vista.mostrarMensajeDeError("No se puede finalizar una tarea que ya está finalizada");
+					if (modelo.esIdDeInstalacionExistente(Integer.parseInt(vista.getIdInstalacion())) ) {
+						if (modelo.completarInstalacion(Integer.parseInt(vista.getIdInstalacion()), vista.getFechaInicioSeleccionada(), vista.getFechaFinalizacionSeleccionada(), vista.tecnicoAlmorzo(), Integer.parseInt(vista.getCantidadDeEvaporadoras()), Integer.parseInt(vista.getCantidadDeKits()), Integer.parseInt(vista.getCantidadDeCondensadoras())) == false) {
+							vista.mostrarMensajeDeError("No se pudo completar la instalacion");
 						}
-					} else {
-						vista.mostrarMensajeDeError("No se puede finalizar una instalación que no existe");
 					}
 				} else {
 					vista.mostrarMensajeDeError("No se puede finalizar una instalación no válida. Utilice sólo números.");
@@ -118,8 +107,9 @@ public class ControladorModificarInstalacion implements ActionListener, KeyListe
 		}
 	}
 
+	//No funciona y no se por que :P
 	public boolean existeInstalacion(int idInstalacion) {
-		if (modelo.buscarInstalacion(idInstalacion) == null){
+		if (modelo.esIdDeInstalacionExistente(idInstalacion) == false){
 			vista.mostrarMensajeDeError("La instalación ingresada no existe");
 			return false;
 		}

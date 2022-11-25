@@ -80,6 +80,12 @@ public class Instalacion {
 	public ArrayList<Producto> getElementos() {
 		return elementos;
 	}
+	
+	public void setStockElementosUtilizados(Producto producto, int cantidad) {
+		for (int i = 0; i < cantidad - 1; i++) {
+			this.elementos.add(Empresa.getInstance().removerUnidadProducto(producto));
+		}
+	}
 
 
 	public void agregarElementos(Producto producto) {
