@@ -42,7 +42,7 @@ public class PanelVerInstalaciones extends Panel {
 
 	private DialogoSeleccionarTecnico ventanaSeleccionarTecnico;
 	private JPanel panelModificarInstalacion;
-	private JTable tablaDatosInstalacion;
+	private JTable tablaDatosInstalaciones;
 	private JScrollPane tablaScrollPane;
 	private JButton buttonCancelar;
 	private JButton buttonBuscar;
@@ -94,9 +94,9 @@ public class PanelVerInstalaciones extends Panel {
 		panelBuscarInstalacion.add(panelDatosInstalacion, BorderLayout.CENTER);
 		panelDatosInstalacion.setLayout(new BorderLayout(0, 0));
 
-		tablaDatosInstalacion = new JTable();
-		this.tablaDatosInstalacion.setEnabled(false);
-		this.tablaScrollPane = new JScrollPane(tablaDatosInstalacion);
+		tablaDatosInstalaciones = new JTable();
+		this.tablaDatosInstalaciones.setEnabled(false);
+		this.tablaScrollPane = new JScrollPane(tablaDatosInstalaciones);
 		tablaScrollPane.setOpaque(false);
 		panelDatosInstalacion.add(tablaScrollPane);
 
@@ -126,50 +126,13 @@ public class PanelVerInstalaciones extends Panel {
 
 	}
 
-	public String getCantidadDeEvaporadoras() {
-		return this.cantidadEvaporadoras.getValue().toString();
-	}
-
-	public String getCantidadDeKits() {
-		return this.cantidadKits.getValue().toString();
-	}
-
-	public String getCantidadDeCondensadoras() {
-		return this.cantidadCondensadoras.getValue().toString();
-	}
-
 	public void mostrarDatosInstalacion(DefaultTableModel datosTableModel) {
-		this.tablaDatosInstalacion.setModel(datosTableModel);
-		this.tablaDatosInstalacion.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		this.tablaDatosInstalaciones.setModel(datosTableModel);
+		this.tablaDatosInstalaciones.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 	}
 
 	private void limpiarDatosCliente() {
-		this.tablaDatosInstalacion.setModel(new DefaultTableModel());
-	}
-
-	private void resetearFecha() {
-		this.dateTimePickerInicio.getDatePicker().setDateToToday();
-		this.dateTimePickerInicio.getTimePicker().setTimeToNow();
-		this.dateTimePickerFinalizacion.getDatePicker().setDateToToday();
-		this.dateTimePickerFinalizacion.getTimePicker().setTimeToNow();
-	}
-
-	public Calendar getFechaInicioSeleccionada() {
-		LocalDate fechaSeleccionada = dateTimePickerInicio.getDatePicker().getDate();
-		LocalTime horaSeleccionada = dateTimePickerInicio.getTimePicker().getTime();
-		Calendar fechaEnFormatoCalendar = new GregorianCalendar();
-		fechaEnFormatoCalendar.set(fechaSeleccionada.getYear(), fechaSeleccionada.getMonthValue() - 1,
-				fechaSeleccionada.getDayOfMonth(), horaSeleccionada.getHour(), horaSeleccionada.getMinute(), 0);
-		return fechaEnFormatoCalendar;
-	}
-
-	public Calendar getFechaFinalizacionSeleccionada() {
-		LocalDate fechaSeleccionada = dateTimePickerFinalizacion.getDatePicker().getDate();
-		LocalTime horaSeleccionada = dateTimePickerFinalizacion.getTimePicker().getTime();
-		Calendar fechaEnFormatoCalendar = new GregorianCalendar();
-		fechaEnFormatoCalendar.set(fechaSeleccionada.getYear(), fechaSeleccionada.getMonthValue() - 1,
-				fechaSeleccionada.getDayOfMonth(), horaSeleccionada.getHour(), horaSeleccionada.getMinute(), 0);
-		return fechaEnFormatoCalendar;
+		this.tablaDatosInstalaciones.setModel(new DefaultTableModel());
 	}
 
 	public void setActionListener(ActionListener controlador) {
@@ -181,20 +144,10 @@ public class PanelVerInstalaciones extends Panel {
 		this.ventanaSeleccionarTecnico.setVisible(false);
 	}
 
-	private void limpiarCheckBoxes() {
-		this.checkBoxAlmorzo.setSelected(false);
-	}
-
-	public boolean tecnicoAlmorzo() {
-		return this.checkBoxAlmorzo.isSelected();
-	}
-
 	@Override
 	public void resetearPanel() {
 		// TODO Auto-generated method stub
 		this.limpiarDatosCliente();
-		this.resetearFecha();
-		this.limpiarCheckBoxes();
 	}
 
 	@Override

@@ -39,22 +39,27 @@ public class ControladorVerInstalaciones implements ActionListener, KeyListener 
 		switch (comandoAccionado) {
 		case "ACTUALIZAR":
 
-			String[] columnas = { "ID", "Cliente", "Direccion", "Estado", "Elementos" };
+			String[] columnas = { "ID", "Cliente", "Direccion", "Estado", "Evaporadoras", "Condensadoras", "Kits" };
 			DefaultTableModel tableModel = new DefaultTableModel(columnas, 0);
 			for (int i = 0; i < modelo.instalacionesAsignadasATecnico(1).size(); i++) {
 				int id = modelo.instalacionesAsignadasATecnico(1).get(i).getId();
 				String cliente = modelo.instalacionesAsignadasATecnico(1).get(i).getCliente().getNombre();
 				String direccion = modelo.instalacionesAsignadasATecnico(1).get(i).getCliente().getDireccion();
 				Estado estado = modelo.instalacionesAsignadasATecnico(1).get(i).getEstado();
-				String cantidadElementos = modelo.instalacionesAsignadasATecnico(1).get(i).getElementos().toString();
-
-				Object[] filas = { id, cliente, direccion, estado, cantidadElementos };
+				int cantidadEvaporadoras = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Evaporadora");
+				int cantidadCondensadoras = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Condensadora");
+				int cantidadKits = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Kit De Instalacion");
+				Object[] filas = { id, cliente, direccion, estado, cantidadEvaporadoras, cantidadCondensadoras, cantidadKits};
 				tableModel.addRow(filas);
 			}
 
 			vista.mostrarDatosInstalacion(tableModel);
 
 			break;
+			
+		case "CANCELAR": 
+			
+			vista.resetearPanel();
 		}
 	}
 

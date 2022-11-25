@@ -68,8 +68,8 @@ public class Main {
 		Calendar fecha9 = new GregorianCalendar();
 	
 		
-		fecha1.set(2022, 12, 25, 9, 0, 0);
-		fecha2.set(2022, 12, 17, 9, 0, 0);
+		fecha1.set(2022, 12, 26, 9, 0, 0);
+		fecha2.set(2022, 12, 29, 9, 0, 0);
 		fecha3.set(2022, 12, 19, 9, 20, 0);
 		fecha4.set(2022, 12, 11, 7, 0, 0);
 		fecha5.set(2022, 12, 18, 7, 0, 0);
@@ -99,15 +99,15 @@ public class Main {
 		empresa.imprimirInventario();
 							
 		empresa.agendarInstalacion(cliente1, tecnico1, fecha1, true, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha2, true, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha3, false, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha4, true, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha5, false, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha6, true, false);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha7, false, true);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha8, false, true);
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha9, true, false);
-		
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha2, true, false);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha3, false, false);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha4, true, false);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha5, false, false);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha6, true, false);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha7, false, true);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha8, false, true);
+//		empresa.agendarInstalacion(cliente1, tecnico1, fecha9, true, false);
+//		
 
 		
 		
@@ -159,9 +159,7 @@ public class Main {
 //				System.out.println("PRECIO TOTAL: " + f.getPrecioTotal());
 //			}
 //		}
-		
-		tecnico1.agregarElementoUtilizado(empresa.getInstalaciones().get(0), kitDeInstalacion, 15);
-		
+				
 		empresa.imprimirInventario();
 
 		
