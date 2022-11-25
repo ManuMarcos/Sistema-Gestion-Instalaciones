@@ -13,6 +13,8 @@ public class KitDeInstalacion extends Producto {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 	
 }

@@ -66,10 +66,6 @@ public class Administrativo extends Empleado{
 		instalacion.setNecesitaSoportePared(necesita);
 	};
 	
-	public void agregarElementoAInstalacion(Instalacion instalacion, Producto producto) {
-		instalacion.agregarElementos(producto);
-	};
-	
 	public void modificarAlmuerzo(Instalacion instalacion, boolean almorzo) {
 		instalacion.setAlmuerzo(almorzo);
 	};

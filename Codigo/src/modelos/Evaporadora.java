@@ -13,6 +13,8 @@ public class Evaporadora extends Producto{
 	
 	
 	
-	
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 	
 }

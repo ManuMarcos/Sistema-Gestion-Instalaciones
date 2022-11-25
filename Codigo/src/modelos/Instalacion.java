@@ -3,6 +3,7 @@ package modelos;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Instalacion {
 
@@ -12,7 +13,7 @@ public class Instalacion {
 	private Estado estado;
 	private Calendar horaInicio;
 	private Calendar horaFinalizacion;
-	private ArrayList<Producto> elementos = new ArrayList<Producto>();
+	private ArrayList<Producto> elementos;
 	private Tecnico tecnico;
 	private Cliente cliente;
 	private Factura factura;
@@ -32,6 +33,7 @@ public class Instalacion {
 		this.setNecesitaSeguro(necesitaSeguro);
 		this.setNecesitaSoportePared(necesitaSoportePared);
 		this.setEstado(Estado.PROGRAMADA);
+		this.elementos = new ArrayList<Producto>();
 	}
 
 	public int getId() {
@@ -71,10 +73,8 @@ public class Instalacion {
 		return elementos;
 	}
 
-	public void setStockElementosUtilizados(Producto producto, int cantidad) {
-		for (int i = 0; i < cantidad - 1; i++) {
-			this.elementos.add(Empresa.getInstance().removerUnidadProducto(producto));
-		}
+	public void agregarElementosUtilizados(ArrayList<Producto> productosUtilizados) {
+		this.elementos.addAll(productosUtilizados);
 	}
 
 	public int getCantidadDeElementos(String nombreProducto) {
@@ -104,7 +104,7 @@ public class Instalacion {
 		return contador;
 	}
 
-	public void agregarElementos(Producto producto) {
+	public void agregarElemento(Producto producto) {
 		this.elementos.add(producto);
 	}
 
@@ -163,5 +163,14 @@ public class Instalacion {
 	public void setAlmuerzo(boolean almuerzo) {
 		this.almuerzo = almuerzo;
 	}
+	
+	public InstalacionView toView() {
+		HashMap<String, Integer> elementosUtilizados = new HashMap<String, Integer>();
+		for (Producto producto : this.elementos) {
+			elementosUtilizados.merge(producto.getClass().getSimpleName(), 1, Integer::sum);
+		}
+		return new InstalacionView(this.id, this.cliente.toView(), this.tecnico.toView(), this.estado.toString(), elementosUtilizados);
+	}
+	
 
 }

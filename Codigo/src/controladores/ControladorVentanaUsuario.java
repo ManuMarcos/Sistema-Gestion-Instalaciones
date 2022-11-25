@@ -39,7 +39,7 @@ public class ControladorVentanaUsuario {
 	public void iniciarVista() {
 		switch (this.empleadoView.getTipoUsuario()) {
 			case "Operador":
-				this.iniciarVistaOperador(empleadoView);
+				this.iniciarVistaOperador();
 				break;
 			case "Tecnico":
 				
@@ -49,13 +49,13 @@ public class ControladorVentanaUsuario {
 				this.vista =  new VentanaUsuario(new ImageIcon("administrativo.png"), "Administrativo",1,1);
 				break;
 			case "Administrador":
-				this.iniciarVistaAdministrador(empleadoView);
+				this.iniciarVistaAdministrador();
 				break;
 				
 		}
 	}
 	
-	private void iniciarVistaOperador(EmpleadoView empleadoView) {
+	private void iniciarVistaOperador() {
 		ControladorAgendarInstalacion controladorAgendarInstalacion = new ControladorAgendarInstalacion();
 		ControladorCrearCliente controladorCrearCliente = new ControladorCrearCliente();
 		
@@ -65,9 +65,9 @@ public class ControladorVentanaUsuario {
 		
 	}
 	
-	private void iniciarVistaTecnico(EmpleadoView empleadoView) {
-		ControladorModificarInstalacion controladorModificarInstalacion = new ControladorModificarInstalacion();
-		ControladorVerInstalaciones controladorVerInstalaciones = new ControladorVerInstalaciones();
+	private void iniciarVistaTecnico(EmpleadoView empleadoLogueado) {
+		ControladorModificarInstalacion controladorModificarInstalacion = new ControladorModificarInstalacion(empleadoLogueado);
+		ControladorVerInstalaciones controladorVerInstalaciones = new ControladorVerInstalaciones(empleadoLogueado);
 		this.vista = new VentanaUsuario(new ImageIcon("tecnico.png"), "Tecnico", 2 ,1);
 		this.vista.agregarModulo(controladorModificarInstalacion.getVista());
 		this.vista.agregarModulo(controladorVerInstalaciones.getVista());
@@ -75,7 +75,7 @@ public class ControladorVentanaUsuario {
 	}
 	
 
-	private void iniciarVistaAdministrador(EmpleadoView empleadoView) {
+	private void iniciarVistaAdministrador() {
 
 		ControladorAbmTecnicos controladorAbmTecnicos = new ControladorAbmTecnicos();
 		ControladorAbmInventario controladorAbmInventario = new ControladorAbmInventario();
@@ -92,9 +92,6 @@ public class ControladorVentanaUsuario {
 	private void crearPanelModular(ImageIcon icono, String titulo, int filas, int columnas) {
 		this.vista = new VentanaUsuario(icono, titulo, filas, columnas);
 	}
-	
-	
-	
 	
 	
 	

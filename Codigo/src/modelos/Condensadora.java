@@ -14,7 +14,9 @@ public class Condensadora extends Producto{
 	
 	
 	
-
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 	
 	
 }

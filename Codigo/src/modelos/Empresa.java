@@ -142,15 +142,34 @@ public class Empresa {
 			
 
 			
-			instalacion.agregarElementos(new Condensadora());
-			instalacion.agregarElementos(new Evaporadora());
-			instalacion.agregarElementos(new KitDeInstalacion());
+			instalacion.agregarElemento(new Condensadora());
+			instalacion.agregarElemento(new Evaporadora());
+			instalacion.agregarElemento(new KitDeInstalacion());
 
 			return true;
 
 		}
 		return false;
 	}
+	
+	
+	public boolean agregarElementosAInstalacion(int idInstalacion ,String nombreProducto, int cantidad) {
+		Producto producto = this.crearProducto(nombreProducto);
+		Instalacion instalacion = this.buscarInstalacion(idInstalacion);
+		if (producto != null) {
+			ArrayList<Producto> productosDelInventario = this.inventario.quitarProductos(producto, cantidad);
+			if (productosDelInventario != null) {
+				instalacion.agregarElementosUtilizados(productosDelInventario);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
+	
+	
 	
 	public ArrayList<Instalacion> getInstalaciones() {
 		return instalaciones;
@@ -221,14 +240,37 @@ public class Empresa {
 		return -1;
 	}
 	
-	public void completarInstalacion(Instalacion instalacion, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, int cantidadEvaporadoras, int cantidadKitsDeInstalacion, int cantidadCondensadoras) {
+	
+	public ArrayList<InstalacionView> getInstalacionesAsignadas(int idTecnico) {
+		ArrayList<InstalacionView> instalacionesAsignadas = new ArrayList<InstalacionView>();
+		for (Instalacion instalacion : this.instalaciones) {
+			if (instalacion.getTecnico().getId() == idTecnico) {
+				instalacionesAsignadas.add(instalacion.toView());
+			}
+		}
+		return instalacionesAsignadas;
+	}
+	
+	
+	public boolean completarInstalacion(Instalacion instalacion, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, int cantEvaporadoras, int cantKitsDeInstalacion, int cantCondensadoras) {
+		boolean sePudoCompletar = true;
 		instalacion.setAlmuerzo(almuerzo);
 		instalacion.setHoraInicio(horaInicio);
 		instalacion.setHoraFinalizacion(horaFinalizacion);
-		instalacion.setStockElementosUtilizados(new Evaporadora(), cantidadEvaporadoras);
-		instalacion.setStockElementosUtilizados(new Condensadora(), cantidadCondensadoras);
-		instalacion.setStockElementosUtilizados(new KitDeInstalacion(), cantidadKitsDeInstalacion);
+		
+		boolean agregarEvaporadoras = this.agregarElementosAInstalacion(instalacion.getId(), "Evaporadora", cantEvaporadoras);
+		boolean agregarCondensadoras = this.agregarElementosAInstalacion(instalacion.getId(), "Condensadora", cantCondensadoras);
+		boolean agregarKits = this.agregarElementosAInstalacion(instalacion.getId(), "KitDeInstalacion", cantKitsDeInstalacion);
+		
+		if (!agregarEvaporadoras || !agregarCondensadoras || !agregarKits) {
+			sePudoCompletar = false;
+			System.out.println("Ocurrio un error");
+		}
+	
+		System.out.println(instalacion.getElementos().toString());
+		
 		instalacion.setEstado(Estado.FINALIZADA);
+		return sePudoCompletar;
 	}
 	
 	public boolean completarInstalacion(int id, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, int cantidadEvaporadoras, int cantidadKitsDeInstalacion, int cantidadCondensadoras) {
@@ -429,7 +471,19 @@ public class Empresa {
 	}
 	*/
 	
-	
+	public Producto crearProducto(String nombreProducto) {
+		switch (nombreProducto) {
+			case "Condensadora":
+				return new Condensadora();
+			case "Evaporadora":
+				return new Evaporadora();
+			case "KitDeInstalacion":
+				return new KitDeInstalacion();
+			default:
+				System.out.println("ERROR");
+				return null;
+		}
+	}
 	
 	
 	

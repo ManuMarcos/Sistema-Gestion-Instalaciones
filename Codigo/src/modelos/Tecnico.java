@@ -44,13 +44,12 @@ public class Tecnico extends Empleado {
 		empresa.completarInstalacion(instalacion, horaInicio, horaFinalizacion, almuerzo, cantidadEvaporadoras, cantidadKitsDeInstalacion, cantidadCondensadoras);
 	}
 	
+	/*
 	public void agregarElementoUtilizado(Instalacion instalacion, Producto producto, int cantidad) {
-		for (int i = 0; i < cantidad; i++) {
-			empresa.removerUnidadProducto(producto);
-			instalacion.agregarElementos(producto);
-		}
+		empresa.completarInstalacion(instalacion, null, null, false, cantidad, cantidad, cantidad)
 	}
 	
+	*/
 	public TecnicoView toView() {
 		return new TecnicoView(this.id, this.nombre, this.getTurnoLaboral().getClass().getSimpleName(), this.getExperienciaLaboral().getClass().getSimpleName(), 
 				this.direccion,this.usuario, this.contrasena, this.getClass().getSimpleName());

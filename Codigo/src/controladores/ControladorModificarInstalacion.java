@@ -26,11 +26,13 @@ public class ControladorModificarInstalacion implements ActionListener, KeyListe
 	//Attributes
 	private PanelModificarInstalacion vista;
 	private Empresa modelo;
+	private EmpleadoView empleadoLogueado;
 	
-	public ControladorModificarInstalacion(){
+	public ControladorModificarInstalacion(EmpleadoView empleadoLogueado){
 		this.vista = new PanelModificarInstalacion();
 		this.vista.setActionListener(this);
 		this.vista.setKeyListener(this);
+		this.empleadoLogueado = empleadoLogueado;
 		this.modelo = Empresa.getInstance();
 	}
 	

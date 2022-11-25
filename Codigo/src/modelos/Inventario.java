@@ -84,12 +84,36 @@ public class Inventario {
 	 * @return Producto
 	 */
 	public Producto quitarProducto(Producto producto) {
-		Producto productoBuscado = this.buscarProducto(producto);
-		if (productoBuscado != null && this.hayStock(productoBuscado)) {
-			this.productos.merge(productoBuscado, -1, Integer::sum);
+		int stockDisponible = this.obtenerStock(producto);
+		if (stockDisponible != -1 && stockDisponible - 1 >= 0) {
+			this.productos.merge(producto, -1, Integer::sum);
 		}
 		return null;
 	}
+	
+	/*
+	 * Si se puede quitar la cantidad de productos ingresados devuelve el arrayList de los productos quitados, sino devuelve null
+	 */
+	
+	public ArrayList<Producto> quitarProductos(Producto producto, int cantidad){
+		int stockDisponible = this.obtenerStock(producto);
+		ArrayList<Producto> productosQuitados = new ArrayList<Producto>();
+		if (stockDisponible != -1 && stockDisponible - cantidad >= 0) {
+			Producto productoBuscado = this.buscarProducto(producto);
+			for (int i = 0; i < cantidad; i++) {
+				productosQuitados.add(productoBuscado);
+			}
+			return productosQuitados;
+		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * Busca el producto en el inventario. Devuelve la referencia al producto buscado. Si no existe devuelve null
@@ -98,7 +122,7 @@ public class Inventario {
 	 */
 	public Producto buscarProducto(Producto producto) {
 		for (Producto pi : this.productos.keySet()) {
-			if (pi.getClass().isInstance(producto)) {
+			if (pi.getClass().equals(producto.getClass())) {
 				return pi;
 			}
 		}

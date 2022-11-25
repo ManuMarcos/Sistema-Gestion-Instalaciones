@@ -98,16 +98,16 @@ public class Main {
 		
 		empresa.imprimirInventario();
 							
-		//empresa.agendarInstalacion(cliente1, tecnico1, fecha1, true, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha2, true, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha3, false, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha4, true, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha5, false, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha6, true, false);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha7, false, true);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha8, false, true);
-//		empresa.agendarInstalacion(cliente1, tecnico1, fecha9, true, false);
-//		
+		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha1, true, false);
+		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha2, true, false);
+		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha3, false, false);
+		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha4, true, false);
+		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha5, false, false);
+		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha6, true, false);
+		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha7, false, true);
+	    empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha8, false, true);
+		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha9, true, false);
+		
 
 		
 		

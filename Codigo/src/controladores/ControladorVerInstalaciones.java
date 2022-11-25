@@ -16,6 +16,7 @@ import modelos.EmpleadoView;
 import modelos.Empresa;
 import modelos.Estado;
 import modelos.Instalacion;
+import modelos.InstalacionView;
 import modelos.Tecnico;
 import modelos.Turno;
 import vistas.PanelVerInstalaciones;
@@ -25,11 +26,13 @@ public class ControladorVerInstalaciones implements ActionListener, KeyListener 
 	// Attributes
 	private PanelVerInstalaciones vista;
 	private Empresa modelo;
+	private EmpleadoView empleadoLogueado;
 
-	public ControladorVerInstalaciones() {
+	public ControladorVerInstalaciones(EmpleadoView empleadoLogueado) {
 		this.vista = new PanelVerInstalaciones();
 		this.vista.setActionListener(this);
 		this.modelo = Empresa.getInstance();
+		this.empleadoLogueado =  empleadoLogueado;
 	}
 
 	@Override
@@ -38,22 +41,7 @@ public class ControladorVerInstalaciones implements ActionListener, KeyListener 
 		String comandoAccionado = e.getActionCommand();
 		switch (comandoAccionado) {
 		case "ACTUALIZAR":
-
-			String[] columnas = { "ID", "Cliente", "Direccion", "Estado", "Evaporadoras", "Condensadoras", "Kits" };
-			DefaultTableModel tableModel = new DefaultTableModel(columnas, 0);
-			for (int i = 0; i < modelo.instalacionesAsignadasATecnico(1).size(); i++) {
-				int id = modelo.instalacionesAsignadasATecnico(1).get(i).getId();
-				String cliente = modelo.instalacionesAsignadasATecnico(1).get(i).getCliente().getNombre();
-				String direccion = modelo.instalacionesAsignadasATecnico(1).get(i).getCliente().getDireccion();
-				Estado estado = modelo.instalacionesAsignadasATecnico(1).get(i).getEstado();
-				int cantidadEvaporadoras = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Evaporadora");
-				int cantidadCondensadoras = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Condensadora");
-				int cantidadKits = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Kit De Instalacion");
-				Object[] filas = { id, cliente, direccion, estado, cantidadEvaporadoras, cantidadCondensadoras, cantidadKits};
-				tableModel.addRow(filas);
-			}
-
-			vista.mostrarDatosInstalacion(tableModel);
+			vista.mostrarDatosInstalacion(this.setearListadoDeInstalaciones());
 
 			break;
 			
@@ -62,6 +50,43 @@ public class ControladorVerInstalaciones implements ActionListener, KeyListener 
 			vista.resetearPanel();
 		}
 	}
+	
+	private DefaultTableModel setearListadoDeInstalaciones() {
+		DefaultTableModel tableModel = new DefaultTableModel();
+		String[] columnas = { "ID", "Cliente", "Direccion", "Estado", "Evaporadoras", "Condensadoras", "Kits" };
+		tableModel.setColumnIdentifiers(columnas);
+		
+		ArrayList<InstalacionView> instalacionesAsignadas = this.modelo.getInstalacionesAsignadas(this.empleadoLogueado.getId());
+		
+		for (InstalacionView instalacion : instalacionesAsignadas) {
+			tableModel.addRow(new Object[] {instalacion.getId(), instalacion.getClienteView().getNombre(), instalacion.getClienteView().getDireccion(), instalacion.getEstado(),
+					instalacion.getElementosUtilizados().get("Evaporadora"), instalacion.getElementosUtilizados().get("Condensadora"), 
+					instalacion.getElementosUtilizados().get("KitDeInstalacion")});
+		}
+	
+		/*
+		for (int i = 0; i < modelo.instalacionesAsignadasATecnico(this.empleadoLogueado.getId()).size(); i++) {
+			int id = modelo.instalacionesAsignadasATecnico(this.empleadoLogueado.getId()).get(i).getId();
+			String cliente = modelo.instalacionesAsignadasATecnico(1).get(i).getCliente().getNombre();
+			String direccion = modelo.instalacionesAsignadasATecnico(1).get(i).getCliente().getDireccion();
+			Estado estado = modelo.instalacionesAsignadasATecnico(1).get(i).getEstado();
+			int cantidadEvaporadoras = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Evaporadora");
+			int cantidadCondensadoras = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Condensadora");
+			int cantidadKits = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Kit De Instalacion");
+			Object[] filas = { id, cliente, direccion, estado, cantidadEvaporadoras, cantidadCondensadoras, cantidadKits};
+			tableModel.addRow(filas);
+		}
+		*/
+		return tableModel;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public String booleanToString(boolean booleano) {
 		if (booleano) {
