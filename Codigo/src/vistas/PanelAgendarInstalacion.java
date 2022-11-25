@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import com.github.lgooddatepicker.components.DateTimePicker;
 
 import controladores.ControladorAgendarInstalacion;
+import modelos.ComboItem;
 import modelos.EmpleadoView;
 
 import java.awt.BorderLayout;
@@ -41,6 +42,19 @@ public class PanelAgendarInstalacion extends Panel {
 
 	private DialogoSeleccionarTecnico ventanaSeleccionarTecnico;
 	private JPanel panelAgendarInstalacion;
+	private JPanel panelCentral;
+	private JPanel panelDatos;
+	private JPanel panelBuscarCliente;
+	private JPanel panelBuscarClienteDatos;
+	private JPanel panelDatosCliente;
+	private JPanel panelSeleccionarDatos;
+	private JPanel panelInferior;
+	private JPanel panelSeleccionarFecha;
+	private JPanel panelCheckBox;
+	
+	
+	
+	
 	private JTextField idClienteTextField;
 	private JTable tablaDatosCliente;
 	private JScrollPane tablaScrollPane;
@@ -49,75 +63,96 @@ public class PanelAgendarInstalacion extends Panel {
 	private DateTimePicker dateTimePicker;
 	private JCheckBox checkBoxNecesitaSeguro;
 	private JCheckBox checkBoxNecesitaSoportePared;
+	private JLabel labelBuscarCliente;
+	private JLabel labelSeleccionarFecha;
 	
 	
 	
-	
-	/**
-	 * Create the panel.
-	 */
 	public PanelAgendarInstalacion() {
-		//setLayout(new GridLayout(2, 1, 0, 0));
+		
 		this.setOpaque(false);
 		setLayout(new BorderLayout(0, 0));
 		
+		this.agregarPaneles();
+		this.agregarEtiquetas();
+		this.agregarTextFields();
+		this.agregarCheckBoxes();
+		this.agregarBotones();
+		this.agregarTabla();
+		this.agregarDatePickers();
+		
+	}
+	
+	
+	private void agregarPaneles() {
 		this.panelAgendarInstalacion = new JPanel();
 		panelAgendarInstalacion.setOpaque(false);
 		this.setBordePanel("Agendar Instalacion");
 		add(panelAgendarInstalacion);
-		
-		
-		
 		panelAgendarInstalacion.setLayout(new BorderLayout(0, 0));
 
-		JPanel panelCentral = new JPanel();
+		this.panelCentral = new JPanel();
 		panelCentral.setOpaque(false);
 		panelAgendarInstalacion.add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelDatos = new JPanel();
+		this.panelDatos = new JPanel();
 		panelDatos.setOpaque(false);
 		panelCentral.add(panelDatos);
 		panelDatos.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelBuscarCliente = new JPanel();
+		this.panelBuscarCliente = new JPanel();
 		panelBuscarCliente.setOpaque(false);
 		panelDatos.add(panelBuscarCliente, BorderLayout.CENTER);
 		panelBuscarCliente.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelBuscarClienteDatos = new JPanel();
+		this.panelBuscarClienteDatos = new JPanel();
 		panelBuscarClienteDatos.setOpaque(false);
 		FlowLayout flowLayout_1 = (FlowLayout) panelBuscarClienteDatos.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panelBuscarCliente.add(panelBuscarClienteDatos, BorderLayout.NORTH);
 		
-		JLabel labelBuscarCliente = this.crearEtiquetaFormateada("Buscar cliente");
-		panelBuscarClienteDatos.add(labelBuscarCliente);
-		
-		idClienteTextField = this.crearTextFieldFormatoTexto(11);
-		panelBuscarClienteDatos.add(idClienteTextField);
-		
-		JPanel panelDatosCliente = new JPanel();
+		this.panelDatosCliente = new JPanel();
 		panelDatosCliente.setOpaque(false);
 		panelBuscarCliente.add(panelDatosCliente, BorderLayout.CENTER);
 		panelDatosCliente.setLayout(new BorderLayout(0, 0));
 		
-		
-		tablaDatosCliente = new JTable();
-		this.tablaDatosCliente.setEnabled(false);
-		this.tablaScrollPane= new JScrollPane(tablaDatosCliente);
-		tablaScrollPane.setOpaque(false);
-		panelDatosCliente.add(tablaScrollPane);
-		
-		JPanel panelSeleccionarDatos = new JPanel();
+		this.panelSeleccionarDatos = new JPanel();
 		panelSeleccionarDatos.setOpaque(false);
 		panelDatos.add(panelSeleccionarDatos, BorderLayout.SOUTH);
 		
-		JPanel panelInferior = new JPanel();
+		this.panelInferior = new JPanel();
 		panelInferior.setOpaque(false);
 		panelAgendarInstalacion.add(panelInferior, BorderLayout.SOUTH);
 		panelInferior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
+		this.panelSeleccionarFecha = new JPanel();
+		panelSeleccionarFecha.setOpaque(false);
+		FlowLayout fl_panelSeleccionarFecha = (FlowLayout) panelSeleccionarFecha.getLayout();
+		fl_panelSeleccionarFecha.setAlignment(FlowLayout.LEFT);
+		panelSeleccionarDatos.add(panelSeleccionarFecha);
+		
+		this.panelCheckBox = new JPanel();
+		panelCheckBox.setOpaque(false);
+		FlowLayout flowLayout = (FlowLayout) panelCheckBox.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panelSeleccionarDatos.add(panelCheckBox);
+	}
+	
+	private void agregarEtiquetas() {
+		this.labelBuscarCliente = this.crearEtiquetaFormateada("Buscar cliente");
+		panelBuscarClienteDatos.add(labelBuscarCliente);
+		
+		this.labelSeleccionarFecha = this.crearEtiquetaFormateada("Seleccionar fecha");
+		panelSeleccionarFecha.add(labelSeleccionarFecha);
+	}
+	
+	private void agregarTextFields() {
+		idClienteTextField = this.crearTextFieldFormatoTexto(11);
+		panelBuscarClienteDatos.add(idClienteTextField);
+	}
+	
+	private void agregarBotones() {
 		this.buttonAgendar= this.crearBotonFormateado("Agendar", "AGENDAR");
 		panelInferior.add(buttonAgendar);
 		
@@ -125,25 +160,9 @@ public class PanelAgendarInstalacion extends Panel {
 		this.buttonCancelar = this.crearBotonFormateado("Cancelar", "CANCELAR");
 		panelInferior.add(buttonCancelar);
 		panelSeleccionarDatos.setLayout(new GridLayout(2, 1, 0, 0));
-		
-		JPanel panelSeleccionarFecha = new JPanel();
-		panelSeleccionarFecha.setOpaque(false);
-		FlowLayout fl_panelSeleccionarFecha = (FlowLayout) panelSeleccionarFecha.getLayout();
-		fl_panelSeleccionarFecha.setAlignment(FlowLayout.LEFT);
-		panelSeleccionarDatos.add(panelSeleccionarFecha);
-		
-		JLabel labelSeleccionarFecha = this.crearEtiquetaFormateada("Seleccionar fecha");
-		panelSeleccionarFecha.add(labelSeleccionarFecha);
-		
-		this.dateTimePicker = new DateTimePicker();
-		panelSeleccionarFecha.add(dateTimePicker);
-		
-		JPanel panelCheckBox = new JPanel();
-		panelCheckBox.setOpaque(false);
-		FlowLayout flowLayout = (FlowLayout) panelCheckBox.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		panelSeleccionarDatos.add(panelCheckBox);
-		
+	}
+	
+	private void agregarCheckBoxes() {
 		this.checkBoxNecesitaSeguro = new JCheckBox("Seguro de trabajo en altura");
 		this.checkBoxNecesitaSeguro.setOpaque(false);
 		this.checkBoxNecesitaSeguro.setFont(this.getFuentaEtiqueta());
@@ -153,14 +172,23 @@ public class PanelAgendarInstalacion extends Panel {
 		this.checkBoxNecesitaSoportePared.setOpaque(false);
 		this.checkBoxNecesitaSoportePared.setFont(this.getFuentaEtiqueta());
 		panelCheckBox.add(this.checkBoxNecesitaSoportePared);
+	}
+	
+	private void agregarDatePickers() {
+		this.dateTimePicker = new DateTimePicker();
+		panelSeleccionarFecha.add(dateTimePicker);
 		
 		this.dateTimePicker.getTimePicker().setTimeToNow();
 		this.dateTimePicker.getDatePicker().setDateToToday();
-		
-		
-		
 	}
 	
+	private void agregarTabla() {
+		tablaDatosCliente = new JTable();
+		this.tablaDatosCliente.setEnabled(false);
+		this.tablaScrollPane= new JScrollPane(tablaDatosCliente);
+		tablaScrollPane.setOpaque(false);
+		panelDatosCliente.add(tablaScrollPane);
+	}
 	
 	public String getIdCliente() {
 		return this.idClienteTextField.getText();

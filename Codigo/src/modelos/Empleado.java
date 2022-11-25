@@ -4,6 +4,7 @@ public abstract class Empleado extends Persona{
 
 	//Attributes
 	protected static int generador = 1;
+	protected int id;
 	protected float sueldo;
 	protected String usuario;
 	protected String contrasena;
@@ -31,7 +32,17 @@ public abstract class Empleado extends Persona{
 	public int getId() {
 		return this.id;
 	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
 	
-	
+	protected EmpleadoView ToView() {
+		return new EmpleadoView(this.id, this.nombre, this.direccion, this.usuario, this.getClass().getSimpleName());
+	}
 	
 }

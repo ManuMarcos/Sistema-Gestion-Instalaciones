@@ -29,6 +29,14 @@ public class Agenda{
 		this.disponibilidad = new TurnoCompleto();
 	}
 	
+	public void setDisponibilidad(Disponibilidad disponibilidad) {
+		this.disponibilidad = disponibilidad;
+	}
+	
+	public Disponibilidad getDisponibilidad() {
+		return this.disponibilidad;
+	}
+	
 	public boolean agendarTurno(Turno turno) {
 		Dia dia = this.getDia(turno.getHoraInicio());
 		if (this.esValido(turno)) {

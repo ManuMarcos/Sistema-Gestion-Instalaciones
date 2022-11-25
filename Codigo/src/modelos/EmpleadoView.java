@@ -1,24 +1,31 @@
 package modelos;
 
-public class EmpleadoView {
+public class EmpleadoView extends PersonaView{
 	
 	//Attributes
-	private String nombre;
-	private int id;
+	protected int id;
+	protected String usuario;
+	protected String tipoEmpleado;
 	
 	
 	//Methods
-	public EmpleadoView(String nombre, int id) {
-		this.nombre = nombre;
+	public EmpleadoView(int id, String nombre, String direccion, String usuario, String tipoEmpleado) {
+		super(nombre, direccion);
 		this.id = id;
-	}
-	
-	public String getNombre() {
-		return this.nombre;
+		this.usuario = usuario;
+		this.tipoEmpleado = tipoEmpleado;
 	}
 	
 	public int getId() {
 		return this.id;
+	}
+	
+	public String getUsuario() {
+		return this.usuario;
+	}
+	
+	public String getTipoUsuario() {
+		return this.tipoEmpleado;
 	}
 	
 	public String toString() {

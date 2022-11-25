@@ -120,7 +120,7 @@ public class VentanaLogin extends JFrame {
 			panelInferiorBoton.setOpaque(false);
 			panelCentral.add(panelInferiorBoton, BorderLayout.SOUTH);
 			
-			JButton ingresarButton = new JButton("Ingresar");
+			JButton ingresarButton = VistaConfig.crearBotonFormateado("Ingresar", "INGRESAR");
 			ingresarButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String usuarioIngresado = usuarioTextField.getText();
@@ -132,7 +132,6 @@ public class VentanaLogin extends JFrame {
 					}
 				}
 			});
-			VistaConfig.setFormatoBoton(ingresarButton);
 			ingresarButton.setPreferredSize(new Dimension(200, 50));
 			
 			panelInferiorBoton.add(ingresarButton);

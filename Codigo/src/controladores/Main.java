@@ -98,7 +98,7 @@ public class Main {
 		
 		empresa.imprimirInventario();
 							
-		empresa.agendarInstalacion(cliente1, tecnico1, fecha1, true, false);
+		//empresa.agendarInstalacion(cliente1, tecnico1, fecha1, true, false);
 //		empresa.agendarInstalacion(cliente1, tecnico1, fecha2, true, false);
 //		empresa.agendarInstalacion(cliente1, tecnico1, fecha3, false, false);
 //		empresa.agendarInstalacion(cliente1, tecnico1, fecha4, true, false);
@@ -173,9 +173,11 @@ public class Main {
 		
 		
 		
-		Tecnico tecnico4 = new Tecnico("Eden Hazard", "Collins Av", new TurnoTarde(), "eden", "eden", new Junior());
 		
-		empresa.agregarEmpleado(tecnico4);
+		
+		empresa.agregarProducto(new Evaporadora(), 150);
+		empresa.setPrecioProducto(new Evaporadora(), 784);
+		
 		
 		
 		

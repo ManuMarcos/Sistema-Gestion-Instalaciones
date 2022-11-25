@@ -8,7 +8,6 @@ public class Tecnico extends Empleado {
 	//Attributes
 	private ExperienciaLaboral experienciaLaboral;
 	private Agenda agenda;
-	private Disponibilidad turnoLaboral;
 	private Empresa empresa = Empresa.getInstance();
 
 	//Methods
@@ -16,7 +15,6 @@ public class Tecnico extends Empleado {
 	//Constructor
 	public Tecnico(String nombre, String direccion, Disponibilidad turnoLaboral,String usuario, String contrasena, ExperienciaLaboral experiencia) {
 		super(nombre,direccion, usuario, contrasena);
-		this.turnoLaboral = turnoLaboral;
 		this.agenda = new Agenda(turnoLaboral);
 		this.setExperienciaLaboral(experiencia);
 	}
@@ -31,11 +29,11 @@ public class Tecnico extends Empleado {
 	}
 
 	public Disponibilidad getTurnoLaboral() {
-		return turnoLaboral;
+		return this.agenda.getDisponibilidad();
 	}
 
 	public void setTurnoLaboral(Disponibilidad turnoLaboral) {
-		this.turnoLaboral = turnoLaboral;
+		this.agenda.setDisponibilidad(turnoLaboral);
 	}
 
 	public Agenda getAgenda() {
@@ -54,15 +52,14 @@ public class Tecnico extends Empleado {
 	}
 	
 	public TecnicoView toView() {
-		return new TecnicoView(this.id, this.nombre, this.turnoLaboral.toString(), this.experienciaLaboral.getClass().getSimpleName(), this.direccion,
-				this.usuario, this.contrasena);
+		return new TecnicoView(this.id, this.nombre, this.getTurnoLaboral().getClass().getSimpleName(), this.getExperienciaLaboral().getClass().getSimpleName(), 
+				this.direccion,this.usuario, this.contrasena, this.getClass().getSimpleName());
 	}
 	
 	
-	
-	
 	public String toString() {
-		return "Id: " + this.id + "\nNombre: " + this.nombre +  "\nDireccion: " + this.direccion +"\n";
+		return "Id: " + this.id + "\nNombre: " + this.nombre +  "\nDireccion: " + this.direccion +"\nTurnoLaboral: " + this.getTurnoLaboral().getClass().getSimpleName() +
+				"\nExp Laboral: " + this.getExperienciaLaboral().getClass().getSimpleName();
 	}
 	
 	

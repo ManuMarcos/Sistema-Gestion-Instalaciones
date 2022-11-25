@@ -1,32 +1,18 @@
 package modelos;
 
-public class TecnicoView {
+public class TecnicoView extends EmpleadoView{
 
-	private int id;
-	private String nombreApellido;
 	private String turnoLaboral;
 	private String experienciaLaboral;
-	private String direccion;
-	private String usuario;
 	private String contrasena;
 	
 	public TecnicoView(int id, String nombreApellido, String turnoLaboral, String experienciaLaboral, String direccion,
-			String usuario, String contrasena) {
-		this.id = id;
-		this.nombreApellido = nombreApellido;
+			String usuario, String contrasena, String tipoEmpleado) {
+		super(id, nombreApellido, direccion, usuario, tipoEmpleado);
 		this.turnoLaboral = turnoLaboral;
 		this.experienciaLaboral = experienciaLaboral;
-		this.direccion = direccion;
-		this.usuario = usuario;
+		//Se manda la contrasena porque el admin la puede ver y setear
 		this.contrasena = contrasena;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public String getNombreApellido() {
-		return nombreApellido;
 	}
 
 	public String getTurnoLaboral() {
@@ -35,14 +21,6 @@ public class TecnicoView {
 
 	public String getExperienciaLaboral() {
 		return experienciaLaboral;
-	}
-
-	public String getDireccion() {
-		return direccion;
-	}
-
-	public String getUsuario() {
-		return usuario;
 	}
 
 	public String getContrasena() {

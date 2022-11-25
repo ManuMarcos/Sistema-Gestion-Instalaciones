@@ -12,10 +12,13 @@ import javax.swing.table.DefaultTableModel;
 
 import modelos.Agenda;
 import modelos.Cliente;
+import modelos.ClienteView;
+import modelos.ComboItem;
 import modelos.EmpleadoView;
 import modelos.Empresa;
 import modelos.Instalacion;
 import modelos.Tecnico;
+import modelos.TecnicoView;
 import modelos.Turno;
 import vistas.PanelAgendarInstalacion;
 
@@ -40,63 +43,99 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String comandoAccionado = e.getActionCommand();
-		Cliente cliente;
-		Calendar fechaSeleccionada;
-		Tecnico tecnicoSeleccionado;
-		boolean necesitaSoporte;
-		boolean necesitaSeguro;
 		switch (comandoAccionado) {
 			case "AGENDAR":
-				if (modelo.hayStockDisponibleParaAgendar()) {
-					if (this.esIdValido(vista.getIdCliente())) {
-						if (this.existeCliente(Long.parseLong(vista.getIdCliente()))){
-							cliente = modelo.buscarCliente(Long.parseLong(vista.getIdCliente()));
-							fechaSeleccionada = vista.getFechaSeleccionada();
-							if (cliente.getAgenda().estaDisponible(new Turno(fechaSeleccionada))) {
-								ArrayList<Tecnico> tecnicosDisponibles = modelo.obtenerTecnicosDisponibles(fechaSeleccionada);
-								if (tecnicosDisponibles.size() > 0) {	
-									DefaultComboBoxModel<EmpleadoView> comboBoxModel = new DefaultComboBoxModel<EmpleadoView>();
-									for(Tecnico tecnico : tecnicosDisponibles) {
-										comboBoxModel.addElement(new EmpleadoView(tecnico.getNombre(), tecnico.getId()));
-										System.out.println(tecnico.getNombre() + " - " + Integer.toString(tecnico.getId()));
-									}
-									vista.mostrarTecnicosDisponibles(comboBoxModel, this);
-								}
-								else {
-									vista.mostrarMensajeDeError("Tecnicos no disponibles", "No hay tecnicos disponibles para el horario seleccionado");
-								}
-							}
-							else {
-								vista.mostrarMensajeDeError("No se pudo agendar la instalacion");
-							}
-						}
-					}
-				}
-				else {
-					vista.mostrarMensajeDeError("Falta de Stock", "No hay stock de productos, se necesitan: (1 Evaporadora, 1 Kit, 1 Condesadora)");
+				String idIngresado = this.vista.getIdCliente();
+				if (this.esIdValido(idIngresado)) {
+					this.agendarInstalacion(Long.parseLong(idIngresado));
+					System.out.println(idIngresado);
 				}
 				break;
 			case "CONFIRMAR_TECNICO":
-				tecnicoSeleccionado = (Tecnico) modelo.buscarEmpleado(vista.getIdTecnicoSeleccionado());
-				cliente = modelo.buscarCliente(Long.parseLong(vista.getIdCliente()));
-				fechaSeleccionada = vista.getFechaSeleccionada();
-				necesitaSeguro= this.vista.necesitaSeguro();
-				necesitaSoporte = this.vista.necesitaSoporte();
-				
-				Instalacion instalacion = modelo.agendarInstalacion(cliente, tecnicoSeleccionado, fechaSeleccionada, necesitaSeguro, necesitaSoporte);
-				String mensaje = "Se agendo con exito la instalacion \nCliente:  " + cliente.getNombre() + "\nTecnico:  " + tecnicoSeleccionado.getNombre() +
-						"\nHorario: " + Agenda.formatearFecha(fechaSeleccionada) + "\nSeguro: " + booleanToString(necesitaSeguro) + "\nSoporte Pared: " + booleanToString(necesitaSoporte);
-				vista.mostrarMensajeInformativo("Instalacion agendada con exito" , mensaje);
+				this.confirmarInstalacion();
 				this.vista.cerrarVentanasEmergentes();
 				this.vista.resetearPanel();
 				break;
 			case "CANCELAR":
 				this.vista.resetearPanel();
+				break;
 		}	
 	}
 
+	private void confirmarInstalacion() {
+		TecnicoView tecnicoView = this.modelo.getTecnicoView(this.vista.getIdTecnicoSeleccionado());
+		ClienteView clienteView = this.modelo.getClienteView(Long.parseLong(this.vista.getIdCliente()));
+		Calendar fechaSeleccionada = vista.getFechaSeleccionada();
+		boolean necesitaSeguro= this.vista.necesitaSeguro();
+		boolean necesitaSoporte = this.vista.necesitaSoporte();
+		if (this.modelo.agendarInstalacion(clienteView.getCuitCuil(), tecnicoView.getId(), fechaSeleccionada, necesitaSeguro, necesitaSoporte)) {
+			String mensaje = "Se agendo con exito la instalacion \nCliente:  " + clienteView.getNombre() + "\nTecnico:  " + tecnicoView.getNombre() +
+					"\nHorario: " + this.modelo.formatearFecha(fechaSeleccionada) + "\nSeguro: " + booleanToString(necesitaSeguro) + "\nSoporte Pared: " + booleanToString(necesitaSoporte);
+			vista.mostrarMensajeInformativo("Instalacion agendada con exito" , mensaje);
+		}
+	}
 	
-	public String booleanToString(boolean booleano) {
+	
+	private void agendarInstalacion(long idCliente) {
+		boolean hayStockDisponible = this.modelo.hayStockDisponibleParaAgendar();
+		boolean existeCliente = this.modelo.existeCliente(idCliente);
+		Calendar fechaSeleccionada = this.vista.getFechaSeleccionada();
+		
+		if (hayStockDisponible) {
+			if (existeCliente) {
+				if (this.modelo.estaDisponibleCliente(fechaSeleccionada, idCliente)) {
+					ArrayList<EmpleadoView> tecnicosDisponibles = this.modelo.getTecnicosDisponibles(fechaSeleccionada);
+					if (tecnicosDisponibles.size() > 0) {
+						vista.mostrarTecnicosDisponibles(this.setearComboBoxTecnicos(tecnicosDisponibles), this);
+					}
+					else {
+						vista.mostrarMensajeDeError("Tecnicos no disponibles", "No hay tecnicos disponibles para el horario seleccionado");
+					}
+				}
+				else {
+					vista.mostrarMensajeDeError("No se pudo agendar la instalacion");
+				}
+			}
+			else {
+				vista.mostrarMensajeDeError("Cliente inexistente", "No existe el cliente ingresado");
+			}
+		}
+		else {
+			vista.mostrarMensajeDeError("Falta de Stock", "No hay stock de productos, se necesitan: (1 Evaporadora, 1 Kit, 1 Condesadora)");
+		};
+	}
+	
+	
+	private DefaultComboBoxModel<EmpleadoView> setearComboBoxTecnicos(ArrayList<EmpleadoView> tecnicos) {
+		DefaultComboBoxModel<EmpleadoView> comboBoxModel = new DefaultComboBoxModel<EmpleadoView>();
+		for(EmpleadoView empleado : tecnicos) {
+			comboBoxModel.addElement(empleado);
+		}
+		return comboBoxModel;
+	}
+	
+	
+	private void mostrarDatosCliente() {
+		String idIngresado = this.vista.getIdCliente();
+		boolean esIdValido = this.esIdValido(idIngresado);
+		
+		if (esIdValido) {
+			long idIngresadoLong = Long.parseLong(idIngresado);
+			if (this.existeCliente(idIngresadoLong)){
+				ClienteView clienteView = modelo.buscarClienteToView(idIngresadoLong);
+				String [] columnas = {"Cuil/Cuit", "NombreApellido", "Direccion", "Categoria", "Correo"};
+				String [][] datosCliente = {{Long.toString(clienteView.getCuitCuil()), clienteView.getNombre(), clienteView.getDireccion(), 
+						clienteView.getTipoCliente().toString(), clienteView.getCorreo()}};
+				DefaultTableModel tableModel = new DefaultTableModel(datosCliente, columnas);
+				vista.mostrarDatosCliente(tableModel);
+			}
+		}
+	}
+	
+
+	
+	
+	private String booleanToString(boolean booleano) {
 		if (booleano) {
 			return "Si";
 		}
@@ -115,16 +154,7 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		// TODO Auto-generated method stub
 		int key = e.getKeyCode();
 		if (key == KeyEvent.VK_ENTER) {
-			if (this.esIdValido(vista.getIdCliente())) {
-				if (this.existeCliente(Long.parseLong(vista.getIdCliente()))) {
-					Cliente cliente = modelo.buscarCliente(Long.parseLong(vista.getIdCliente()));
-					String [] columnas = {"Cuil/Cuit", "NombreApellido", "Direccion", "Categoria", "Correo"};
-					String [][] datosCliente = {{Long.toString(cliente.getCuitCuil()), cliente.getNombre(), cliente.getDireccion(), 
-							cliente.getTipoCliente().toString(), cliente.getCorreoElectronico()}};
-					DefaultTableModel tableModel = new DefaultTableModel(datosCliente, columnas);
-					vista.mostrarDatosCliente(tableModel);
-				}
-			}
+			this.mostrarDatosCliente();
 		}
 	}
 
@@ -146,8 +176,8 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 	}
 
 	public boolean existeCliente(long idCliente) {
-		if (modelo.buscarCliente(idCliente) == null){
-			vista.mostrarMensajeDeError("El cliente ingresado no existe");
+		if (!this.modelo.existeCliente(idCliente)){
+			vista.mostrarMensajeDeError("Cliente inexistente", "El cliente ingresado no existe");
 			return false;
 		}
 		return true;

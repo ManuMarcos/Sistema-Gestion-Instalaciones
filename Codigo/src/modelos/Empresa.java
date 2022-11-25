@@ -58,15 +58,25 @@ public class Empresa {
 		return false;
 	}
 	
-	public Cliente buscarCliente(long cuitCuil) {
+	public ClienteView buscarClienteToView(long cuitCuil) {
 		for (Cliente cliente : this.clientes) {
 			if (cliente.tengoElCuitCuil(cuitCuil)) {
+				return cliente.toView();
+			}
+		}
+		return null;
+	}
+	
+	private Cliente buscarCliente(long cuitCuil) {
+		for (Cliente cliente : this.clientes) {
+			if(cliente.tengoElCuitCuil(cuitCuil)) {
 				return cliente;
 			}
 		}
 		return null;
 	}
 	
+<<<<<<< HEAD
 	public ArrayList<Instalacion> instalacionesAsignadasATecnico(int idTecnico) {
 		ArrayList<Instalacion> resultado = new ArrayList<>();
 		for (Instalacion i : this.instalaciones) {
@@ -76,6 +86,8 @@ public class Empresa {
 		}
 		return resultado;
 	}
+=======
+>>>>>>> 04bb1fc8e34b3d176ee58a72ad876aebffd8543f
 	
 	public Empleado buscarEmpleado(int id) {
 		for (Empleado empleado : this.empleados) {
@@ -87,18 +99,7 @@ public class Empresa {
 	}
 	
 	
-	public ArrayList<Tecnico> obtenerTecnicosDisponibles(Calendar fecha) {
-		ArrayList<Tecnico> tecnicosDisponibles = new ArrayList<Tecnico>();
-		for (Empleado empleado : this.empleados) {
-			if (empleado.getClass().getSimpleName().equals("Tecnico")) {
-				Tecnico tecnico = (Tecnico) empleado;
-				if (tecnico.getAgenda().estaDisponible(new Turno(fecha))) {
-					tecnicosDisponibles.add(tecnico);
-				}
-			}
-		}
-		return tecnicosDisponibles;
-	}
+	
 	
 	public boolean esPosibleAgendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
 		Agenda agendaCliente = cliente.getAgenda();
@@ -122,7 +123,10 @@ public class Empresa {
 	}
 	
 	
-	public Instalacion agendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha, boolean necesitaSeguro, boolean necesitaSoportePared) {
+	public boolean agendarInstalacion(long idCliente, int idTecnico, Calendar fecha, boolean necesitaSeguro, boolean necesitaSoportePared) {
+		Cliente cliente = this.buscarCliente(idCliente);
+		Tecnico tecnico = (Tecnico) this.buscarEmpleado(idTecnico);
+		
 		if (this.esPosibleAgendarInstalacion(cliente, tecnico, fecha)) {
 			Turno turno = new Turno(fecha);
 			cliente.getAgenda().agendarTurno(turno);
@@ -137,6 +141,7 @@ public class Empresa {
 //			this.inventario.quitarProducto(new KitDeInstalacion());
 //			System.out.println(this.inventario.toString());
 			
+<<<<<<< HEAD
 			
 			instalacion.agregarElementos(new Condensadora());
 			instalacion.agregarElementos(new Evaporadora());
@@ -145,8 +150,11 @@ public class Empresa {
 
 
 			return instalacion;
+=======
+			return true;
+>>>>>>> 04bb1fc8e34b3d176ee58a72ad876aebffd8543f
 		}
-		return null;
+		return false;
 	}
 	
 	public ArrayList<Instalacion> getInstalaciones() {
@@ -202,14 +210,20 @@ public class Empresa {
 		System.out.println(this.inventario.toString());
 	}
 	
-	public Empleado esUsuarioValido(String usuario, String contrasena, String tipoEmpleado) {
+	
+	
+	/*
+	 * Valida el usuario, contrasena y tipo de empleado. Si existe devuelve el id, caso contrario devuelve -1
+	 */
+	
+	public int esUsuarioValido(String usuario, String contrasena, String tipoEmpleado) {
 		for (Empleado empleado : this.empleados) {
 			if (empleado.getUsuario().equals(usuario) && empleado.getContrasena().equals(contrasena) 
 					&& empleado.getClass().getSimpleName().equals(tipoEmpleado)) {
-				return empleado;
+				return empleado.getId();
 			}
 		}
-		return null;
+		return -1;
 	}
 	
 	public void completarInstalacion(Instalacion instalacion, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, int cantidadEvaporadoras, int cantidadKitsDeInstalacion, int cantidadCondensadoras) {
@@ -266,6 +280,13 @@ public class Empresa {
 		return tecnicos;
 	}
 	
+	public ClienteView getClienteView(long idCliente) {
+		return this.buscarCliente(idCliente).toView();
+	}
+	
+	public String formatearFecha(Calendar fecha) {
+		return Agenda.formatearFecha(fecha);
+	}
 	
 	
 	public static double getPrecioSeguro() {
@@ -320,6 +341,68 @@ public class Empresa {
 		return this.inventario;
 	}
 	
+	public EmpleadoView getEmpleadoView(int id) {
+		Empleado empleado = this.buscarEmpleado(id);
+		if (empleado != null) {
+			return empleado.ToView();
+		}
+		return null;
+	}
+	
+	public ArrayList<EmpleadoView> getTecnicosDisponibles(Calendar fecha) {
+		ArrayList<EmpleadoView> tecnicosDisponibles = new ArrayList<EmpleadoView>();
+		for (Tecnico tecnico : this.getTecnicos()) {
+			if (tecnico.getAgenda().estaDisponible(new Turno(fecha))) {
+				tecnicosDisponibles.add(tecnico.ToView());
+			}
+		}
+		return tecnicosDisponibles;
+	}
+	
+	
+	private ArrayList<Tecnico> getTecnicos(){
+		ArrayList<Tecnico> tecnicos = new ArrayList<Tecnico>();
+		for (Empleado empleado : this.empleados) {
+			if (empleado.getClass().equals(Tecnico.class)) {
+				tecnicos.add((Tecnico) empleado);
+			}
+		}
+		return tecnicos;
+	}
+	
+	
+	/*
+	public ArrayList<Tecnico> obtenerTecnicosDisponibles(Calendar fecha) {
+		ArrayList<Tecnico> tecnicosDisponibles = new ArrayList<Tecnico>();
+		for (Tecnico tecnico  : this.getTecnicos()) {
+			if (tecnico.getAgenda().estaDisponible(new Turno(fecha))) {
+				tecnicosDisponibles.add(tecnico);
+			}
+		}
+		return tecnicosDisponibles;
+	}
+	*/
+	
+	/*
+	public boolean estaDisponibleTecnico(Calendar fecha, int id) {
+		Tecnico tecnico = (Tecnico) this.buscarEmpleado(id);
+		Turno turno = new Turno(fecha);
+		if (tecnico.getAgenda().estaDisponible(turno)) {
+			return true;
+		}
+		return false;
+	}
+	*/
+	public boolean estaDisponibleCliente(Calendar fecha, long cuitCuil) {
+		Cliente cliente = this.buscarCliente(cuitCuil);
+		Turno turno = new Turno(fecha);
+		if (cliente.getAgenda().estaDisponible(turno)) {
+			return true;
+		}
+		return false;
+	}
+	
+	
 	public boolean hayStockDisponibleParaAgendar() {
 		if (this.inventario.hayStock(new Evaporadora()) && this.inventario.hayStock(new Condensadora()) && this.inventario.hayStock(new KitDeInstalacion())) {
 			return true;
@@ -331,9 +414,85 @@ public class Empresa {
 		return this.inventario.getProductos();
 	}
 	
+	public TecnicoView getTecnicoView(int id) {
+		for (Empleado empleado : this.empleados) {
+			if (empleado.getClass().equals(Tecnico.class) && empleado.getId() == id) {
+				Tecnico tecnico = (Tecnico) empleado;
+				return tecnico.toView();
+			}
+		}
+		return null;
+	}
+	/*
+	
+	*/
+	/*
+	public void imprimirTecnicos() {
+		for (Tecnico tecnico : this.getTecnicos()) {
+			System.out.println(tecnico.toString());
+		}
+	}
+	*/
 	
 	
 	
+	
+	
+	
+	
+	public Disponibilidad crearTurnoLaboral(String turno) {
+		switch (turno) {
+			case "TurnoManana":
+				return new TurnoManana();
+			case "TurnoTarde":
+				return new TurnoTarde();
+			case "TurnoCompleto":
+				return new TurnoCompleto();
+			default:
+				System.out.println("ERROR");
+				return null;
+		}
+	}
+	
+	public ExperienciaLaboral crearExpLaboral(String expLaboral) {
+		switch (expLaboral) {
+		case "Junior":
+			return new Junior();
+		case "SemiSenior":
+			return new SemiSenior();
+		case "Senior":
+			return new Senior();
+		default:
+			return null;
+		}
+	}
+	
+	public TecnicoView crearTecnico(String nombre, String direccion, String turnoLaboral, String usuario, String contrasena, String experiencia) {
+		Tecnico tecnico = new Tecnico(nombre,direccion, this.crearTurnoLaboral(turnoLaboral),usuario,contrasena, this.crearExpLaboral(experiencia));
+		this.empleados.add(tecnico);
+		return tecnico.toView();
+	}
+	
+	public void modificarTecnico(int id, String nombre, String direccion, String turnoLaboral, String usuario, String contrasena, String expLaboral) {
+		Tecnico tecnico = (Tecnico) this.buscarEmpleado(id);
+		tecnico.setNombre(nombre);
+		tecnico.setDireccion(direccion);
+		tecnico.setTurnoLaboral(this.crearTurnoLaboral(turnoLaboral));
+		tecnico.setExperienciaLaboral(this.crearExpLaboral(expLaboral));
+		tecnico.setUsuario(usuario);
+		tecnico.setContrasena(contrasena);
+		System.out.println(tecnico.toString());
+	}
+	
+	public boolean eliminarEmpleado(int id) {
+		for (int i = 0; i < this.empleados.size(); i++) {
+			if (empleados.get(i).getId() ==  id) {
+				this.empleados.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
 	

@@ -5,8 +5,9 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
-public class VistaConfig {
+public abstract class VistaConfig {
 
 	
 	//Configuracion de las etiquetas
@@ -17,6 +18,15 @@ public class VistaConfig {
 	//Paleta de color
 	public static final Color celeste = new Color(173, 216, 230);
 	
+	//Configuracion de los text fields
+	public static final String textFieldFontFamily = "Sans Serif";
+	public static final int textFieldStyle = Font.ITALIC;
+	public static final int textFieldSize = 16;
+	
+	//Configuracion de los botones
+	public static final String buttonFamlabelFontFamily = "Tahoma";
+	public static final int buttonFontStyle = Font.PLAIN;
+	public static final int buttonFontSize = 16;
 	
 	
 	
@@ -31,22 +41,31 @@ public class VistaConfig {
 	
 	
 	
-	//Configuracion de los botones
-	public static final String buttonFamlabelFontFamily = "Tahoma";
-	public static final int buttonFontStyle = Font.PLAIN;
-	public static final int buttonFontSize = 16;
 	
-	public static JButton getBotonFormateado(String titulo, String comando) {
+	
+	public static JButton crearBotonFormateado(String titulo, String comando) {
 		JButton boton = new JButton(titulo);
 		boton.setActionCommand(comando);
 		setFormatoBoton(boton);
 		return boton;
 	}
 	
-	public static void setFormatoBoton(JButton boton) {
+	private static void setFormatoBoton(JButton boton) {
 		boton.setForeground(new Color(255, 255, 255));
 		boton.setFont(new Font(VistaConfig.buttonFamlabelFontFamily, VistaConfig.buttonFontStyle, VistaConfig.buttonFontSize));
 		boton.setBackground(Color.BLACK);
+	}
+	
+	public static JLabel crearEtiquetaFormateada(String titulo) {
+		JLabel etiqueta = new JLabel(titulo);
+		etiqueta.setFont(new Font(VistaConfig.labelFontFamily, VistaConfig.labelFontStyle, VistaConfig.labelFontSize));
+		return etiqueta;
+	}
+	
+	public static JTextField crearTextFieldFormateado(int columnas) {
+		JTextField textField = new JTextField(columnas);
+		textField.setFont(new Font(VistaConfig.textFieldFontFamily, VistaConfig.textFieldStyle, VistaConfig.textFieldSize));
+		return textField;
 	}
 	
 	

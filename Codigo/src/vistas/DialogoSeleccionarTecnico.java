@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controladores.ControladorAgendarInstalacion;
+import modelos.ComboItem;
 import modelos.EmpleadoView;
 
 import java.awt.BorderLayout;
@@ -34,18 +35,21 @@ public class DialogoSeleccionarTecnico extends JDialog {
 	/**
 	 * Create the frame.
 	 */
-	public DialogoSeleccionarTecnico(JFrame padre, boolean modal) {
-		super(padre,modal);
+	public DialogoSeleccionarTecnico(JFrame padre, boolean esModal) {
+		super(padre,esModal);
 		setTitle("Seleccionar Tecnico");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 420, 117);
+		this.setBackground(Color.WHITE);
 		contentPane = new JPanel();
+		contentPane.setOpaque(false);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelCentral = new JPanel();
+		panelCentral.setOpaque(false);
 		contentPane.add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -58,11 +62,10 @@ public class DialogoSeleccionarTecnico extends JDialog {
 		panelCentral.add(comboBoxTecnicos);
 		
 		JPanel panelInferior = new JPanel();
+		panelInferior.setOpaque(false);
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
 		
-		this.buttonConfirmar= new JButton("Confirmar");
-		VistaConfig.setFormatoBoton(buttonConfirmar);
-		buttonConfirmar.setActionCommand("CONFIRMAR_TECNICO");
+		this.buttonConfirmar = VistaConfig.crearBotonFormateado("Confirmar", "CONFIRMAR_TECNICO");
 		panelInferior.add(buttonConfirmar);
 	}
 
@@ -75,7 +78,10 @@ public class DialogoSeleccionarTecnico extends JDialog {
 	}
 	
 	public EmpleadoView getTecnicoSeleccionado() {
-		return (EmpleadoView)this.comboBoxTecnicos.getSelectedItem();
+		return (EmpleadoView) this.comboBoxTecnicos.getSelectedItem();
 	}
+	
+
+	
 	
 }
