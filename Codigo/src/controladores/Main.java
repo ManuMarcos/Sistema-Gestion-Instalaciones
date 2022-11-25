@@ -68,12 +68,12 @@ public class Main {
 		Calendar fecha9 = new GregorianCalendar();
 	
 		
-		fecha1.set(2022, 10, 23, 8, 0, 0);
-		fecha2.set(2022, 10, 17, 11, 0, 0);
-		fecha3.set(2022, 10, 17, 11, 20, 0);
-		fecha4.set(2022, 10, 17, 16, 0, 0);
-		fecha5.set(2022, 10, 18, 8, 0, 0);
-		fecha6.set(2022, 10, 18, 9, 30, 0);
+		fecha1.set(2022, 12, 26, 9, 0, 0);
+		fecha2.set(2022, 12, 29, 9, 0, 0);
+		fecha3.set(2022, 12, 19, 9, 20, 0);
+		fecha4.set(2022, 12, 11, 7, 0, 0);
+		fecha5.set(2022, 12, 18, 7, 0, 0);
+		fecha6.set(2022, 12, 18, 8, 30, 0);
 		
 		
 		//Sabado 26/11/2022
@@ -107,7 +107,7 @@ public class Main {
 //		empresa.agendarInstalacion(cliente1, tecnico1, fecha7, false, true);
 //		empresa.agendarInstalacion(cliente1, tecnico1, fecha8, false, true);
 //		empresa.agendarInstalacion(cliente1, tecnico1, fecha9, true, false);
-		
+//		
 
 		
 		
@@ -145,20 +145,23 @@ public class Main {
 		
 		
 		//Ejemplo de gestion
-		for (Instalacion i : empresa.getInstalaciones()) {
-			System.out.println("ID: " + i.getId() + " " + "Cliente: " + i.getCliente().getNombre());
-			//Agregamos en empresa? O en inventario?
-			tecnico1.agregarElementoUtilizado(i, kitDeInstalacion);
-			tecnico1.agregarElementoUtilizado(i, evaporadora);
-			tecnico1.agregarElementoUtilizado(i, condensadora);
-			Calendar fechaFinalizacion = new GregorianCalendar();
-			fechaFinalizacion.set(2022, 10, 23, 9, 30, 0);
-			tecnico1.completarInstalacion(i, fecha1, fechaFinalizacion, false);
-			administrativo.facturarInstalacion(i, 1.21);
-			for (Factura f : empresa.getFacturas()) {
-				System.out.println("PRECIO TOTAL: " + f.getPrecioTotal());
-			}
-		}
+//		for (Instalacion i : empresa.getInstalaciones()) {
+//			System.out.println("ID: " + i.getId() + " " + "Cliente: " + i.getCliente().getNombre());
+//			//Agregamos en empresa? O en inventario?
+//			tecnico1.agregarElementoUtilizado(i, kitDeInstalacion, 3);
+//			tecnico1.agregarElementoUtilizado(i, evaporadora, 1);
+//			tecnico1.agregarElementoUtilizado(i, condensadora, 9);
+//			Calendar fechaFinalizacion = new GregorianCalendar();
+//			fechaFinalizacion.set(2022, 10, 25, 9, 30, 0);
+//			tecnico1.completarInstalacion(i, fecha1, fechaFinalizacion, false);
+//			administrativo.facturarInstalacion(i, 1.21);
+//			for (Factura f : empresa.getFacturas()) {
+//				System.out.println("PRECIO TOTAL: " + f.getPrecioTotal());
+//			}
+//		}
+				
+		empresa.imprimirInventario();
+
 		
 		
 		//Prueba agendar instalacion sin stock

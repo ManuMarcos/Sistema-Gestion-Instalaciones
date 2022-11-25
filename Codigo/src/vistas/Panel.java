@@ -12,6 +12,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -79,6 +80,11 @@ public abstract class Panel extends JPanel{
 	public JTextField crearTextFieldFormatoTexto(int columnas) {
 		JTextField campoTexto = new JTextField(columnas);
 		return campoTexto;
+	}
+	
+	public JSpinner crearSpinner() {
+		JSpinner spinner = new JSpinner();
+		return spinner;
 	}
 	
 	public JFormattedTextField crearTextFieldFormatoCustom(String formato) {

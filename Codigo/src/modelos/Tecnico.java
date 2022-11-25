@@ -40,16 +40,15 @@ public class Tecnico extends Empleado {
 		return this.agenda;
 	}
 	
-	public void completarInstalacion(Instalacion instalacion, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo) {
-		instalacion.setAlmuerzo(almuerzo);
-		instalacion.setHoraInicio(horaInicio);
-		instalacion.setHoraFinalizacion(horaFinalizacion);
-		instalacion.setEstado(Estado.FINALIZADA);
+	public void completarInstalacion(Instalacion instalacion, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, int cantidadEvaporadoras, int cantidadKitsDeInstalacion, int cantidadCondensadoras) {
+		empresa.completarInstalacion(instalacion, horaInicio, horaFinalizacion, almuerzo, cantidadEvaporadoras, cantidadKitsDeInstalacion, cantidadCondensadoras);
 	}
 	
-	public void agregarElementoUtilizado(Instalacion instalacion, Producto producto) {
-		empresa.removerUnidadProducto(producto);
-		instalacion.agregarElementos(producto);
+	public void agregarElementoUtilizado(Instalacion instalacion, Producto producto, int cantidad) {
+		for (int i = 0; i < cantidad; i++) {
+			empresa.removerUnidadProducto(producto);
+			instalacion.agregarElementos(producto);
+		}
 	}
 	
 	public TecnicoView toView() {

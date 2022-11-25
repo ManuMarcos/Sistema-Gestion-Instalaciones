@@ -76,6 +76,18 @@ public class Empresa {
 		return null;
 	}
 	
+<<<<<<< HEAD
+	public ArrayList<Instalacion> instalacionesAsignadasATecnico(int idTecnico) {
+		ArrayList<Instalacion> resultado = new ArrayList<>();
+		for (Instalacion i : this.instalaciones) {
+			if (i.getTecnico().getId() == idTecnico) {
+				resultado.add(i);
+			}
+		}
+		return resultado;
+	}
+=======
+>>>>>>> 04bb1fc8e34b3d176ee58a72ad876aebffd8543f
 	
 	public Empleado buscarEmpleado(int id) {
 		for (Empleado empleado : this.empleados) {
@@ -123,19 +135,46 @@ public class Empresa {
 			turno.setInstalacion(instalacion);
 			this.agregarInstalaciones(instalacion);
 			
-			//Se quitan los productos necesarios para una instalacion y se imprime como queda el inventario
-			this.inventario.quitarProducto(new Condensadora());
-			this.inventario.quitarProducto(new Evaporadora());
-			this.inventario.quitarProducto(new KitDeInstalacion());
-			System.out.println(this.inventario.toString());
+//			Se quitan los productos necesarios para una instalacion y se imprime como queda el inventario
+//			this.inventario.quitarProducto(new Condensadora());
+//			this.inventario.quitarProducto(new Evaporadora());
+//			this.inventario.quitarProducto(new KitDeInstalacion());
+//			System.out.println(this.inventario.toString());
 			
+<<<<<<< HEAD
+			
+			instalacion.agregarElementos(new Condensadora());
+			instalacion.agregarElementos(new Evaporadora());
+			instalacion.agregarElementos(new KitDeInstalacion());
+			
+
+
+			return instalacion;
+=======
 			return true;
+>>>>>>> 04bb1fc8e34b3d176ee58a72ad876aebffd8543f
 		}
 		return false;
 	}
 	
 	public ArrayList<Instalacion> getInstalaciones() {
 		return instalaciones;
+	}
+	
+	public Instalacion buscarInstalacion(int id) {
+		for (Instalacion instalacion : this.instalaciones) {
+			if (instalacion.getId() == id) {
+				return instalacion;
+			}
+		}
+		return null;
+	}
+	
+	public boolean esIdDeInstalacionExistente(int id) {
+		if (this.buscarInstalacion(id) != null) {
+			return true;
+		}
+		return false;
 	}
 
 	public void agregarInstalaciones(Instalacion instalacion) {
@@ -158,6 +197,15 @@ public class Empresa {
 		return this.inventario.buscarProducto(producto);
 	}
 	
+	public int getStockDeElementosInstalacion(int idInstalacion, String nombreProducto) {
+		Instalacion instalacion = this.buscarInstalacion(idInstalacion);
+		
+		if (instalacion != null) {
+			 return instalacion.getCantidadDeElementos(nombreProducto);
+		}
+		return 0;
+	}
+	
 	public void imprimirInventario() {
 		System.out.println(this.inventario.toString());
 	}
@@ -176,6 +224,25 @@ public class Empresa {
 			}
 		}
 		return -1;
+	}
+	
+	public void completarInstalacion(Instalacion instalacion, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, int cantidadEvaporadoras, int cantidadKitsDeInstalacion, int cantidadCondensadoras) {
+		instalacion.setAlmuerzo(almuerzo);
+		instalacion.setHoraInicio(horaInicio);
+		instalacion.setHoraFinalizacion(horaFinalizacion);
+		instalacion.setStockElementosUtilizados(new Evaporadora(), cantidadEvaporadoras);
+		instalacion.setStockElementosUtilizados(new Condensadora(), cantidadCondensadoras);
+		instalacion.setStockElementosUtilizados(new KitDeInstalacion(), cantidadKitsDeInstalacion);
+		instalacion.setEstado(Estado.FINALIZADA);
+	}
+	
+	public boolean completarInstalacion(int id, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, int cantidadEvaporadoras, int cantidadKitsDeInstalacion, int cantidadCondensadoras) {
+		Instalacion instalacion = this.buscarInstalacion(id);	
+		if (instalacion != null) {
+			this.completarInstalacion(instalacion, horaInicio, horaFinalizacion, almuerzo, cantidadEvaporadoras, cantidadKitsDeInstalacion, cantidadCondensadoras);
+			return true;
+		}
+		return false;
 	}
 	
 	public void agregarEmpleado(Empleado empleado) {
@@ -246,6 +313,19 @@ public class Empresa {
 		this.inventario.setStock(producto, cantidad);
 	};
 	
+//	public void setCantidadElementosEnInstalacion(int idInstalacion, String producto, int cantidad) {
+//		Instalacion instalacion = this.buscarInstalacion(idInstalacion);
+//		
+//		if (instalacion != null) {
+//			if (producto == "Evaporadora") {
+//				instalacion.setStockElementosUtilizados(new Evaporadora(), cantidad);
+//			} else if (producto == "Condensadora") {
+//				instalacion.setStockElementosUtilizados(new Condensadora(), cantidad);
+//			} else if (producto == "Kit De Instalacion") {
+//				instalacion.setStockElementosUtilizados(new KitDeInstalacion(), cantidad);
+//			}
+//		}
+//	}
 	
 	public void agregarCalendario() {}
 
