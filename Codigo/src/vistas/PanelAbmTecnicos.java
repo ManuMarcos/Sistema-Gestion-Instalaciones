@@ -2,6 +2,7 @@ package vistas;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -42,7 +43,9 @@ public class PanelAbmTecnicos extends Panel {
 	
 	
 	public PanelAbmTecnicos() {
+		setOpaque(false);
 		setLayout(new BorderLayout(0, 0));
+		this.setBackground(Color.WHITE);
 		
 		this.agregarPaneles();
 		this.agregarEtiquetas();
@@ -78,21 +81,26 @@ public class PanelAbmTecnicos extends Panel {
 	
 	private void agregarPaneles() {
 		this.panelPrincipal= new JPanel();
+		panelPrincipal.setOpaque(false);
 		add(panelPrincipal);
 		panelPrincipal.setLayout(new BorderLayout(0, 0));
 		
 		this.panelSuperior= new JPanel();
+		panelSuperior.setOpaque(false);
 		panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
 		
 		this.panelCentral= new JPanel();
+		panelCentral.setOpaque(false);
 		panelPrincipal.add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new BorderLayout(0, 0));
 		panelSuperior.setLayout(new BorderLayout(0, 0));
 		
 		this.panelBuscarTecnico = new JPanel();
+		panelBuscarTecnico.setOpaque(false);
 		panelSuperior.add(panelBuscarTecnico, BorderLayout.CENTER);
 
 		panelNuevoTecnico = new JPanel();
+		panelNuevoTecnico.setOpaque(false);
 		panelSuperior.add(panelNuevoTecnico, BorderLayout.EAST);
 		
 		buttonNuevoTecnico = this.crearBotonFormateado("Nuevo Tecnico", "NUEVO_TECNICO");

@@ -49,9 +49,7 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 			modeloTablaTecnicos.addRow(new Object[] {tecnicoView.getId(), tecnicoView.getNombreApellido(), tecnicoView.getDireccion(), tecnicoView.getTurnoLaboral(),
 					tecnicoView.getExperienciaLaboral(),tecnicoView.getUsuario(), tecnicoView.getContrasena()});
 		}
-		this.vista.setListadoTecnicos(modeloTablaTecnicos);
-		
-		
+		this.vista.setListadoTecnicos(modeloTablaTecnicos);	
 	}
 	
 	private void setComboExpLaboral() {
@@ -66,7 +64,6 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 		DefaultComboBoxModel<String> comboTurnoLaboral = new DefaultComboBoxModel<String>();
 		comboTurnoLaboral.addElement(TurnoManana.class.getSimpleName());
 		comboTurnoLaboral.addElement(TurnoTarde.class.getSimpleName());
-		comboTurnoLaboral.addElement(TurnoCompleto.class.getSimpleName());
 		this.vista.setComboTurnoLaboral(comboTurnoLaboral);
 	}
 	
@@ -79,9 +76,7 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 		// TODO Auto-generated method stub
 		int idFilaSeleccionada = this.vista.getIdFilaSeleccionada();
 		if (idFilaSeleccionada != -1) {
-			TecnicoView tecnico = modelo.getTecnicoView(idFilaSeleccionada);
-			this.vista.mostrarDatosTecnico(tecnico.getId(), tecnico.getNombreApellido(), tecnico.getDireccion(), tecnico.getUsuario(), tecnico.getContrasena(), 
-					tecnico.getTurnoLaboral(), tecnico.getExperienciaLaboral());
+			this.mostrarDatosTecnico(idFilaSeleccionada);
 		}
 	}
 
@@ -119,27 +114,65 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 				this.vista.pedirDatosTecnico();
 				break;
 			case "CREAR_TECNICO":
-				TecnicoView tecnico = this.modelo.crearTecnico(this.vista.getNombreTecnico(), this.vista.getDireccionTecnico(), this.vista.getTurnoLaboral(), this.vista.getUsuarioTecnico(), 
-						this.vista.getContrasenaTecnico(), this.vista.getExpLaboral());
-				
-				String mensaje = "Se creo el siguiente tecnico: \nNombre: " + tecnico.getNombreApellido() + "\nDireccion: " + tecnico.getDireccion() + "\nTurno Laboral: " + 
-						tecnico.getTurnoLaboral() + "\nExperiencia Laboral: " + tecnico.getExperienciaLaboral() + "\nUsuario: " + tecnico.getUsuario() + "\nContrasena: " + tecnico.getContrasena();
-				
-				this.vista.mostrarMensajeInformativo("Tecnico creado con exito", mensaje);
-				this.vista.cerrarDialogoDatosTecnico();
-				this.cargarListadoTecnicos();
+				this.crearTecnico();
 				break;
 			case "MODIFICAR_TECNICO":
-				this.modelo.modificarTecnico(Integer.parseInt(this.vista.getId()), this.vista.getNombreTecnico() , this.vista.getDireccionTecnico(), 
-						this.vista.getTurnoLaboral(), this.vista.getUsuarioTecnico(), this.vista.getContrasenaTecnico(), this.vista.getExpLaboral());
-				this.vista.cerrarDialogoDatosTecnico();
-				this.cargarListadoTecnicos();
+				this.modificarTecnico();
+				break;
 			case "CANCELAR":
 				this.vista.cerrarDialogoDatosTecnico();
+				break;
+			case "ELIMINAR_TECNICO":
+				this.eliminarTecnico();
 				break;
 		}
 	}
 	
 	
+	private void mostrarDatosTecnico(int id) {
+		TecnicoView tecnico = modelo.getTecnicoView(id);
+		this.vista.mostrarDatosTecnico(tecnico.getId(), tecnico.getNombreApellido(), tecnico.getDireccion(), tecnico.getUsuario(), tecnico.getContrasena(), 
+				tecnico.getTurnoLaboral(), tecnico.getExperienciaLaboral());
+	}
+	
+	
+	
+	private void crearTecnico() {
+		//Falta validar si crearTecnico devuelve true or false
+		this.modelo.crearTecnico(this.vista.getNombreTecnico(), this.vista.getDireccionTecnico(), this.vista.getTurnoLaboral(), this.vista.getUsuarioTecnico(), 
+				this.vista.getContrasenaTecnico(), this.vista.getExpLaboral());
+		
+		this.vista.mostrarMensajeInformativo("Tecnico creado con exito", "Se creo el siguiente tecnico: " + this.datosTecnicoToString());
+		this.vista.cerrarDialogoDatosTecnico();
+		this.cargarListadoTecnicos();
+	}
+	
+	
+	private void modificarTecnico() {
+		this.modelo.modificarTecnico(Integer.parseInt(this.vista.getId()), this.vista.getNombreTecnico() , this.vista.getDireccionTecnico(), 
+				this.vista.getTurnoLaboral(), this.vista.getUsuarioTecnico(), this.vista.getContrasenaTecnico(), this.vista.getExpLaboral());
+		System.out.println(this.vista.getTurnoLaboral());
+		this.vista.cerrarDialogoDatosTecnico();
+		this.cargarListadoTecnicos();
+		this.modelo.imprimirTecnicos();
+	}
+	
+	private void eliminarTecnico() {
+		if (this.modelo.eliminarEmpleado(Integer.parseInt(this.vista.getId()))){
+			this.vista.mostrarMensajeInformativo("Tecnico elimnado con exito", "Se elimino el siguiente tecnico: " + this.datosTecnicoToString());
+		}
+		else {
+			this.vista.mostrarMensajeDeError("Ocurrio un error inesperado");
+		}
+		this.vista.cerrarDialogoDatosTecnico();
+		this.cargarListadoTecnicos();
+	}
+	
+	public String datosTecnicoToString() {
+		String mensaje =  "\nNombre: " + this.vista.getNombreTecnico() + "\nDireccion: " + this.vista.getDireccionTecnico() + "\nTurno Laboral: " + 
+				this.vista.getTurnoLaboral() + "\nExperiencia Laboral: " + this.vista.getExpLaboral() + "\nUsuario: " + this.vista.getUsuarioTecnico() +
+				"\nContrasena: " + this.vista.getContrasenaTecnico();
+		return mensaje;
+	}
 	
 }

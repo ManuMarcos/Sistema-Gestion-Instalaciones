@@ -39,13 +39,16 @@ public class DialogoSeleccionarTecnico extends JDialog {
 		setTitle("Seleccionar Tecnico");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 420, 117);
+		this.setBackground(Color.WHITE);
 		contentPane = new JPanel();
+		contentPane.setOpaque(false);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelCentral = new JPanel();
+		panelCentral.setOpaque(false);
 		contentPane.add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -58,6 +61,7 @@ public class DialogoSeleccionarTecnico extends JDialog {
 		panelCentral.add(comboBoxTecnicos);
 		
 		JPanel panelInferior = new JPanel();
+		panelInferior.setOpaque(false);
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
 		
 		this.buttonConfirmar = VistaConfig.crearBotonFormateado("Confirmar", "CONFIRMAR_TECNICO");

@@ -79,12 +79,9 @@ public class Empresa {
 	
 	public ArrayList<Tecnico> obtenerTecnicosDisponibles(Calendar fecha) {
 		ArrayList<Tecnico> tecnicosDisponibles = new ArrayList<Tecnico>();
-		for (Empleado empleado : this.empleados) {
-			if (empleado.getClass().getSimpleName().equals("Tecnico")) {
-				Tecnico tecnico = (Tecnico) empleado;
-				if (tecnico.getAgenda().estaDisponible(new Turno(fecha))) {
-					tecnicosDisponibles.add(tecnico);
-				}
+		for (Tecnico tecnico  : this.getTecnicos()) {
+			if (tecnico.getAgenda().estaDisponible(new Turno(fecha))) {
+				tecnicosDisponibles.add(tecnico);
 			}
 		}
 		return tecnicosDisponibles;
@@ -246,6 +243,8 @@ public class Empresa {
 		return this.inventario;
 	}
 	
+	
+	
 	public boolean hayStockDisponibleParaAgendar() {
 		if (this.inventario.hayStock(new Evaporadora()) && this.inventario.hayStock(new Condensadora()) && this.inventario.hayStock(new KitDeInstalacion())) {
 			return true;
@@ -267,6 +266,29 @@ public class Empresa {
 		return null;
 	}
 	
+	public ArrayList<Tecnico> getTecnicos(){
+		ArrayList<Tecnico> tecnicos = new ArrayList<Tecnico>();
+		for (Empleado empleado : this.empleados) {
+			if (empleado.getClass().equals(Tecnico.class)) {
+				tecnicos.add((Tecnico) empleado);
+			}
+		}
+		return tecnicos;
+	}
+	
+	public void imprimirTecnicos() {
+		for (Tecnico tecnico : this.getTecnicos()) {
+			System.out.println(tecnico.toString());
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public Disponibilidad crearTurnoLaboral(String turno) {
 		switch (turno) {
 			case "TurnoManana":
@@ -276,6 +298,7 @@ public class Empresa {
 			case "TurnoCompleto":
 				return new TurnoCompleto();
 			default:
+				System.out.println("ERROR");
 				return null;
 		}
 	}
@@ -285,7 +308,7 @@ public class Empresa {
 		case "Junior":
 			return new Junior();
 		case "SemiSenior":
-			return new Senior();
+			return new SemiSenior();
 		case "Senior":
 			return new Senior();
 		default:
@@ -307,7 +330,19 @@ public class Empresa {
 		tecnico.setExperienciaLaboral(this.crearExpLaboral(expLaboral));
 		tecnico.setUsuario(usuario);
 		tecnico.setContrasena(contrasena);
+		System.out.println(tecnico.toString());
 	}
+	
+	public boolean eliminarEmpleado(int id) {
+		for (int i = 0; i < this.empleados.size(); i++) {
+			if (empleados.get(i).getId() ==  id) {
+				this.empleados.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 	
 }

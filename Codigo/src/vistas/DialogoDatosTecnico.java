@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 public class DialogoDatosTecnico extends JDialog {
 
 	//Attributes
+	private JPanel contentPane;
 	private JPanel panelPrincipal;
 	private JTextField textFieldId;
 	private JTextField textFieldNombreApellido;
@@ -60,7 +61,15 @@ public class DialogoDatosTecnico extends JDialog {
 	public DialogoDatosTecnico(JFrame framePadre, boolean esModal) {
 		super(framePadre, esModal);
 		setBounds(100, 100, 638, 410);
-		getContentPane().setLayout(new BorderLayout());
+		
+		contentPane = new JPanel();
+		contentPane.setOpaque(false);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		
+		this.setBackground(Color.WHITE);
 		this.setTitle("Datos tecnico");
 		this.agregarPaneles();
 		this.agregarEtiquetas();
@@ -160,6 +169,7 @@ public class DialogoDatosTecnico extends JDialog {
 		panelTurnoLaboral.add(comboBoxTurnoLaboral);
 		
 		this.comboBoxExpLaboral= new JComboBox<String>();
+		comboBoxExpLaboral.setOpaque(false);
 		panelExperienciaLaboral.add(comboBoxExpLaboral);
 	}
 	
@@ -194,44 +204,53 @@ public class DialogoDatosTecnico extends JDialog {
 	private void agregarPaneles() {
 		
 		this.panelPrincipal = new JPanel();
+		panelPrincipal.setOpaque(false);
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(panelPrincipal, BorderLayout.CENTER);
 		panelPrincipal.setLayout(new GridLayout(7, 1, 0, 0));
 		
 		this.panelId= new JPanel();
+		panelId.setOpaque(false);
 		panelPrincipal.add(panelId);
 		
 		this.panelNombreApellido= new JPanel();
+		panelNombreApellido.setOpaque(false);
 		FlowLayout flowLayout_1 = (FlowLayout) panelNombreApellido.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelNombreApellido);
 		
 		this.panelTurnoLaboral= new JPanel();
+		panelTurnoLaboral.setOpaque(false);
 		FlowLayout flowLayout_2 = (FlowLayout) panelTurnoLaboral.getLayout();
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelTurnoLaboral);
 		
 		this.panelExperienciaLaboral= new JPanel();
+		panelExperienciaLaboral.setOpaque(false);
 		FlowLayout flowLayout_3 = (FlowLayout) panelExperienciaLaboral.getLayout();
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelExperienciaLaboral);
 		
 		this.panelDireccion= new JPanel();
+		panelDireccion.setOpaque(false);
 		FlowLayout flowLayout_4 = (FlowLayout) panelDireccion.getLayout();
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelDireccion);
 		
 		this.panelUsuario= new JPanel();
+		panelUsuario.setOpaque(false);
 		FlowLayout flowLayout_5 = (FlowLayout) panelUsuario.getLayout();
 		flowLayout_5.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelUsuario);
 		
 		this.panelContrasena= new JPanel();
+		panelContrasena.setOpaque(false);
 		FlowLayout flowLayout_6 = (FlowLayout) panelContrasena.getLayout();
 		flowLayout_6.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelContrasena);
 		
 		this.panelBotones = new JPanel();
+		panelBotones.setOpaque(false);
 		panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(panelBotones, BorderLayout.SOUTH);
 	}
