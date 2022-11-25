@@ -76,7 +76,7 @@ public class Empresa {
 		return null;
 	}
 	
-<<<<<<< HEAD
+
 	public ArrayList<Instalacion> instalacionesAsignadasATecnico(int idTecnico) {
 		ArrayList<Instalacion> resultado = new ArrayList<>();
 		for (Instalacion i : this.instalaciones) {
@@ -86,8 +86,7 @@ public class Empresa {
 		}
 		return resultado;
 	}
-=======
->>>>>>> 04bb1fc8e34b3d176ee58a72ad876aebffd8543f
+
 	
 	public Empleado buscarEmpleado(int id) {
 		for (Empleado empleado : this.empleados) {
@@ -141,18 +140,14 @@ public class Empresa {
 //			this.inventario.quitarProducto(new KitDeInstalacion());
 //			System.out.println(this.inventario.toString());
 			
-<<<<<<< HEAD
+
 			
 			instalacion.agregarElementos(new Condensadora());
 			instalacion.agregarElementos(new Evaporadora());
 			instalacion.agregarElementos(new KitDeInstalacion());
-			
 
-
-			return instalacion;
-=======
 			return true;
->>>>>>> 04bb1fc8e34b3d176ee58a72ad876aebffd8543f
+
 		}
 		return false;
 	}
