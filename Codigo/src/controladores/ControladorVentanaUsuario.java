@@ -43,6 +43,7 @@ public class ControladorVentanaUsuario {
 			case "Tecnico":
 				Tecnico tecnico = (Tecnico) usuario;
 				this.vista = new VentanaUsuario(new ImageIcon("tecnico.png"), "Tecnico",1,1);
+				this.iniciarVistaTecnico(tecnico);
 				break;
 			case "Administrativo":
 				Administrativo administrativo = (Administrativo) usuario;
@@ -63,6 +64,13 @@ public class ControladorVentanaUsuario {
 		this.vista = new VentanaUsuario(new ImageIcon("operadorCallCenter.png"), "Operador", 2, 1);
 		this.vista.agregarModulo(controladorAgendarInstalacion.getVista());
 		this.vista.agregarModulo(controladorCrearCliente.getVista());
+		
+	}
+	
+	private void iniciarVistaTecnico(Tecnico tecnico) {
+		ControladorModificarInstalacion controladorModificarInstalacion = new ControladorModificarInstalacion();
+		this.vista = new VentanaUsuario(new ImageIcon("operadorCallCenter.png"), "Tecnico", 2, 1);
+		this.vista.agregarModulo(controladorModificarInstalacion.getVista());
 		
 	}
 	

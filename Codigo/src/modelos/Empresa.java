@@ -135,6 +135,15 @@ public class Empresa {
 	public ArrayList<Instalacion> getInstalaciones() {
 		return instalaciones;
 	}
+	
+	public Instalacion buscarInstalacion(int id) {
+		for (Instalacion instalacion : this.instalaciones) {
+			if (instalacion.getId() == id) {
+				return instalacion;
+			}
+		}
+		return null;
+	}
 
 	public void agregarInstalaciones(Instalacion instalacion) {
 		this.instalaciones.add(instalacion);
