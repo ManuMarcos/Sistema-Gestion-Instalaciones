@@ -1,6 +1,6 @@
 package modelos;
 
-public class ProductoView {
+public class ProductoInventarioView {
 
 	//Attributes
 	private int id;
@@ -8,7 +8,7 @@ public class ProductoView {
 	private int stock;
 	private String producto;
 	
-	public ProductoView(int id, float precio, int stock, String nombreProducto) {
+	public ProductoInventarioView(int id, float precio, int stock, String nombreProducto) {
 		this.id = id;
 		this.precio = precio;
 		this.stock = stock;
@@ -27,7 +27,7 @@ public class ProductoView {
 		return stock;
 	}
 
-	public String getProducto() {
+	public String getNombre() {
 		return producto;
 	}
 	

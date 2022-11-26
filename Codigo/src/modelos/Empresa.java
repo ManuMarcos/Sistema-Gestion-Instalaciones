@@ -127,41 +127,33 @@ public class Empresa {
 		Tecnico tecnico = (Tecnico) this.buscarEmpleado(idTecnico);
 		
 		if (this.esPosibleAgendarInstalacion(cliente, tecnico, fecha)) {
-			Turno turno = new Turno(fecha);
-			cliente.getAgenda().agendarTurno(turno);
-			tecnico.getAgenda().agendarTurno(turno);
-			Instalacion instalacion = new Instalacion(cliente, tecnico, necesitaSeguro, necesitaSoportePared);
-			turno.setInstalacion(instalacion);
-			this.agregarInstalaciones(instalacion);
-			
-//			Se quitan los productos necesarios para una instalacion y se imprime como queda el inventario
-//			this.inventario.quitarProducto(new Condensadora());
-//			this.inventario.quitarProducto(new Evaporadora());
-//			this.inventario.quitarProducto(new KitDeInstalacion());
-//			System.out.println(this.inventario.toString());
-			
-
-			
-			instalacion.agregarElemento(new Condensadora());
-			instalacion.agregarElemento(new Evaporadora());
-			instalacion.agregarElemento(new KitDeInstalacion());
-
-			return true;
-
+			if (this.hayStockDisponibleParaAgendar()) {
+				Turno turno = new Turno(fecha);
+				cliente.getAgenda().agendarTurno(turno);
+				tecnico.getAgenda().agendarTurno(turno);
+				Instalacion instalacion = new Instalacion(cliente, tecnico, necesitaSeguro, necesitaSoportePared);
+				turno.setInstalacion(instalacion);
+				this.agregarInstalaciones(instalacion);
+	
+				instalacion.agregarElemento(this.inventario.quitarProducto(new Condensadora()));
+				instalacion.agregarElemento(this.inventario.quitarProducto(new Evaporadora()));
+				instalacion.agregarElemento(this.inventario.quitarProducto(new KitDeInstalacion()));
+				
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	
-	public boolean agregarElementosAInstalacion(int idInstalacion ,String nombreProducto, int cantidad) {
-		Producto producto = this.crearProducto(nombreProducto);
-		Instalacion instalacion = this.buscarInstalacion(idInstalacion);
+	private boolean agregarElementosAInstalacion(Instalacion instalacion ,Producto producto , int cantidad) {
 		if (producto != null) {
 			ArrayList<Producto> productosDelInventario = this.inventario.quitarProductos(producto, cantidad);
 			if (productosDelInventario != null) {
 				instalacion.agregarElementosUtilizados(productosDelInventario);
 				return true;
 			}
+			System.out.println("ACA HAY PROBLEMAS");
 		}
 		return false;
 	}
@@ -195,21 +187,33 @@ public class Empresa {
 		this.instalaciones.add(instalacion);
 	}
 
-	public void setStockProducto(Producto producto, int cantidadStock) {
-		this.inventario.setStock(producto, cantidadStock);
+	public boolean setStockProducto(String nombreProducto, int cantidadStock) {
+		Producto producto = this.crearProducto(nombreProducto);
+		if (producto != null) {
+			this.inventario.setStock(producto, cantidadStock);
+			return true;
+		}
+		return false;
 	}
 	
-	public void setPrecioProducto(Producto producto, float precio) {
-		this.inventario.setPrecioProducto(producto, precio);
+	public boolean setPrecioProducto(String nombreProducto, float precio) {
+		Producto producto = this.crearProducto(nombreProducto);
+		if (producto != null) {
+			producto.setPrecio(precio);
+			return true;
+		}
+		return false;
 	}
+	
+	
+	
+	
 	
 	public Producto removerUnidadProducto(Producto producto) {
 		return this.inventario.quitarProducto(producto);
 	}
 	
-	public Producto obtenerProducto(Producto producto) {
-		return this.inventario.buscarProducto(producto);
-	}
+	
 	
 	public int getStockDeElementosInstalacion(int idInstalacion, String nombreProducto) {
 		Instalacion instalacion = this.buscarInstalacion(idInstalacion);
@@ -251,36 +255,34 @@ public class Empresa {
 		return instalacionesAsignadas;
 	}
 	
-	
-	public boolean completarInstalacion(Instalacion instalacion, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, int cantEvaporadoras, int cantKitsDeInstalacion, int cantCondensadoras) {
+	public boolean completarInstalacion(int id, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, 
+			int cantEvaporadoras, int cantKitsDeInstalacion, int cantCondensadoras) {
 		boolean sePudoCompletar = true;
-		instalacion.setAlmuerzo(almuerzo);
-		instalacion.setHoraInicio(horaInicio);
-		instalacion.setHoraFinalizacion(horaFinalizacion);
+		Instalacion instalacion = this.buscarInstalacion(id);	
+		if (instalacion != null) {
+			instalacion.setAlmuerzo(almuerzo);
+			instalacion.setHoraInicio(horaInicio);
+			instalacion.setHoraFinalizacion(horaFinalizacion);
+			
+			boolean agregarEvaporadoras = this.agregarElementosAInstalacion(instalacion, new Evaporadora(), cantEvaporadoras);
+			boolean agregarCondensadoras = this.agregarElementosAInstalacion(instalacion, new Condensadora(), cantCondensadoras);
+			boolean agregarKits = this.agregarElementosAInstalacion(instalacion, new KitDeInstalacion(), cantKitsDeInstalacion);
+			
+			if (!agregarEvaporadoras || !agregarCondensadoras || !agregarKits) {
+				sePudoCompletar = false;
+				System.out.println("Ocurrio un error");
+			}
 		
-		boolean agregarEvaporadoras = this.agregarElementosAInstalacion(instalacion.getId(), "Evaporadora", cantEvaporadoras);
-		boolean agregarCondensadoras = this.agregarElementosAInstalacion(instalacion.getId(), "Condensadora", cantCondensadoras);
-		boolean agregarKits = this.agregarElementosAInstalacion(instalacion.getId(), "KitDeInstalacion", cantKitsDeInstalacion);
-		
-		if (!agregarEvaporadoras || !agregarCondensadoras || !agregarKits) {
-			sePudoCompletar = false;
-			System.out.println("Ocurrio un error");
+			System.out.println(instalacion.getElementos().toString());
+			
+			instalacion.setEstado(Estado.FINALIZADA);
 		}
-	
-		System.out.println(instalacion.getElementos().toString());
-		
-		instalacion.setEstado(Estado.FINALIZADA);
+		else {
+			sePudoCompletar = false;
+		}
 		return sePudoCompletar;
 	}
 	
-	public boolean completarInstalacion(int id, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, int cantidadEvaporadoras, int cantidadKitsDeInstalacion, int cantidadCondensadoras) {
-		Instalacion instalacion = this.buscarInstalacion(id);	
-		if (instalacion != null) {
-			this.completarInstalacion(instalacion, horaInicio, horaFinalizacion, almuerzo, cantidadEvaporadoras, cantidadKitsDeInstalacion, cantidadCondensadoras);
-			return true;
-		}
-		return false;
-	}
 	
 	public void agregarEmpleado(Empleado empleado) {
 		this.empleados.add(empleado);
@@ -346,9 +348,18 @@ public class Empresa {
 		this.clientes.add(cliente);
 	}
 	
-	public void agregarProducto(Producto producto, int cantidad) {
-		this.inventario.setStock(producto, cantidad);
+	public boolean agregarProducto(String nombreProducto, int cantidad) {
+		Producto producto = this.crearProducto(nombreProducto);
+		if (producto != null) {
+			this.inventario.setStock(producto, cantidad);
+			return true;
+		}
+		return false;
 	};
+	
+	
+	
+	
 	
 //	public void setCantidadElementosEnInstalacion(int idInstalacion, String producto, int cantidad) {
 //		Instalacion instalacion = this.buscarInstalacion(idInstalacion);
@@ -447,7 +458,7 @@ public class Empresa {
 		return false;
 	}
 	
-	public ArrayList<ProductoView> getProductosView(){
+	public ArrayList<ProductoInventarioView> getProductosView(){
 		return this.inventario.getProductos();
 	}
 	
@@ -460,6 +471,20 @@ public class Empresa {
 		}
 		return null;
 	}
+	
+	public ProductoInventarioView getProductoView(int idProducto) {
+		return this.inventario.getProductoView(idProducto);
+	}
+	
+	
+	public void actualizarDatosProducto(String nombreProducto, float precio, int stock) {
+		Producto producto = this.crearProducto(nombreProducto);
+		this.inventario.setStock(producto, stock);
+		this.inventario.setPrecioProducto(producto, precio);
+	}
+	
+	
+	
 	/*
 	
 	*/
@@ -485,10 +510,6 @@ public class Empresa {
 		}
 	}
 	
-	
-	
-	
-	
 	public Disponibilidad crearTurnoLaboral(String turno) {
 		switch (turno) {
 			case "TurnoManana":
@@ -512,6 +533,7 @@ public class Empresa {
 		case "Senior":
 			return new Senior();
 		default:
+			System.out.println("ERROR");
 			return null;
 		}
 	}
@@ -530,7 +552,6 @@ public class Empresa {
 		tecnico.setExperienciaLaboral(this.crearExpLaboral(expLaboral));
 		tecnico.setUsuario(usuario);
 		tecnico.setContrasena(contrasena);
-		System.out.println(tecnico.toString());
 	}
 	
 	public boolean eliminarEmpleado(int id) {

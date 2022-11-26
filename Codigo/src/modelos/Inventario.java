@@ -23,7 +23,7 @@ public class Inventario {
 	 * @return cantEnStock
 	 */
 	
-	public int obtenerStock(Producto producto) {
+	public int getStock(Producto producto) {
 		Producto productoBuscado = this.buscarProducto(producto);
 		if (productoBuscado != null) {
 			return this.productos.get(productoBuscado);
@@ -65,13 +65,24 @@ public class Inventario {
 		return false;
 	}
 	
+	public void agregarProducto(Producto producto) {
+		Producto productoBuscado = this.buscarProducto(producto);
+		if (productoBuscado != null) {
+			this.productos.merge(productoBuscado, 1, Integer :: sum);
+		}
+		else {
+			this.productos.put(producto, 1);
+		}
+	}
+	
+	
 	/**
 	 * Verifica si hay stock del producto. Devolviendo true si hay y false si no.
 	 * @param producto
 	 * @return boolean
 	 */
 	public boolean hayStock(Producto producto) {
-		if (this.obtenerStock(producto) > 0) {
+		if (this.getStock(producto) > 0) {
 			return true;
 		}
 		return false;
@@ -84,9 +95,12 @@ public class Inventario {
 	 * @return Producto
 	 */
 	public Producto quitarProducto(Producto producto) {
-		int stockDisponible = this.obtenerStock(producto);
-		if (stockDisponible != -1 && stockDisponible - 1 >= 0) {
-			this.productos.merge(producto, -1, Integer::sum);
+		Producto productoBuscado = this.buscarProducto(producto);
+		int stockDisponible = this.productos.get(productoBuscado);
+		
+		if (productoBuscado != null && stockDisponible > 0) {
+			this.productos.put(productoBuscado, stockDisponible - 1);
+			return productoBuscado;
 		}
 		return null;
 	}
@@ -96,25 +110,21 @@ public class Inventario {
 	 */
 	
 	public ArrayList<Producto> quitarProductos(Producto producto, int cantidad){
-		int stockDisponible = this.obtenerStock(producto);
-		ArrayList<Producto> productosQuitados = new ArrayList<Producto>();
-		if (stockDisponible != -1 && stockDisponible - cantidad >= 0) {
-			Producto productoBuscado = this.buscarProducto(producto);
+		Producto productoBuscado = this.buscarProducto(producto);
+		int stockDisponible = this.productos.get(productoBuscado);
+		
+		if (stockDisponible - cantidad >= 0 && productoBuscado != null) {
+			ArrayList<Producto> productosQuitados = new ArrayList<Producto>();
 			for (int i = 0; i < cantidad; i++) {
 				productosQuitados.add(productoBuscado);
 			}
+			this.productos.put(productoBuscado, stockDisponible - cantidad);
 			return productosQuitados;
 		}
 		return null;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * Busca el producto en el inventario. Devuelve la referencia al producto buscado. Si no existe devuelve null
 	 * @param producto
@@ -129,15 +139,22 @@ public class Inventario {
 		return null;
 	}
 	
-	public ArrayList<ProductoView> getProductos() {
-		ArrayList<ProductoView> productosView = new ArrayList<ProductoView>();
+	public ArrayList<ProductoInventarioView> getProductos() {
+		ArrayList<ProductoInventarioView> productosView = new ArrayList<ProductoInventarioView>();
 		for (Producto pi : this.productos.keySet()) {
-			productosView.add(new ProductoView(pi.getId(),pi.getPrecio(), (int) this.productos.get(pi), pi.getClass().getSimpleName()));
+			productosView.add(new ProductoInventarioView(pi.getId(),pi.getPrecio(), (int) this.productos.get(pi), pi.getClass().getSimpleName()));
 		}
 		return productosView;
 	}
 	
-	
+	public ProductoInventarioView getProductoView(int idProducto) {
+		for (Producto pi : this.productos.keySet()) {
+			if (pi.getId() == idProducto) {
+				return new ProductoInventarioView(pi.getId(), pi.getPrecio(),(int) this.productos.get(pi), pi.getClass().getSimpleName());
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * Devuelve un String con todos los productos en el inventario con su Nombre, Stock y Precio
@@ -145,8 +162,11 @@ public class Inventario {
 	public String toString() {
 		String listaProductos = "";
 		for (Producto producto : this.productos.keySet()) {
+			
 			listaProductos += producto.getClass().getSimpleName() + "  Stock: " + this.productos.get(producto) + 
 					"  Precio: " + producto.getPrecio() + "\n";
+			
+			
 		}
 		return listaProductos;
 	}

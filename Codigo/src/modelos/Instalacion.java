@@ -106,6 +106,7 @@ public class Instalacion {
 
 	public void agregarElemento(Producto producto) {
 		this.elementos.add(producto);
+		System.out.println(producto.toString());
 	}
 
 	public Tecnico getTecnico() {

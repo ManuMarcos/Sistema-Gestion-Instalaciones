@@ -1,77 +1,89 @@
 package vistas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import java.awt.GridLayout;
-import javax.swing.JButton;
 import javax.swing.BoxLayout;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.SystemColor;
-import java.awt.FlowLayout;
-import javax.swing.JInternalFrame;
 
 public class VentanaUsuario extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+	//Panels
 	private JPanel contentPane;
-	private JTable tableDatosOperador;
-	private JScrollPane scrollPaneTableDatosOperador;
+	private JPanel panelCentral;
+	private JPanel panelIzquierdo;
+	private JPanel panelInferior;
+	//Labels
+	private JLabel labelUsuario;
+	private JLabel labelNombreApellido;
+	private JLabel labelLegajo;
+	private JLabel labelIconoUsuario;
 	private JLabel datoUsuario;
 	private JLabel datoNombreApellido;
 	private JLabel datoNroLegajo;
-	private JPanel panelCentral;
-	private JInternalFrame internalFrame;
-	private JLabel labelIconoUsuario;
+	
+	
 
 	
-	/**
-	 * Create the frame.
-	 */
 	public VentanaUsuario(Icon iconoUsuario, String titulo, int filas, int columnas) {
+		this.setTitle(titulo);
+		this.modificarContentPane();
+		this.agregarPaneles(filas, columnas);
+		this.setearIcono(iconoUsuario);
+		this.agregarEtiquetas();
+	}
+	
+	private void modificarContentPane() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 928, 570);
-		this.setTitle(titulo);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		
+	}
+	
+	private void setearIcono(Icon iconoUsuario) {
+		this.labelIconoUsuario = new JLabel(iconoUsuario);
+		this.labelIconoUsuario.setBorder(new EmptyBorder(0,0,10,0));
+		panelIzquierdo.add(labelIconoUsuario);
+	}
+	
+	private void setearPanelModular(int filas, int columnas) {
 		this.panelCentral = new JPanel();
 		this.panelCentral.setBorder(new EmptyBorder(0,5,0,5));
 		panelCentral.setBackground(Color.WHITE);
 		panelCentral.setOpaque(false);
 		contentPane.add(panelCentral, BorderLayout.CENTER);
-		
 		//Setear cantidad de columnas y filas
 		panelCentral.setLayout(new GridLayout(filas, columnas, 5, 5));
+	}
+	
+
+	private void agregarPaneles(int columnas, int filas) {
 		
-		JPanel panelIzquierdo = new JPanel();
+		this.setearPanelModular(columnas, filas);
+		
+		this.panelIzquierdo = new JPanel();
 		panelIzquierdo.setOpaque(false);
 		contentPane.add(panelIzquierdo, BorderLayout.WEST);
 		panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
 		
-		this.labelIconoUsuario = new JLabel(iconoUsuario);
-		this.labelIconoUsuario.setBorder(new EmptyBorder(0,0,10,0));
-		panelIzquierdo.add(labelIconoUsuario);
-		
-		JLabel labelUsuario = new JLabel("Usuario");
+		this.panelInferior = new JPanel();
+		panelInferior.setOpaque(false);
+		contentPane.add(panelInferior, BorderLayout.SOUTH);
+	}
+	
+	private void agregarEtiquetas() {
+		this.labelUsuario = new JLabel("Usuario");
 		labelUsuario.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		labelUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		labelUsuario.setFont(new Font(VistaConfig.labelFontFamily, Font.BOLD, 14));
@@ -85,7 +97,7 @@ public class VentanaUsuario extends JFrame {
 		datoUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		panelIzquierdo.add(datoUsuario);
 		
-		JLabel labelNombreApellido = new JLabel("Nombre Apellido");
+		this.labelNombreApellido = new JLabel("Nombre Apellido");
 		labelNombreApellido.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		labelNombreApellido.setHorizontalAlignment(SwingConstants.CENTER);
 		labelNombreApellido.setFont(new Font(VistaConfig.labelFontFamily, Font.BOLD, 14));
@@ -99,7 +111,7 @@ public class VentanaUsuario extends JFrame {
 		datoNombreApellido.setHorizontalAlignment(SwingConstants.CENTER);
 		panelIzquierdo.add(datoNombreApellido);
 		
-		JLabel labelLegajo = new JLabel("Nro de Legajo");
+		this.labelLegajo = new JLabel("Nro de Legajo");
 		labelLegajo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		labelLegajo.setHorizontalAlignment(SwingConstants.CENTER);
 		labelLegajo.setFont(new Font(VistaConfig.labelFontFamily, Font.BOLD, 14));
@@ -112,13 +124,10 @@ public class VentanaUsuario extends JFrame {
 		datoNroLegajo.setForeground(Color.DARK_GRAY);
 		datoNroLegajo.setHorizontalAlignment(SwingConstants.CENTER);
 		panelIzquierdo.add(datoNroLegajo);
-		
-		JPanel panelInferior = new JPanel();
-		panelInferior.setOpaque(false);
-		contentPane.add(panelInferior, BorderLayout.SOUTH);
-		
-		
 	}
+	
+	
+	
 	
 	public void setDatosUsuario(String usuario, String nroLegajo, String nombreApellido) {
 		this.datoUsuario.setText(usuario);

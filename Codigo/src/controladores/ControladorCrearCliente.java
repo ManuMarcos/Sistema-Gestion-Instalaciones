@@ -2,11 +2,8 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import modelos.Empresa;
 import modelos.TipoCliente;
-import vistas.PanelAgendarInstalacion;
 import vistas.PanelCrearCliente;
 
 public class ControladorCrearCliente implements ActionListener{

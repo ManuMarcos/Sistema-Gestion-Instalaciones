@@ -3,29 +3,31 @@ package modelos;
 public abstract class Producto {
 
 	//Attributes
-	protected float precio;
+	private float precio = 0;
 	protected static int generador = 1;
 	protected int id;
 	
 	
 	//Methods
 	
-	public Producto() {
+	public Producto(float precio) {
+		this.precio = precio;
 		this.id = generador;
 		generador++;
 	}
 	
-	protected void setPrecio(float precio) {
+	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
-	
-	
-	protected float getPrecio() {
+
+	public float getPrecio() {
 		return this.precio;	
 	}
 	
 	protected int getId() {
 		return this.id;
 	}
+
+	
 
 }

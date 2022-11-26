@@ -51,10 +51,7 @@ public class PanelAgendarInstalacion extends Panel {
 	private JPanel panelInferior;
 	private JPanel panelSeleccionarFecha;
 	private JPanel panelCheckBox;
-	
-	
-	
-	
+
 	private JTextField idClienteTextField;
 	private JTable tablaDatosCliente;
 	private JScrollPane tablaScrollPane;

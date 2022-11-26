@@ -1,6 +1,6 @@
 package controladores;
 
-import modelos.Empleado;
+
 import modelos.Empresa;
 
 import vistas.VentanaLogin;
@@ -21,6 +21,7 @@ public class ControladorLogin {
 		int idUsuario = this.modelo.esUsuarioValido(usuario, contrasena, tipoUsuario);
 		if (idUsuario != -1) {
 			ControladorVentanaUsuario controladorVentanaUsuario = new ControladorVentanaUsuario(idUsuario);
+			controladorVentanaUsuario.iniciarVista();
 		}
 		else {
 			vista.mostrarMensajeDeError("Usuario invalido");

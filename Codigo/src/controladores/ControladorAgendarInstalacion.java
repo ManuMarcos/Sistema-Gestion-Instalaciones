@@ -6,20 +6,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
-
-import modelos.Agenda;
-import modelos.Cliente;
 import modelos.ClienteView;
-import modelos.ComboItem;
 import modelos.EmpleadoView;
 import modelos.Empresa;
-import modelos.Instalacion;
-import modelos.Tecnico;
 import modelos.TecnicoView;
-import modelos.Turno;
 import vistas.PanelAgendarInstalacion;
 
 
@@ -36,9 +28,6 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		this.modelo = Empresa.getInstance();
 	}
 	
-	
-	
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -48,7 +37,6 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 				String idIngresado = this.vista.getIdCliente();
 				if (this.esIdValido(idIngresado)) {
 					this.agendarInstalacion(Long.parseLong(idIngresado));
-					System.out.println(idIngresado);
 				}
 				break;
 			case "CONFIRMAR_TECNICO":
@@ -164,7 +152,7 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		// TODO Auto-generated method stub
 	}
 	
-	public boolean esIdValido(String idCliente) {
+	private boolean esIdValido(String idCliente) {
 		try {
 			Long.parseLong(vista.getIdCliente());
 			return true;
@@ -175,7 +163,7 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		}
 	}
 
-	public boolean existeCliente(long idCliente) {
+	private boolean existeCliente(long idCliente) {
 		if (!this.modelo.existeCliente(idCliente)){
 			vista.mostrarMensajeDeError("Cliente inexistente", "El cliente ingresado no existe");
 			return false;

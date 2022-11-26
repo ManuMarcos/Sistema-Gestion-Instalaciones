@@ -4,20 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.Calendar;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
-
-import modelos.Agenda;
-import modelos.Cliente;
 import modelos.EmpleadoView;
 import modelos.Empresa;
-import modelos.Estado;
 import modelos.Instalacion;
-import modelos.Tecnico;
-import modelos.Turno;
 import vistas.PanelModificarInstalacion;
 
 

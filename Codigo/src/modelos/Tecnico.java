@@ -40,10 +40,11 @@ public class Tecnico extends Empleado {
 		return this.agenda;
 	}
 	
+	/*
 	public void completarInstalacion(Instalacion instalacion, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, int cantidadEvaporadoras, int cantidadKitsDeInstalacion, int cantidadCondensadoras) {
 		empresa.completarInstalacion(instalacion, horaInicio, horaFinalizacion, almuerzo, cantidadEvaporadoras, cantidadKitsDeInstalacion, cantidadCondensadoras);
 	}
-	
+	*/
 	/*
 	public void agregarElementoUtilizado(Instalacion instalacion, Producto producto, int cantidad) {
 		empresa.completarInstalacion(instalacion, null, null, false, cantidad, cantidad, cantidad)

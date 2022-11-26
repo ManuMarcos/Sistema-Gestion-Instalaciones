@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
-import modelos.Empleado;
+
 import modelos.Empresa;
 import modelos.Junior;
 import modelos.SemiSenior;
 import modelos.Senior;
 import modelos.TecnicoView;
-import modelos.TurnoCompleto;
+
 import modelos.TurnoManana;
 import modelos.TurnoTarde;
 import vistas.PanelAbmTecnicos;

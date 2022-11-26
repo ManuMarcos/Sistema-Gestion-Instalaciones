@@ -4,14 +4,15 @@ public class Condensadora extends Producto{
 
 	//Attributes
 	
-	
-	
-	
 	//Methods
+	
 	public Condensadora() {
-		// TODO Auto-generated constructor stub
+		super(0);
 	}
 	
+	public Condensadora(float precio) {
+		super(precio);
+	}
 	
 	
 	public String toString() {

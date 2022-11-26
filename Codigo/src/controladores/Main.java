@@ -27,6 +27,12 @@ public class Main {
 		
 		ExperienciaLaboral junior = new Junior();
 		ExperienciaLaboral semisenior = new SemiSenior();
+		
+		ExperienciaLaboral junior2 = new Junior();
+		
+		
+		
+		
 
 		Tecnico tecnico1 = new Tecnico("Nahuel Damiano", "Los Indios 254", new TurnoManana(), "tecnico1", "tecnico1", junior);
 		Tecnico tecnico2 = new Tecnico("Roberto Robertson", "Los Indios 123", new TurnoManana(), "tecnico2", "tecnico2", semisenior);
@@ -52,6 +58,7 @@ public class Main {
 		empresa.agregarEmpleado(administrativo);
 		
 		System.out.println(tecnico1.toString());
+		
 		
 		
 		
@@ -85,19 +92,52 @@ public class Main {
 		
 		
 		//Se agrega el stock antes de agendar instalaciones
-		Producto evaporadora = new Evaporadora();
-		Producto condensadora = new Condensadora();
-		Producto kitDeInstalacion = new KitDeInstalacion();
+		//Producto evaporadora = new Evaporadora();
+		//Producto condensadora = new Condensadora();
+		//Producto kitDeInstalacion = new KitDeInstalacion();
 		
-		empresa.setStockProducto(evaporadora, 50);
-		empresa.setStockProducto(condensadora, 20);
-		empresa.setStockProducto(kitDeInstalacion, 23);
-		empresa.setPrecioProducto(evaporadora, 50);
-		empresa.setPrecioProducto(condensadora, 78);
-		empresa.setPrecioProducto(kitDeInstalacion, 40);
+		empresa.setStockProducto("Evaporadora", 5);
+		empresa.setStockProducto("Condensadora", 6);
+		empresa.setStockProducto("KitDeInstalacion", 2);
 		
-		empresa.imprimirInventario();
-							
+		empresa.getInventario().setStock(new Evaporadora(), 1220);
+		empresa.getInventario().setStock(new Condensadora(), 500);
+		empresa.getInventario().setStock(new KitDeInstalacion(), 20);
+		
+	
+		
+		System.out.println(empresa.getInventario().toString());
+		
+		
+		/*
+		empresa.setPrecioProducto("Evaporadora", 50);
+		empresa.setPrecioProducto("Condensadora", 78);
+		empresa.setPrecioProducto("KitDeInstalacion", 40);
+		*/
+		
+		empresa.setPrecioProducto("Evaporadora", 200);
+		/*
+		
+		empresa.getInventario().quitarProductos(new Condensadora(), 9);
+		empresa.getInventario().quitarProductos(new KitDeInstalacion(), 10);
+		System.out.println(empresa.getInventario().obtenerStock(new KitDeInstalacion()));
+		empresa.getInventario().quitarProductos(new KitDeInstalacion(), 13);
+		*/
+		
+		
+		
+		
+	
+		/*
+		empresa.getInventario().quitarProductos(new Evaporadora(), 3);
+		System.out.println(empresa.getInventario().toString());
+		empresa.getInventario().quitarProductos(new Condensadora(), 4);
+		System.out.println(empresa.getInventario().toString());
+		*/
+		
+	
+		
+		/*					
 		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha1, true, false);
 		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha2, true, false);
 		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha3, false, false);
@@ -107,15 +147,15 @@ public class Main {
 		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha7, false, true);
 	    empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha8, false, true);
 		empresa.agendarInstalacion(cliente1.getCuitCuil(), tecnico1.getId(), fecha9, true, false);
-		
+		*/
 
 		
-		
+		/*
 		System.out.println("-----------------------------Agenda Tecnico-----------------------------");
 		tecnico1.getAgenda().imprimirTurnos();
 		System.out.println("-----------------------------Agenda Cliente-----------------------------");
 		cliente1.getAgenda().imprimirTurnos();
-		
+		*/
 //		System.out.println("VALOR POR HORA TECNICO 1 SIENDO JUNIOR");
 //		System.out.println(tecnico1.getExperienciaLaboral().getCostoHora());
 //		
@@ -160,7 +200,7 @@ public class Main {
 //			}
 //		}
 				
-		empresa.imprimirInventario();
+		
 
 		
 		
@@ -170,14 +210,6 @@ public class Main {
 		empresa.getInventario().setStock(new Evaporadora(), 1);
 		empresa.getInventario().setStock(new KitDeInstalacion(), 0);
 		*/
-		
-		
-		
-		
-		
-		empresa.agregarProducto(new Evaporadora(), 150);
-		empresa.setPrecioProducto(new Evaporadora(), 784);
-		
 		
 		
 		
