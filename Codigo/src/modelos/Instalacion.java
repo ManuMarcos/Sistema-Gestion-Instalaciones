@@ -26,22 +26,18 @@ public class Instalacion {
 
 	// Constructor
 	public Instalacion(Cliente cliente, Tecnico tecnico, boolean necesitaSeguro, boolean necesitaSoportePared) {
-		this.setCliente(cliente);
-		this.setTecnico(tecnico);
-		this.setId(generador);
+		this.cliente = cliente;
+		this.tecnico = tecnico;
+		this.id = generador;
 		generador++;
-		this.setNecesitaSeguro(necesitaSeguro);
-		this.setNecesitaSoportePared(necesitaSoportePared);
-		this.setEstado(Estado.PROGRAMADA);
+		this.necesitaSeguro = necesitaSeguro;
+		this.necesitaSoportePared = necesitaSoportePared;
+		this.estado = Estado.PROGRAMADA;
 		this.elementos = new ArrayList<Producto>();
 	}
 
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public Estado getEstado() {
@@ -50,6 +46,9 @@ public class Instalacion {
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
+		if (estado.equals(Estado.FINALIZADA)) {
+			this.facturar();
+		}
 	}
 
 	public Calendar getHoraInicio() {
@@ -102,6 +101,21 @@ public class Instalacion {
 		}
 		
 		return contador;
+	}
+
+	private void facturar() {
+		float precio = 0;
+		
+		for(Producto elemento : this.elementos) {
+			precio += elemento.getPrecio();
+		}
+		
+		//Falta terminar
+		this.factura = new Factura(precio, 21, this.cliente.getTipoCliente());
+		
+		//ESTO NO ME GUSTA
+		Empresa.getInstance().agregarFactura(factura);
+		
 	}
 
 	public void agregarElemento(Producto producto) {
@@ -170,7 +184,7 @@ public class Instalacion {
 		for (Producto producto : this.elementos) {
 			elementosUtilizados.merge(producto.getClass().getSimpleName(), 1, Integer::sum);
 		}
-		return new InstalacionView(this.id, this.cliente.toView(), this.tecnico.toView(), this.estado.toString(), elementosUtilizados);
+		return new InstalacionView(this.id, this.cliente.toView(), this.tecnico.toView(), this.estado.toString(), elementosUtilizados, this.horaInicio, this.horaFinalizacion);
 	}
 	
 

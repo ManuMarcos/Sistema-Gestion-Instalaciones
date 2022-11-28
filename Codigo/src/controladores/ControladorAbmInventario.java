@@ -65,6 +65,9 @@ public class ControladorAbmInventario implements MouseListener, ActionListener{
 				break;
 			case "CANCELAR":
 				break;
+			case "ACTUALIZAR":
+				this.cargarListadoDeProductos();
+				break;
 		}
 	}
 	

@@ -20,7 +20,7 @@ public class ControladorVentanaUsuario {
 	}
 	
 	private void mostrarDatosUsuario() {
-		this.vista.setDatosUsuario(empleadoView.getUsuario(), empleadoView.getNombre(), Integer.toString(empleadoView.getId()));
+		this.vista.setDatosUsuario(empleadoView.getUsuario(), Integer.toString(empleadoView.getId()), empleadoView.getNombre());
 	}
 	
 	public void iniciarVista() {
@@ -51,7 +51,6 @@ public class ControladorVentanaUsuario {
 		this.vista = new VentanaUsuario(new ImageIcon("operadorCallCenter.png"), "Operador", 2, 1);
 		this.vista.agregarModulo(controladorAgendarInstalacion.getVista());
 		this.vista.agregarModulo(controladorCrearCliente.getVista());
-		
 	}
 	
 	private void iniciarVistaTecnico(EmpleadoView empleadoLogueado) {
@@ -60,7 +59,6 @@ public class ControladorVentanaUsuario {
 		this.vista = new VentanaUsuario(new ImageIcon("tecnico.png"), "Tecnico", 2 ,1);
 		this.vista.agregarModulo(controladorModificarInstalacion.getVista());
 		this.vista.agregarModulo(controladorVerInstalaciones.getVista());
-	
 	}
 	
 

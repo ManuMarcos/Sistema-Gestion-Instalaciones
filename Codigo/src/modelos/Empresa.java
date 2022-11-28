@@ -100,6 +100,9 @@ public class Empresa {
 	
 	
 	
+	
+	
+	
 	public boolean esPosibleAgendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
 		Agenda agendaCliente = cliente.getAgenda();
 		Agenda agendaTecnico = tecnico.getAgenda();
@@ -134,7 +137,8 @@ public class Empresa {
 				Instalacion instalacion = new Instalacion(cliente, tecnico, necesitaSeguro, necesitaSoportePared);
 				turno.setInstalacion(instalacion);
 				this.agregarInstalaciones(instalacion);
-	
+				instalacion.setHoraInicio(turno.getHoraInicio());
+				//instalacion.setHoraFinalizacion(turno.getHoraFinalizacion());
 				instalacion.agregarElemento(this.inventario.quitarProducto(new Condensadora()));
 				instalacion.agregarElemento(this.inventario.quitarProducto(new Evaporadora()));
 				instalacion.agregarElemento(this.inventario.quitarProducto(new KitDeInstalacion()));
@@ -205,7 +209,16 @@ public class Empresa {
 		return false;
 	}
 	
-	
+	public ArrayList<ClienteView> buscarNombreClienteLike(String nombreApellido) {
+		ArrayList<ClienteView> clientesView = new ArrayList<ClienteView>();
+		System.out.println(nombreApellido);
+		for (Cliente cliente : this.clientes) {
+			if (cliente.getNombre().toLowerCase().contains(nombreApellido)) {
+				clientesView.add(cliente.toView());
+			}
+		}
+		return clientesView;
+	}
 	
 	
 	
@@ -263,7 +276,6 @@ public class Empresa {
 			instalacion.setAlmuerzo(almuerzo);
 			instalacion.setHoraInicio(horaInicio);
 			instalacion.setHoraFinalizacion(horaFinalizacion);
-			
 			boolean agregarEvaporadoras = this.agregarElementosAInstalacion(instalacion, new Evaporadora(), cantEvaporadoras);
 			boolean agregarCondensadoras = this.agregarElementosAInstalacion(instalacion, new Condensadora(), cantCondensadoras);
 			boolean agregarKits = this.agregarElementosAInstalacion(instalacion, new KitDeInstalacion(), cantKitsDeInstalacion);
@@ -272,10 +284,8 @@ public class Empresa {
 				sePudoCompletar = false;
 				System.out.println("Ocurrio un error");
 			}
-		
-			System.out.println(instalacion.getElementos().toString());
-			
 			instalacion.setEstado(Estado.FINALIZADA);
+			System.out.println(instalacion.getElementos().toString());
 		}
 		else {
 			sePudoCompletar = false;
@@ -288,9 +298,20 @@ public class Empresa {
 		this.empleados.add(empleado);
 	};
 	
+	/*
 	public ArrayList<Cliente> getClientes(){
 		return this.clientes;
 	}
+	*/
+	
+	public ArrayList<ClienteView> getClientesView(){
+		ArrayList<ClienteView> clientesView = new ArrayList<ClienteView>();
+		for (Cliente cliente : this.clientes) {
+			clientesView.add(cliente.toView());
+		}
+		return clientesView;
+	}
+	
 	
 	public ArrayList<String> getNombresClientes(){
 		ArrayList<String> nombreClientes = new ArrayList<String>();
@@ -358,32 +379,23 @@ public class Empresa {
 	};
 	
 	
-	
-	
-	
-//	public void setCantidadElementosEnInstalacion(int idInstalacion, String producto, int cantidad) {
-//		Instalacion instalacion = this.buscarInstalacion(idInstalacion);
-//		
-//		if (instalacion != null) {
-//			if (producto == "Evaporadora") {
-//				instalacion.setStockElementosUtilizados(new Evaporadora(), cantidad);
-//			} else if (producto == "Condensadora") {
-//				instalacion.setStockElementosUtilizados(new Condensadora(), cantidad);
-//			} else if (producto == "Kit De Instalacion") {
-//				instalacion.setStockElementosUtilizados(new KitDeInstalacion(), cantidad);
-//			}
-//		}
-//	}
-	
 	public void agregarCalendario() {}
 
 	public ArrayList<Factura> getFacturas() {
 		return facturas;
 	}
 
-	public void agregarFacturas(Factura factura) {
+	public void agregarFactura(Factura factura) {
 		this.facturas.add(factura);
 	};
+	
+	//ELIMINAR
+	public void imprimirFacturas() {
+		for (Factura factura : this.facturas) {
+			System.out.println(factura.getNumero() + "\n" + factura.getPrecioTotal() + "\n" + factura.getIva());
+		}
+	}
+	
 	
 	public Inventario getInventario() {
 		return this.inventario;

@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
@@ -13,9 +15,10 @@ import modelos.EmpleadoView;
 import modelos.Empresa;
 import modelos.TecnicoView;
 import vistas.PanelAgendarInstalacion;
+import vistas.VistaConfig;
 
 
-public class ControladorAgendarInstalacion implements ActionListener, KeyListener{
+public class ControladorAgendarInstalacion implements ActionListener, KeyListener, MouseListener{
 
 	//Attributes
 	private PanelAgendarInstalacion vista;
@@ -24,6 +27,7 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 	public ControladorAgendarInstalacion(){
 		this.vista = new PanelAgendarInstalacion();
 		this.vista.setActionListener(this);
+		this.vista.setMouseListener(this);
 		this.vista.setKeyListener(this);
 		this.modelo = Empresa.getInstance();
 	}
@@ -34,15 +38,16 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		String comandoAccionado = e.getActionCommand();
 		switch (comandoAccionado) {
 			case "AGENDAR":
-				String idIngresado = this.vista.getIdCliente();
-				if (this.esIdValido(idIngresado)) {
-					this.agendarInstalacion(Long.parseLong(idIngresado));
-				}
+				long idCliente = this.vista.getIdClienteSeleccionado();
+				this.agendarInstalacion(idCliente);
 				break;
 			case "CONFIRMAR_TECNICO":
 				this.confirmarInstalacion();
 				this.vista.cerrarVentanasEmergentes();
 				this.vista.resetearPanel();
+				break;
+			case "ABRIR_LISTADO_CLIENTES":
+				this.mostrarListadoClientes(this.modelo.getClientesView());
 				break;
 			case "CANCELAR":
 				this.vista.resetearPanel();
@@ -52,7 +57,7 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 
 	private void confirmarInstalacion() {
 		TecnicoView tecnicoView = this.modelo.getTecnicoView(this.vista.getIdTecnicoSeleccionado());
-		ClienteView clienteView = this.modelo.getClienteView(Long.parseLong(this.vista.getIdCliente()));
+		ClienteView clienteView = this.modelo.getClienteView(this.vista.getIdClienteSeleccionado());
 		Calendar fechaSeleccionada = vista.getFechaSeleccionada();
 		boolean necesitaSeguro= this.vista.necesitaSeguro();
 		boolean necesitaSoporte = this.vista.necesitaSoporte();
@@ -66,11 +71,9 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 	
 	private void agendarInstalacion(long idCliente) {
 		boolean hayStockDisponible = this.modelo.hayStockDisponibleParaAgendar();
-		boolean existeCliente = this.modelo.existeCliente(idCliente);
 		Calendar fechaSeleccionada = this.vista.getFechaSeleccionada();
 		
 		if (hayStockDisponible) {
-			if (existeCliente) {
 				if (this.modelo.estaDisponibleCliente(fechaSeleccionada, idCliente)) {
 					ArrayList<EmpleadoView> tecnicosDisponibles = this.modelo.getTecnicosDisponibles(fechaSeleccionada);
 					if (tecnicosDisponibles.size() > 0) {
@@ -82,12 +85,8 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 				}
 				else {
 					vista.mostrarMensajeDeError("No se pudo agendar la instalacion");
+					}
 				}
-			}
-			else {
-				vista.mostrarMensajeDeError("Cliente inexistente", "No existe el cliente ingresado");
-			}
-		}
 		else {
 			vista.mostrarMensajeDeError("Falta de Stock", "No hay stock de productos, se necesitan: (1 Evaporadora, 1 Kit, 1 Condesadora)");
 		};
@@ -102,10 +101,8 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		return comboBoxModel;
 	}
 	
-	
+	/*
 	private void mostrarDatosCliente() {
-		String idIngresado = this.vista.getIdCliente();
-		boolean esIdValido = this.esIdValido(idIngresado);
 		
 		if (esIdValido) {
 			long idIngresadoLong = Long.parseLong(idIngresado);
@@ -119,7 +116,22 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 			}
 		}
 	}
+	*/
 	
+	
+	
+	
+	private void mostrarListadoClientes(ArrayList<ClienteView> clientes) {
+		DefaultTableModel tableModel = new DefaultTableModel();
+		String[] columnas = {"Cuil/Cuit", "NombreApellido", "Direccion", "Categoria", "Correo"};
+		tableModel.setColumnIdentifiers(columnas);
+		
+		for (ClienteView cv : clientes) {
+			tableModel.addRow(new Object[] {cv.getCuitCuil(), cv.getNombre(), cv.getDireccion(), 
+					cv.getTipoCliente(), cv.getCorreo()});
+		}
+		this.vista.mostrarListadoClientes(tableModel);
+	}
 
 	
 	
@@ -129,50 +141,68 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		}
 		return "No";
 	}
-	
+		
+	public PanelAgendarInstalacion getVista() {
+		return this.vista;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		long idClienteSeleccionado = this.vista.getIdClienteSeleccionado();
+		if (idClienteSeleccionado != -1) {
+			ClienteView clienteView = this.modelo.getClienteView(idClienteSeleccionado);
+			DefaultTableModel datosCliente = new DefaultTableModel();
+			String[] columnas = {"Cuil/Cuit", "NombreApellido", "Direccion", "Categoria", "Correo"};
+			datosCliente.setColumnIdentifiers(columnas);
+			datosCliente.addRow(new Object [] {clienteView.getCuitCuil(), clienteView.getNombre(), clienteView.getDireccion(), clienteView.getTipoCliente(),
+					clienteView.getCorreo()});
+			this.vista.mostrarDatosCliente(datosCliente);
+			this.vista.cerrarListadoClientes();
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
+		
 	}
-
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_ENTER) {
-			this.mostrarDatosCliente();
-		}
+		
 	}
-
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-	}
-	
-	private boolean esIdValido(String idCliente) {
-		try {
-			Long.parseLong(vista.getIdCliente());
-			return true;
-		}
-		catch (Exception excepcion){
-			vista.mostrarMensajeDeError("Por favor ingrese solo numeros");
-			return false;
-		}
-	}
-
-	private boolean existeCliente(long idCliente) {
-		if (!this.modelo.existeCliente(idCliente)){
-			vista.mostrarMensajeDeError("Cliente inexistente", "El cliente ingresado no existe");
-			return false;
-		}
-		return true;
-	}
-	
-	public PanelAgendarInstalacion getVista() {
-		return this.vista;
+		ArrayList<ClienteView> clientesLikeNombre = this.modelo.buscarNombreClienteLike(this.vista.getNombreClienteIngresado());
+		this.mostrarListadoClientes(clientesLikeNombre);
 	}
 	
 	

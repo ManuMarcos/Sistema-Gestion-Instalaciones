@@ -3,6 +3,7 @@ package vistas;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -12,6 +13,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import java.awt.FlowLayout;
 
 public class PanelAbmInventario extends Panel {
 	
@@ -19,13 +22,16 @@ public class PanelAbmInventario extends Panel {
 	private JScrollPane scrollPaneTablaProductos;
 	private JPanel panelPrincipal;
 	private DialogoDatosProducto dialogoDatosProducto;
+	private JPanel panelBotones;
+	private JButton buttonActualizar;
 
 	
 	public PanelAbmInventario() {
 		setLayout(new BorderLayout(0, 0));
-		
+		this.setBackground(Color.WHITE);
 		this.agregarPaneles();
 		this.agregarTablas();
+		this.agregarBotones();
 		this.iniciarDialogoDatosProducto();
 		this.setBordePanel("Inventario");
 		
@@ -35,7 +41,14 @@ public class PanelAbmInventario extends Panel {
 		this.tablaProductos = new JTable();
 		this.tablaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.scrollPaneTablaProductos = new JScrollPane(tablaProductos);
+		scrollPaneTablaProductos.setOpaque(false);
 		panelPrincipal.add(scrollPaneTablaProductos);
+		
+	}
+	
+	private void agregarBotones() {
+		buttonActualizar = VistaConfig.crearBotonFormateado("Actualizar", "ACTUALIZAR");
+		panelBotones.add(buttonActualizar);
 	}
 	
 	public void setearTablaProductos(DefaultTableModel listadoProductos) {
@@ -67,8 +80,15 @@ public class PanelAbmInventario extends Panel {
 	
 	private void agregarPaneles() {
 		this.panelPrincipal = new JPanel();
+		panelPrincipal.setOpaque(false);
 		add(panelPrincipal);
 		panelPrincipal.setLayout(new BorderLayout(0, 0));
+		
+		panelBotones = new JPanel();
+		panelBotones.setOpaque(false);
+		FlowLayout flowLayout = (FlowLayout) panelBotones.getLayout();
+		flowLayout.setAlignment(FlowLayout.RIGHT);
+		panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
 	}
 
 	public String getNombreProducto() {
@@ -97,6 +117,7 @@ public class PanelAbmInventario extends Panel {
 	@Override
 	public void setActionListener(ActionListener controlador) {
 		this.dialogoDatosProducto.setActionListener(controlador);
+		this.buttonActualizar.addActionListener(controlador);
 	}
 
 	@Override

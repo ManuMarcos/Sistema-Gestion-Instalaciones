@@ -28,6 +28,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Calendar;
@@ -62,6 +63,8 @@ public class PanelAgendarInstalacion extends Panel {
 	private JCheckBox checkBoxNecesitaSoportePared;
 	private JLabel labelBuscarCliente;
 	private JLabel labelSeleccionarFecha;
+	private DialogoListadoClientes dialogoListadoClientes;
+	private JButton buttonBuscarCliente;
 	
 	
 	
@@ -72,11 +75,11 @@ public class PanelAgendarInstalacion extends Panel {
 		
 		this.agregarPaneles();
 		this.agregarEtiquetas();
-		this.agregarTextFields();
 		this.agregarCheckBoxes();
 		this.agregarBotones();
 		this.agregarTabla();
 		this.agregarDatePickers();
+		this.iniciarDialogoListadoClientes();
 		
 	}
 	
@@ -137,17 +140,11 @@ public class PanelAgendarInstalacion extends Panel {
 	}
 	
 	private void agregarEtiquetas() {
-		this.labelBuscarCliente = this.crearEtiquetaFormateada("Buscar cliente");
-		panelBuscarClienteDatos.add(labelBuscarCliente);
-		
 		this.labelSeleccionarFecha = this.crearEtiquetaFormateada("Seleccionar fecha");
 		panelSeleccionarFecha.add(labelSeleccionarFecha);
 	}
 	
-	private void agregarTextFields() {
-		idClienteTextField = this.crearTextFieldFormatoTexto(11);
-		panelBuscarClienteDatos.add(idClienteTextField);
-	}
+	
 	
 	private void agregarBotones() {
 		this.buttonAgendar= this.crearBotonFormateado("Agendar", "AGENDAR");
@@ -157,6 +154,9 @@ public class PanelAgendarInstalacion extends Panel {
 		this.buttonCancelar = this.crearBotonFormateado("Cancelar", "CANCELAR");
 		panelInferior.add(buttonCancelar);
 		panelSeleccionarDatos.setLayout(new GridLayout(2, 1, 0, 0));
+		
+		this.buttonBuscarCliente = this.crearBotonFormateado("Seleccionar cliente", "ABRIR_LISTADO_CLIENTES");
+		panelBuscarClienteDatos.add(buttonBuscarCliente);
 	}
 	
 	private void agregarCheckBoxes() {
@@ -187,14 +187,12 @@ public class PanelAgendarInstalacion extends Panel {
 		panelDatosCliente.add(tablaScrollPane);
 	}
 	
-	public String getIdCliente() {
-		return this.idClienteTextField.getText();
-	}
 
 	public void mostrarDatosCliente(DefaultTableModel datosTableModel) {
 		this.tablaDatosCliente.setModel(datosTableModel);
 		this.tablaDatosCliente.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 	}
+	
 	
 	private void limpiarDatosCliente() {
 		this.tablaDatosCliente.setModel(new DefaultTableModel());
@@ -215,17 +213,36 @@ public class PanelAgendarInstalacion extends Panel {
 	}
 	
 
+	public void mostrarListadoClientes(DefaultTableModel listadoClientes) {
+		this.dialogoListadoClientes.setListadoClientes(listadoClientes);
+	}
+	
+	public void cerrarListadoClientes() {
+		this.dialogoListadoClientes.cerrar();
+	}
+	
+	
+	
+	
+	private void iniciarDialogoListadoClientes() {
+		JFrame framePadre =  (JFrame) SwingUtilities.getWindowAncestor(this);
+		this.dialogoListadoClientes = new DialogoListadoClientes(framePadre, true);
+		dialogoListadoClientes.setLocationRelativeTo(this);
+	}
 	
 	public void setActionListener(ActionListener controlador) {
 		this.buttonAgendar.addActionListener(controlador);
 		this.buttonCancelar.addActionListener(controlador);
+		this.buttonBuscarCliente.addActionListener(controlador);
 	}
 	
 	public void setKeyListener(KeyListener controlador) {
-		this.idClienteTextField.addKeyListener(controlador);
+		this.dialogoListadoClientes.setKeyListener(controlador);
 	}
 	
-	
+	public void setMouseListener(MouseListener controlador) {
+		this.dialogoListadoClientes.setMouseListener(controlador);
+	}
 	
 	public void mostrarTecnicosDisponibles(DefaultComboBoxModel<EmpleadoView> comboBoxModel, ControladorAgendarInstalacion controlador) {
 		JFrame framePadre =  (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -250,6 +267,10 @@ public class PanelAgendarInstalacion extends Panel {
 		return this.ventanaSeleccionarTecnico.getTecnicoSeleccionado().getId();
 	}
 	
+	public long getIdClienteSeleccionado() {
+		return this.dialogoListadoClientes.getIdFilaSeleccionada();
+	}
+	
 	public boolean necesitaSeguro() {
 		return this.checkBoxNecesitaSeguro.isSelected();
 	}
@@ -258,12 +279,14 @@ public class PanelAgendarInstalacion extends Panel {
 		return this.checkBoxNecesitaSoportePared.isSelected();
 	}
 	
+	public String getNombreClienteIngresado() {
+		return this.dialogoListadoClientes.getNombreIngresado();
+	}
 
 	
 	@Override
 	public void resetearPanel() {
 		// TODO Auto-generated method stub
-		this.idClienteTextField.setText(null);
 		this.limpiarDatosCliente();
 		this.resetearFecha();
 		this.limpiarCheckBoxes();

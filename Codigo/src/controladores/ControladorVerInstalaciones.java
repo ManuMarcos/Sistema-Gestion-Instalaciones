@@ -20,6 +20,7 @@ import modelos.InstalacionView;
 import modelos.Tecnico;
 import modelos.Turno;
 import vistas.PanelVerInstalaciones;
+import vistas.VistaConfig;
 
 public class ControladorVerInstalaciones implements ActionListener, KeyListener {
 
@@ -42,7 +43,8 @@ public class ControladorVerInstalaciones implements ActionListener, KeyListener 
 		switch (comandoAccionado) {
 		case "ACTUALIZAR":
 			vista.mostrarDatosInstalacion(this.setearListadoDeInstalaciones());
-
+			//ELIMINAR
+			this.modelo.imprimirFacturas();
 			break;
 			
 		case "CANCELAR": 
@@ -53,30 +55,16 @@ public class ControladorVerInstalaciones implements ActionListener, KeyListener 
 	
 	private DefaultTableModel setearListadoDeInstalaciones() {
 		DefaultTableModel tableModel = new DefaultTableModel();
-		String[] columnas = { "ID", "Cliente", "Direccion", "Estado", "Evaporadoras", "Condensadoras", "Kits" };
+		String[] columnas = { "ID", "Fecha" ,"Cliente", "Direccion", "Estado", "Evaporadoras", "Condensadoras", "Kits"};
 		tableModel.setColumnIdentifiers(columnas);
 		
 		ArrayList<InstalacionView> instalacionesAsignadas = this.modelo.getInstalacionesAsignadas(this.empleadoLogueado.getId());
 		
 		for (InstalacionView instalacion : instalacionesAsignadas) {
-			tableModel.addRow(new Object[] {instalacion.getId(), instalacion.getClienteView().getNombre(), instalacion.getClienteView().getDireccion(), instalacion.getEstado(),
-					instalacion.getElementosUtilizados().get("Evaporadora"), instalacion.getElementosUtilizados().get("Condensadora"), 
-					instalacion.getElementosUtilizados().get("KitDeInstalacion")});
+			tableModel.addRow(new Object[] {instalacion.getId(), VistaConfig.formatearFecha(instalacion.getHoraInicio()), instalacion.getClienteView().getNombre(), 
+					instalacion.getClienteView().getDireccion(), instalacion.getEstado(),instalacion.getElementosUtilizados().get("Evaporadora"), 
+					instalacion.getElementosUtilizados().get("Condensadora"), instalacion.getElementosUtilizados().get("KitDeInstalacion"), });
 		}
-	
-		/*
-		for (int i = 0; i < modelo.instalacionesAsignadasATecnico(this.empleadoLogueado.getId()).size(); i++) {
-			int id = modelo.instalacionesAsignadasATecnico(this.empleadoLogueado.getId()).get(i).getId();
-			String cliente = modelo.instalacionesAsignadasATecnico(1).get(i).getCliente().getNombre();
-			String direccion = modelo.instalacionesAsignadasATecnico(1).get(i).getCliente().getDireccion();
-			Estado estado = modelo.instalacionesAsignadasATecnico(1).get(i).getEstado();
-			int cantidadEvaporadoras = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Evaporadora");
-			int cantidadCondensadoras = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Condensadora");
-			int cantidadKits = modelo.instalacionesAsignadasATecnico(1).get(i).getCantidadDeElementos("Kit De Instalacion");
-			Object[] filas = { id, cliente, direccion, estado, cantidadEvaporadoras, cantidadCondensadoras, cantidadKits};
-			tableModel.addRow(filas);
-		}
-		*/
 		return tableModel;
 	}
 	

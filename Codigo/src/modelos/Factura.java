@@ -9,6 +9,15 @@ public class Factura {
 	private double precioTotal;
 	
 	//Methods
+	//Constructor
+	public Factura(double precioProvisorio, double iva, TipoCliente tipoCliente) {
+		this.setNumero(generador);
+		generador ++;
+		this.setPrecioTotal(precioProvisorio * iva);
+	}
+	//Tipo cliente para el tipo de factura
+	
+	
 	/**
 	 * Devuelve el IVA. DISCLAIMER: Por cómo está la fórmula, devuelve "1.XX", donde XX es el valor que corresponde. Por ejemplo: 1.21 es 21%
 	 * @return double
@@ -41,11 +50,6 @@ public class Factura {
 		this.precioTotal = precioTotal;
 	}
 	
-	//Constructor
-	public Factura(double precioProvisorio, double iva) {
-		this.setNumero(generador);
-		generador ++;
-		this.setPrecioTotal(precioProvisorio * iva);
-	}
+	
 	
 }

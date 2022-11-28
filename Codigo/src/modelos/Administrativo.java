@@ -49,9 +49,9 @@ public class Administrativo extends Empleado{
 			
 			precio = precio + manoDeObra;
 			
-			Factura factura = new Factura(precio, iva);
+			
 						
-			empresa.agregarFacturas(factura);
+			
 			
 		} else {
 			System.out.println("No se pueden facturar instalaciones no finalizadas");

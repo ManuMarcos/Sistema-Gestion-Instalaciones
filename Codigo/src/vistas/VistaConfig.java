@@ -2,6 +2,9 @@ package vistas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -39,9 +42,11 @@ public abstract class VistaConfig {
 	//Configuracion de los colores
 	
 	
-	
-	
-	
+	public static String formatearFecha(Calendar fecha) {
+		DateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		String fechaFormateada = formatoFecha.format(fecha.getTime());
+		return fechaFormateada;
+	}
 	
 	public static JButton crearBotonFormateado(String titulo, String comando) {
 		JButton boton = new JButton(titulo);
@@ -67,6 +72,8 @@ public abstract class VistaConfig {
 		textField.setFont(new Font(VistaConfig.textFieldFontFamily, VistaConfig.textFieldStyle, VistaConfig.textFieldSize));
 		return textField;
 	}
+	
+	
 	
 	
 }
