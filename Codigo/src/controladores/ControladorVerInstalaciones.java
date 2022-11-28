@@ -43,13 +43,12 @@ public class ControladorVerInstalaciones implements ActionListener, KeyListener 
 		switch (comandoAccionado) {
 		case "ACTUALIZAR":
 			vista.mostrarDatosInstalacion(this.setearListadoDeInstalaciones());
-			//ELIMINAR
-			this.modelo.imprimirFacturas();
-			break;
 			
+			break;
 		case "CANCELAR": 
 			
 			vista.resetearPanel();
+			break;
 		}
 	}
 	
@@ -59,6 +58,7 @@ public class ControladorVerInstalaciones implements ActionListener, KeyListener 
 		tableModel.setColumnIdentifiers(columnas);
 		
 		ArrayList<InstalacionView> instalacionesAsignadas = this.modelo.getInstalacionesAsignadas(this.empleadoLogueado.getId());
+		System.out.println(instalacionesAsignadas.toString());
 		
 		for (InstalacionView instalacion : instalacionesAsignadas) {
 			tableModel.addRow(new Object[] {instalacion.getId(), VistaConfig.formatearFecha(instalacion.getHoraInicio()), instalacion.getClienteView().getNombre(), 
@@ -116,14 +116,7 @@ public class ControladorVerInstalaciones implements ActionListener, KeyListener 
 		// TODO Auto-generated method stub
 	}
 
-	// No funciona y no se por que :P
-	public boolean existeInstalacion(int idInstalacion) {
-		if (modelo.esIdDeInstalacionExistente(idInstalacion) == false) {
-			vista.mostrarMensajeDeError("La instalación ingresada no existe");
-			return false;
-		}
-		return true;
-	}
+	
 
 	public PanelVerInstalaciones getVista() {
 		return this.vista;

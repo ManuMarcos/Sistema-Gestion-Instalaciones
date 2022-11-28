@@ -23,75 +23,29 @@ public class Main {
 
 		Empresa empresa = Empresa.getInstance();
 		
+		Instalacion.setCostoViaje(350);
+		
 		Disponibilidad turnoManana = new TurnoManana();
 		
 		ExperienciaLaboral junior = new Junior();
 		ExperienciaLaboral semisenior = new SemiSenior();
 		
-		ExperienciaLaboral junior2 = new Junior();
-		
-		
-		
-		
-
-		Tecnico tecnico1 = new Tecnico("Nahuel Damiano", "Los Indios 254", new TurnoManana(), "tecnico1", "tecnico1", junior);
-		Tecnico tecnico2 = new Tecnico("Roberto Robertson", "Los Indios 123", new TurnoManana(), "tecnico2", "tecnico2", semisenior);
-		Tecnico tecnico3 = new Tecnico("Raul Batista", "Callao 203", new TurnoTarde(), "tecnico3", "tecnico3", junior);
-
+		empresa.crearTecnico("Carlos Garcia", "Machado 365", "TurnoManana", "tecnico1", "tecnico1", "Junior");
+		empresa.crearTecnico("Roberto Robertson", "Los Indios 123", "TurnoTarde", "tecnico2", "tecnico2", "Senior");
+		empresa.crearTecnico("Raul Batista", "Callao 203", "TurnoManana", "tecnico3", "tecnico3", "SemiSenior");
+	
 		Operador operador = new Operador("Sebastian Robles", "Casullo 182", "operador", "operador");
 		Administrador administrador = new Administrador("admin","Sarmiento 201", "admin", "admin");
 		Administrativo administrativo = new Administrativo("Jesus Lopez", "Arenales 874", "administrativo", "administrativo123");
 		
-		Cliente cliente1 = new Cliente("Manuel Marcos", "Rivadavia 2589",20419150275L, TipoCliente.INDIVIDUO, 
-				"manuelignaciomarcos@gmail.com");
-		
-		
-		Cliente cliente2 = new Cliente("Burger King", "Colonia 329", 20206958745L, TipoCliente.EMPRESA, "burgerking@gmail.com");
-		
-		
-		
 		empresa.agregarEmpleado(operador);
-		empresa.agregarEmpleado(tecnico1);
-		empresa.agregarEmpleado(tecnico2);
-		empresa.agregarEmpleado(tecnico3);
-		empresa.agregarCliente(cliente1);
-		empresa.agregarCliente(cliente2);
 		empresa.agregarEmpleado(administrador);
 		empresa.agregarEmpleado(administrativo);
 		
-		System.out.println(tecnico1.toString());
-		
-		
-		
-		
-		
-		
-		Calendar fecha1 = new GregorianCalendar();
-		Calendar fecha2 = new GregorianCalendar();
-		Calendar fecha3 = new GregorianCalendar();
-		Calendar fecha4 = new GregorianCalendar();
-		Calendar fecha5 = new GregorianCalendar();
-		Calendar fecha6 = new GregorianCalendar();
-		Calendar fecha7 = new GregorianCalendar();
-		Calendar fecha8 = new GregorianCalendar();
-		Calendar fecha9 = new GregorianCalendar();
-	
-		
-		fecha1.set(2022, 12, 26, 9, 0, 0);
-		fecha2.set(2022, 12, 29, 9, 0, 0);
-		fecha3.set(2022, 12, 19, 9, 20, 0);
-		fecha4.set(2022, 12, 11, 7, 0, 0);
-		fecha5.set(2022, 12, 18, 7, 0, 0);
-		fecha6.set(2022, 12, 18, 8, 30, 0);
-		
-		
-		//Sabado 26/11/2022
-		fecha7.set(2022, 10, 26, 8, 00);
-		fecha8.set(2022, 10, 22, 12, 30);
-		
-		
-		fecha9.set(2022, 10, 22, 11, 0, 0);
-		
+		empresa.crearCliente("Manuel Marcos", "Rivadavia 2589",20419150275L, TipoCliente.INDIVIDUO, 
+				"manuelignaciomarcos@gmail.com");
+		empresa.crearCliente("Burger King", "Colonia 329", 20206958745L, TipoCliente.EMPRESA, "burgerking@gmail.com");
+
 		
 		//Se agrega el stock antes de agendar instalaciones
 		//Producto evaporadora = new Evaporadora();
@@ -106,9 +60,14 @@ public class Main {
 		empresa.getInventario().setStock(new Condensadora(), 500);
 		empresa.getInventario().setStock(new KitDeInstalacion(), 20);
 		
-	
 		
-		System.out.println(empresa.getInventario().toString());
+		ControladorLogin controlador = new ControladorLogin();
+		controlador.inciarVentanaLogin();
+		
+		
+		
+		
+
 		
 		
 		/*
@@ -117,7 +76,7 @@ public class Main {
 		empresa.setPrecioProducto("KitDeInstalacion", 40);
 		*/
 		
-		empresa.setPrecioProducto("Evaporadora", 200);
+		
 		/*
 		
 		empresa.getInventario().quitarProductos(new Condensadora(), 9);
@@ -182,8 +141,7 @@ public class Main {
 
 		
 		
-		ControladorLogin controlador = new ControladorLogin();
-		controlador.inciarVentanaLogin();
+	
 		
 		
 		//Ejemplo de gestion

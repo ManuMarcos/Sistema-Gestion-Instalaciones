@@ -89,6 +89,16 @@ public class Inventario {
 	}
 	
 	
+	public boolean hayStockSuficiente(Producto producto, int cantidad) {
+		if (this.getStock(producto) >= cantidad) {
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	
 	/**
 	 * Devuelve el producto buscado, decrementando el stock en 1. Si no hay stock o no existe en el inventario, devuelve null
 	 * @param producto

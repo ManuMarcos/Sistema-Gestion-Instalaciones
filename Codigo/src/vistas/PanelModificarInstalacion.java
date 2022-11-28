@@ -17,9 +17,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.lgooddatepicker.components.DateTimePicker;
+import com.github.lgooddatepicker.components.TimePicker;
 
 import controladores.ControladorAgendarInstalacion;
 import modelos.EmpleadoView;
+import modelos.Empresa;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -27,6 +29,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Calendar;
@@ -47,12 +51,14 @@ public class PanelModificarInstalacion extends Panel {
 	private JScrollPane tablaScrollPane;
 	private JButton buttonCancelar;
 	private JButton buttonAgendar;
-	private DateTimePicker dateTimePickerInicio;
-	private DateTimePicker dateTimePickerFinalizacion;
+	private TimePicker timePickerHoraInicio;
+	private TimePicker timePickerHoraFinalizacion;
 	private JCheckBox checkBoxAlmorzo;
 	private JSpinner cantidadEvaporadoras;
 	private JSpinner cantidadKits;
 	private JSpinner cantidadCondensadoras;
+	private JTextField textFieldFechaInicio;
+	private JTextField textFieldFechaFinalizacion;
 	
 	
 	
@@ -127,13 +133,13 @@ public class PanelModificarInstalacion extends Panel {
 		
 		this.buttonCancelar = this.crearBotonFormateado("Cancelar", "CANCELAR");
 		panelInferior.add(buttonCancelar);
-		panelSeleccionarDatos.setLayout(new GridLayout(4, 1, 0, 0));
+		panelSeleccionarDatos.setLayout(new GridLayout(3, 1, 0, 0));
 		
 		JPanel panelSeleccionarProductos = new JPanel();
 		panelSeleccionarProductos.setOpaque(false);
 		FlowLayout fl_panelSeleccionarProductos = (FlowLayout) panelSeleccionarProductos.getLayout();
-		fl_panelSeleccionarProductos.setAlignment(FlowLayout.LEFT);
 		fl_panelSeleccionarProductos.setAlignOnBaseline(true);
+		fl_panelSeleccionarProductos.setAlignment(FlowLayout.LEFT);
 		fl_panelSeleccionarProductos.setHgap(25);
 		panelSeleccionarDatos.add(panelSeleccionarProductos);
 		
@@ -155,29 +161,40 @@ public class PanelModificarInstalacion extends Panel {
 		cantidadKits = this.crearSpinner();
 		panelSeleccionarProductos.add(cantidadKits);
 		
+		JPanel panelHoras = new JPanel();
+		panelHoras.setOpaque(false);
+		panelSeleccionarDatos.add(panelHoras);
+		panelHoras.setLayout(new GridLayout(1, 2, 0, 0));
+		
 		JPanel panelSeleccionarHoraInicio = new JPanel();
 		panelSeleccionarHoraInicio.setOpaque(false);
 		FlowLayout fl_panelSeleccionarHoraInicio = (FlowLayout) panelSeleccionarHoraInicio.getLayout();
 		fl_panelSeleccionarHoraInicio.setAlignment(FlowLayout.LEFT);
-		panelSeleccionarDatos.add(panelSeleccionarHoraInicio);
+		panelHoras.add(panelSeleccionarHoraInicio);
 		
-		JLabel labelSeleccionarHoraInicio = this.crearEtiquetaFormateada("Seleccionar hora de inicio");
+		JLabel labelSeleccionarHoraInicio = this.crearEtiquetaFormateada("Hora inicio");
 		panelSeleccionarHoraInicio.add(labelSeleccionarHoraInicio);
 		
 		JPanel panelSeleccionarHoraFinalizacion = new JPanel();
 		panelSeleccionarHoraFinalizacion.setOpaque(false);
 		FlowLayout fl_panelSeleccionarHoraFinalizacion = (FlowLayout) panelSeleccionarHoraFinalizacion.getLayout();
 		fl_panelSeleccionarHoraFinalizacion.setAlignment(FlowLayout.LEFT);
-		panelSeleccionarDatos.add(panelSeleccionarHoraFinalizacion);
+		panelHoras.add(panelSeleccionarHoraFinalizacion);
 		
-		JLabel labelSeleccionarHoraFinalizacion = this.crearEtiquetaFormateada("Seleccionar hora de finalización");
+		JLabel labelSeleccionarHoraFinalizacion = this.crearEtiquetaFormateada("Hora finalización");
 		panelSeleccionarHoraFinalizacion.add(labelSeleccionarHoraFinalizacion);
 		
-		this.dateTimePickerInicio = new DateTimePicker();
-		panelSeleccionarHoraInicio.add(dateTimePickerInicio);
+		textFieldFechaInicio = this.crearTextFieldFormatoTexto(8);
+		panelSeleccionarHoraInicio.add(textFieldFechaInicio);
 		
-		this.dateTimePickerFinalizacion = new DateTimePicker();
-		panelSeleccionarHoraFinalizacion.add(dateTimePickerFinalizacion);
+		this.timePickerHoraInicio = new TimePicker();
+		panelSeleccionarHoraInicio.add(timePickerHoraInicio);
+		
+		textFieldFechaFinalizacion = this.crearTextFieldFormatoTexto(8);
+		panelSeleccionarHoraFinalizacion.add(textFieldFechaFinalizacion);
+		
+		this.timePickerHoraFinalizacion = new TimePicker();
+		panelSeleccionarHoraFinalizacion.add(timePickerHoraFinalizacion);
 		
 		JPanel panelCheckBox = new JPanel();
 		panelCheckBox.setOpaque(false);
@@ -209,6 +226,23 @@ public class PanelModificarInstalacion extends Panel {
 		return this.cantidadCondensadoras.getValue().toString();
 	}
 	
+	public void setCantKits(int cantKits) {
+		this.cantidadKits.setValue(cantKits);
+	}
+	
+	public void setCantCondensadoras(int cantCondensadoras) {
+		this.cantidadCondensadoras.setValue(cantCondensadoras);
+	}
+	
+	public void setCantEvaporadoras(int cantEvaporadoras) {
+		this.cantidadEvaporadoras.setValue(cantEvaporadoras);
+	}
+	
+	public boolean getAlmuerzo() {
+		return this.checkBoxAlmorzo.isSelected();
+	}
+	
+	
 	public void mostrarDatosInstalacion(DefaultTableModel datosTableModel) {
 		this.tablaDatosInstalacion.setModel(datosTableModel);
 		this.tablaDatosInstalacion.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
@@ -219,28 +253,39 @@ public class PanelModificarInstalacion extends Panel {
 	}
 	
 	private void resetearFecha() {
-		this.dateTimePickerInicio.getDatePicker().setDateToToday();
-		this.dateTimePickerInicio.getTimePicker().setTimeToNow();
-		this.dateTimePickerFinalizacion.getDatePicker().setDateToToday();
-		this.dateTimePickerFinalizacion.getTimePicker().setTimeToNow();
+		
+		this.timePickerHoraInicio.setTimeToNow();
+		this.timePickerHoraFinalizacion.setTimeToNow();
 	}
 	
-	public Calendar getFechaInicioSeleccionada() {
-		LocalDate fechaSeleccionada = dateTimePickerInicio.getDatePicker().getDate();
-		LocalTime horaSeleccionada = dateTimePickerInicio.getTimePicker().getTime();
-		Calendar fechaEnFormatoCalendar = new GregorianCalendar();
-		fechaEnFormatoCalendar.set(fechaSeleccionada.getYear(), fechaSeleccionada.getMonthValue() - 1, fechaSeleccionada.getDayOfMonth(), 
-		horaSeleccionada.getHour(), horaSeleccionada.getMinute(), 0);
-		return fechaEnFormatoCalendar;
+	public void setFechaInicio(String fechaInicio) {
+		this.textFieldFechaInicio.setText(fechaInicio);
+		this.textFieldFechaInicio.setEditable(false);
 	}
 	
-	public Calendar getFechaFinalizacionSeleccionada() {
-		LocalDate fechaSeleccionada = dateTimePickerFinalizacion.getDatePicker().getDate();
-		LocalTime horaSeleccionada = dateTimePickerFinalizacion.getTimePicker().getTime();
-		Calendar fechaEnFormatoCalendar = new GregorianCalendar();
-		fechaEnFormatoCalendar.set(fechaSeleccionada.getYear(), fechaSeleccionada.getMonthValue() - 1, fechaSeleccionada.getDayOfMonth(), 
-		horaSeleccionada.getHour(), horaSeleccionada.getMinute(), 0);
-		return fechaEnFormatoCalendar;
+	public void setFechaFinalizacion(String fechaFinalizacion) {
+		this.textFieldFechaFinalizacion.setText(fechaFinalizacion);
+		this.textFieldFechaFinalizacion.setEditable(false);
+	}
+	
+	public void setHoraInicio(Calendar horaInicio) {
+		this.timePickerHoraInicio.setTime(LocalTime.of(horaInicio.get(Calendar.HOUR_OF_DAY), horaInicio.get(Calendar.MINUTE)));
+	}
+	
+	
+	public void setHoraFinalizacion(Calendar horaFinalizacion) {
+		this.timePickerHoraFinalizacion.setTime(LocalTime.of(horaFinalizacion.get(Calendar.HOUR_OF_DAY), horaFinalizacion.get(Calendar.MINUTE)));
+	}
+	
+
+	
+	
+	public LocalTime getHoraInicio() {
+		return timePickerHoraInicio.getTime();
+	}
+	
+	public LocalTime getHoraFinalizacion() {
+		return timePickerHoraFinalizacion.getTime();
 	}
 
 	

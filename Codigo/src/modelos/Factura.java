@@ -1,55 +1,70 @@
 package modelos;
 
+import java.util.ArrayList;
+
 public class Factura {
 
 	//Attributes
 	private static int generador;
-	private double iva;
+	private static final int iva = 21;
 	private int numero;
-	private double precioTotal;
+	private float subtotal;
+	private float precioTotal;
+	private float importeIva;
+	private ArrayList<FacturaRenglon> renglones;
+	
 	
 	//Methods
 	//Constructor
-	public Factura(double precioProvisorio, double iva, TipoCliente tipoCliente) {
-		this.setNumero(generador);
+	public Factura() {
+		this.numero = generador;
 		generador ++;
-		this.setPrecioTotal(precioProvisorio * iva);
+		this.renglones = new ArrayList<FacturaRenglon>();
+		
 	}
 	//Tipo cliente para el tipo de factura
 	
-	
-	/**
-	 * Devuelve el IVA. DISCLAIMER: Por cómo está la fórmula, devuelve "1.XX", donde XX es el valor que corresponde. Por ejemplo: 1.21 es 21%
-	 * @return double
-	 */
-	public double getIva() {
-		return this.iva;
-	}
-	
-	/**
-	 * Define el IVA. DISCLAIMER: Por cómo está la fórmula, hay que pasarle "1.XX", donde XX es el valor del IVA. Por ejemplo: 1.21 para 21%
-	 * @param double
-	 */
-	public void setIva(double iva) {
-		this.iva = iva;
-	}
 	
 	public int getNumero() {
 		return numero;
 	}
 	
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public void agregarRenglon(String descripcion, int cantidad, float precioUnitario) {
+		this.renglones.add(new FacturaRenglon(descripcion, cantidad, precioUnitario));
+		this.subtotal += precioUnitario * cantidad;
+		this.calcularIva();
+		this.calcularPrecioTotal();
 	}
 	
-	public double getPrecioTotal() {
-		return precioTotal;
+	private void calcularPrecioTotal() {
+		this.precioTotal +=  this.subtotal + this.importeIva;
 	}
 	
-	public void setPrecioTotal(double precioTotal) {
-		this.precioTotal = precioTotal;
+	
+	private void calcularIva() {
+		this.importeIva += this.subtotal * (iva/100);
 	}
 	
+	public float getPrecioTotal() {
+		return this.precioTotal;
+	}
+	
+	public ArrayList<FacturaRenglon> getRenglones(){
+		return this.renglones;
+	}
+	
+	public String toString() {
+		String factura = "";
+		for(FacturaRenglon renglon : this.renglones) {
+			factura += renglon.toString() + "\n" ;
+		}
+		factura += "Subtotal: " + this.subtotal;
+		factura += "Importe Iva: " + this.importeIva;
+		factura += "Precio total: " + this.precioTotal+ "\n";
+		return factura;
+	}
+	
+
 	
 	
 }

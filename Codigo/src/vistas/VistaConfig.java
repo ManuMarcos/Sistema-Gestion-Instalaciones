@@ -18,7 +18,7 @@ public abstract class VistaConfig {
 	public static final int labelFontStyle = Font.PLAIN;
 	public static final int labelFontSize = 18;
 	
-	//Paleta de color
+	//Paleta de colores
 	public static final Color celeste = new Color(173, 216, 230);
 	
 	//Configuracion de los text fields

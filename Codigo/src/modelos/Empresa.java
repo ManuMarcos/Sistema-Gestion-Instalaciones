@@ -1,5 +1,6 @@
 package modelos;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -136,9 +137,9 @@ public class Empresa {
 				tecnico.getAgenda().agendarTurno(turno);
 				Instalacion instalacion = new Instalacion(cliente, tecnico, necesitaSeguro, necesitaSoportePared);
 				turno.setInstalacion(instalacion);
-				this.agregarInstalaciones(instalacion);
+				this.instalaciones.add(instalacion);
 				instalacion.setHoraInicio(turno.getHoraInicio());
-				//instalacion.setHoraFinalizacion(turno.getHoraFinalizacion());
+				instalacion.setHoraFinalizacion(turno.getHoraFinalizacion());
 				instalacion.agregarElemento(this.inventario.quitarProducto(new Condensadora()));
 				instalacion.agregarElemento(this.inventario.quitarProducto(new Evaporadora()));
 				instalacion.agregarElemento(this.inventario.quitarProducto(new KitDeInstalacion()));
@@ -148,23 +149,6 @@ public class Empresa {
 		}
 		return false;
 	}
-	
-	
-	private boolean agregarElementosAInstalacion(Instalacion instalacion ,Producto producto , int cantidad) {
-		if (producto != null) {
-			ArrayList<Producto> productosDelInventario = this.inventario.quitarProductos(producto, cantidad);
-			if (productosDelInventario != null) {
-				instalacion.agregarElementosUtilizados(productosDelInventario);
-				return true;
-			}
-			System.out.println("ACA HAY PROBLEMAS");
-		}
-		return false;
-	}
-	
-	
-	
-	
 	
 	
 	public ArrayList<Instalacion> getInstalaciones() {
@@ -180,9 +164,11 @@ public class Empresa {
 		return null;
 	}
 	
-	public boolean esIdDeInstalacionExistente(int id) {
-		if (this.buscarInstalacion(id) != null) {
-			return true;
+	public boolean existeInstalacion(int id) {
+		for (Instalacion instalacion : this.instalaciones) {
+			if (instalacion.getId() == id) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -228,14 +214,7 @@ public class Empresa {
 	
 	
 	
-	public int getStockDeElementosInstalacion(int idInstalacion, String nombreProducto) {
-		Instalacion instalacion = this.buscarInstalacion(idInstalacion);
-		
-		if (instalacion != null) {
-			 return instalacion.getCantidadDeElementos(nombreProducto);
-		}
-		return 0;
-	}
+	
 	
 	public void imprimirInventario() {
 		System.out.println(this.inventario.toString());
@@ -268,24 +247,27 @@ public class Empresa {
 		return instalacionesAsignadas;
 	}
 	
-	public boolean completarInstalacion(int id, Calendar horaInicio, Calendar horaFinalizacion, boolean almuerzo, 
-			int cantEvaporadoras, int cantKitsDeInstalacion, int cantCondensadoras) {
+	public boolean completarInstalacion(int id, LocalTime horaInicio, LocalTime horaFinalizacion, boolean almuerzo, 
+			int evaporadorasAdicionales, int kitsAdicionales, int condensadorasAdicionales, float otrosGastos) {
 		boolean sePudoCompletar = true;
 		Instalacion instalacion = this.buscarInstalacion(id);	
 		if (instalacion != null) {
-			instalacion.setAlmuerzo(almuerzo);
-			instalacion.setHoraInicio(horaInicio);
-			instalacion.setHoraFinalizacion(horaFinalizacion);
-			boolean agregarEvaporadoras = this.agregarElementosAInstalacion(instalacion, new Evaporadora(), cantEvaporadoras);
-			boolean agregarCondensadoras = this.agregarElementosAInstalacion(instalacion, new Condensadora(), cantCondensadoras);
-			boolean agregarKits = this.agregarElementosAInstalacion(instalacion, new KitDeInstalacion(), cantKitsDeInstalacion);
+			ArrayList<Producto> elementosUtilizados = new ArrayList<Producto>();
 			
-			if (!agregarEvaporadoras || !agregarCondensadoras || !agregarKits) {
-				sePudoCompletar = false;
-				System.out.println("Ocurrio un error");
+			if (this.inventario.hayStockSuficiente(new Evaporadora(), evaporadorasAdicionales) && 
+					this.inventario.hayStockSuficiente(new Condensadora(), condensadorasAdicionales)
+					&& this.inventario.hayStockSuficiente(new KitDeInstalacion(), kitsAdicionales)) {
+				elementosUtilizados.addAll(this.inventario.quitarProductos(new Evaporadora(), evaporadorasAdicionales));
+				elementosUtilizados.addAll(this.inventario.quitarProductos(new Condensadora(), condensadorasAdicionales));
+				elementosUtilizados.addAll(this.inventario.quitarProductos(new KitDeInstalacion(), kitsAdicionales));
 			}
-			instalacion.setEstado(Estado.FINALIZADA);
-			System.out.println(instalacion.getElementos().toString());
+			else {
+				System.out.println("Ocurrio un error, elementos utilizados > stock en inventario");
+			}
+			
+			Factura factura = instalacion.finalizar(horaInicio, horaFinalizacion, elementosUtilizados, otrosGastos, almuerzo);
+			this.facturas.add(factura);
+			System.out.println(factura.toString());
 		}
 		else {
 			sePudoCompletar = false;
@@ -389,12 +371,8 @@ public class Empresa {
 		this.facturas.add(factura);
 	};
 	
-	//ELIMINAR
-	public void imprimirFacturas() {
-		for (Factura factura : this.facturas) {
-			System.out.println(factura.getNumero() + "\n" + factura.getPrecioTotal() + "\n" + factura.getIva());
-		}
-	}
+	
+	
 	
 	
 	public Inventario getInventario() {
@@ -431,28 +409,16 @@ public class Empresa {
 	}
 	
 	
-	/*
-	public ArrayList<Tecnico> obtenerTecnicosDisponibles(Calendar fecha) {
-		ArrayList<Tecnico> tecnicosDisponibles = new ArrayList<Tecnico>();
-		for (Tecnico tecnico  : this.getTecnicos()) {
-			if (tecnico.getAgenda().estaDisponible(new Turno(fecha))) {
-				tecnicosDisponibles.add(tecnico);
+	public InstalacionView getInstalacionView(int id) {
+		for(Instalacion instalacion : this.instalaciones) {
+			if (instalacion.getId() == id) {
+				return instalacion.toView();
 			}
 		}
-		return tecnicosDisponibles;
+		return null;
 	}
-	*/
 	
-	/*
-	public boolean estaDisponibleTecnico(Calendar fecha, int id) {
-		Tecnico tecnico = (Tecnico) this.buscarEmpleado(id);
-		Turno turno = new Turno(fecha);
-		if (tecnico.getAgenda().estaDisponible(turno)) {
-			return true;
-		}
-		return false;
-	}
-	*/
+
 	public boolean estaDisponibleCliente(Calendar fecha, long cuitCuil) {
 		Cliente cliente = this.buscarCliente(cuitCuil);
 		Turno turno = new Turno(fecha);

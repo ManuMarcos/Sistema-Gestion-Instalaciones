@@ -1,5 +1,6 @@
 package modelos;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,7 +18,9 @@ public class Instalacion {
 	private Tecnico tecnico;
 	private Cliente cliente;
 	private Factura factura;
-	private long tiempoTrabajado;
+	private static float costoViaje;
+	private float otrosGastos;
+	private int minsTrabajados;
 	private boolean necesitaSeguro;
 	private boolean necesitaSoportePared;
 	private boolean almuerzo;
@@ -51,6 +54,10 @@ public class Instalacion {
 		}
 	}
 
+	public static void setCostoViaje(float costo){
+		costoViaje = costo;
+	}
+	
 	public Calendar getHoraInicio() {
 		return horaInicio;
 	}
@@ -58,64 +65,103 @@ public class Instalacion {
 	public void setHoraInicio(Calendar horaInicio) {
 		this.horaInicio = horaInicio;
 	}
-
+	
+	private void setHoraInicio(LocalTime horaInicio) {
+		this.horaInicio.set(this.horaInicio.get(Calendar.YEAR), this.horaInicio.get(Calendar.MONTH), this.horaInicio.get(Calendar.DAY_OF_MONTH), 
+				horaInicio.getHour(), horaInicio.getMinute(), 0);
+	}
+	
+	private void setHoraFinalizacion(LocalTime horaFinalizacion) {
+		this.horaFinalizacion.set(this.horaFinalizacion.get(Calendar.YEAR), this.horaFinalizacion.get(Calendar.MONTH), this.horaFinalizacion.get(Calendar.DAY_OF_MONTH), 
+				horaFinalizacion.getHour(), horaFinalizacion.getMinute(), 0);
+		this.setMinsTrabajados(this.horaFinalizacion.getTimeInMillis() - this.horaInicio.getTimeInMillis());
+	}
+	
+	private float calcularPrecioElementos() {
+		float precioElementos = 0;
+		for (Producto producto : this.elementos) {
+			precioElementos += producto.getPrecio();
+		}
+		return precioElementos;
+	}
+	
+	public float getPrecioProvisorio() {
+		return this.calcularPrecioElementos() + costoViaje;
+	}
+	
+	public Factura  finalizar(LocalTime horaInicio, LocalTime horaFinalizacion, ArrayList<Producto> materialesAdicionales, 
+			float otrosGastos, boolean almuerzo) {
+		this.setHoraInicio(horaInicio);
+		this.setHoraFinalizacion(horaFinalizacion);
+		this.elementos.addAll(materialesAdicionales);
+		this.otrosGastos = otrosGastos;
+		this.almuerzo = almuerzo;
+		if (almuerzo == true) {
+			this.minsTrabajados -= 30;
+		}
+		this.estado = Estado.FINALIZADA;
+		return this.facturar();
+	}
+	
 	public Calendar getHoraFinalizacion() {
 		return horaFinalizacion;
 	}
 
 	public void setHoraFinalizacion(Calendar horaFinalizacion) {
 		this.horaFinalizacion = horaFinalizacion;
-		this.setTiempoTrabajado(this.getHoraFinalizacion().getTimeInMillis() - this.getHoraInicio().getTimeInMillis());
 	}
 
 	public ArrayList<Producto> getElementos() {
 		return elementos;
 	}
-
-	public void agregarElementosUtilizados(ArrayList<Producto> productosUtilizados) {
-		this.elementos.addAll(productosUtilizados);
-	}
-
-	public int getCantidadDeElementos(String nombreProducto) {
-		int contador = 0;
-		
-		for (int i = 0; i < this.getElementos().size(); i++) {
-			if (nombreProducto == "Evaporadora") {
-				if (this.getElementos().get(i).getClass() == new Evaporadora().getClass()) {
-					System.out.println("TENGO EVAPORADORA");
-					contador++;
-				}
-			}
-			if (nombreProducto == "Condensadora") {
-				if (this.getElementos().get(i).getClass() == new Condensadora().getClass()) {
-					System.out.println("TENGO CONDENSADORA");
-					contador++;
-				}
-			}
-			if (nombreProducto == "Kit De Instalacion") {
-				if (this.getElementos().get(i).getClass() == new KitDeInstalacion().getClass()) {
-					System.out.println("TENGO KIT");
-					contador++;
-				}
+	
+	public int getCantElementos(Producto producto) {
+		int cantidad = 0;
+		for (Producto elemento : this.elementos) {
+			if (elemento.getClass().isInstance(producto)) {
+				cantidad ++;
 			}
 		}
-		
-		return contador;
+		return cantidad;
 	}
-
-	private void facturar() {
-		float precio = 0;
+	
+	
+	private ArrayList<Producto> getTipoElementosUtilizados(){
+		ArrayList<Producto> tiposElementosUtilizados = new ArrayList<Producto>();
 		
-		for(Producto elemento : this.elementos) {
-			precio += elemento.getPrecio();
+		for (Producto elemento : this.elementos) {
+			boolean tipoAgregado = false;
+			for (Producto tipoElemento : tiposElementosUtilizados) {
+				if (elemento.getClass().equals(tipoElemento.getClass())) {
+					tipoAgregado = true;
+				}
+			}
+			if (tipoAgregado == false) {
+				tiposElementosUtilizados.add(elemento);
+			}
+		}
+		return tiposElementosUtilizados;
+	}
+	
+	
+	private Factura facturar() {
+		this.factura = new Factura();
+		
+		ArrayList<Producto> tiposElementosUtilizados = this.getTipoElementosUtilizados();
+		System.out.println(tiposElementosUtilizados.size());
+		for (Producto elemento : tiposElementosUtilizados) {
+			factura.agregarRenglon(elemento.toString(), this.getCantElementos(elemento), elemento.getPrecio());
 		}
 		
-		//Falta terminar
-		this.factura = new Factura(precio, 21, this.cliente.getTipoCliente());
+		float horasTrabajadas = (float) this.minsTrabajados / 60;
+		factura.agregarRenglon("Mano de Obra - " + this.tecnico.getExperienciaLaboral().toString() + " * " + horasTrabajadas + " Horas", 
+				1, this.tecnico.getExperienciaLaboral().costearHorasTrabajadas(horasTrabajadas));
 		
-		//ESTO NO ME GUSTA
-		Empresa.getInstance().agregarFactura(factura);
-		
+		factura.agregarRenglon("Costo de Viaje", 1, costoViaje);
+		if (this.otrosGastos != 0) {
+			factura.agregarRenglon("Otros gastos", 1, this.otrosGastos);
+		}
+		return this.factura;
 	}
 
 	public void agregarElemento(Producto producto) {
@@ -127,6 +173,7 @@ public class Instalacion {
 		return tecnico;
 	}
 
+	
 	public void setTecnico(Tecnico tecnico) {
 		this.tecnico = tecnico;
 	}
@@ -147,12 +194,12 @@ public class Instalacion {
 		this.factura = factura;
 	}
 
-	public long getTiempoTrabajado() {
-		return tiempoTrabajado;
+	public int getMinsTrabajados() {
+		return this.minsTrabajados;
 	}
 
-	public void setTiempoTrabajado(long tiempoTrabajado) {
-		this.tiempoTrabajado = ((tiempoTrabajado / 1000) / 60);
+	private void setMinsTrabajados(long tiempoTrabajado) {
+		this.minsTrabajados = (int) ((tiempoTrabajado / 1000) / 60);
 	}
 
 	public boolean getNecesitaSeguro() {
@@ -174,17 +221,19 @@ public class Instalacion {
 	public boolean almorzoElTecninco() {
 		return almuerzo;
 	}
-
+	
 	public void setAlmuerzo(boolean almuerzo) {
 		this.almuerzo = almuerzo;
 	}
+
 	
 	public InstalacionView toView() {
-		HashMap<String, Integer> elementosUtilizados = new HashMap<String, Integer>();
-		for (Producto producto : this.elementos) {
-			elementosUtilizados.merge(producto.getClass().getSimpleName(), 1, Integer::sum);
+		HashMap<String, Integer> tiposElementosUtilizados = new HashMap<String, Integer>();
+		
+		for (Producto producto : this.getTipoElementosUtilizados()) {
+			tiposElementosUtilizados.put(producto.getClass().getSimpleName(), this.getCantElementos(producto));
 		}
-		return new InstalacionView(this.id, this.cliente.toView(), this.tecnico.toView(), this.estado.toString(), elementosUtilizados, this.horaInicio, this.horaFinalizacion);
+		return new InstalacionView(this.id, this.cliente.toView(), this.tecnico.toView(), this.estado.toString(), tiposElementosUtilizados, this.horaInicio, this.horaFinalizacion);
 	}
 	
 

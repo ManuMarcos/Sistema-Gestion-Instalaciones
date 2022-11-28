@@ -78,8 +78,7 @@ public abstract class Panel extends JPanel{
 	}
 	
 	public JTextField crearTextFieldFormatoTexto(int columnas) {
-		JTextField campoTexto = new JTextField(columnas);
-		return campoTexto;
+		return VistaConfig.crearTextFieldFormateado(columnas);
 	}
 	
 	public JSpinner crearSpinner() {

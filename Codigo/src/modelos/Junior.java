@@ -3,11 +3,18 @@ package modelos;
 public class Junior extends ExperienciaLaboral {
 	
 	//Attributes
-	private static double costoJunior = 150;
+	private static float costoHora = 150;
 
 	//Constructor
 	public Junior() {
 		super();
-		this.setCostoHora(Junior.costoJunior);
+	}
+	
+	public void setCostoHora(float costoHora) {
+		Junior.costoHora = costoHora;
+	}
+	
+	public float getCostoHora() {
+		return Junior.costoHora;
 	}
 }

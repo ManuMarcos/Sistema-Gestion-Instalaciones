@@ -24,7 +24,7 @@ public class Administrativo extends Empleado{
 		
 	}
 	
-
+	/*
 	public void facturarInstalacion(Instalacion instalacion, double iva) {
 		if (instalacion.getEstado() == Estado.FINALIZADA) {
 			double precio = 0;
@@ -57,6 +57,7 @@ public class Administrativo extends Empleado{
 			System.out.println("No se pueden facturar instalaciones no finalizadas");
 		}
 	};
+	*/
 	
 	public void modificarNecesitaSeguro(Instalacion instalacion, boolean necesita){
 		instalacion.setNecesitaSeguro(necesita);
