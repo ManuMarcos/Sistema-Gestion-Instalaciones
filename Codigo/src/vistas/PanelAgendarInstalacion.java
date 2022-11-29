@@ -225,7 +225,7 @@ public class PanelAgendarInstalacion extends Panel {
 	
 	
 	private void iniciarDialogoListadoClientes() {
-		JFrame framePadre =  (JFrame) SwingUtilities.getWindowAncestor(this);
+		JFrame framePadre = (JFrame) SwingUtilities.getWindowAncestor(this);
 		this.dialogoListadoClientes = new DialogoListadoClientes(framePadre, true);
 		dialogoListadoClientes.setLocationRelativeTo(this);
 	}

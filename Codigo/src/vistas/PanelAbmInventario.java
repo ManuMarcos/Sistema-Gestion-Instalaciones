@@ -73,7 +73,7 @@ public class PanelAbmInventario extends Panel {
 	}
 	
 	private void iniciarDialogoDatosProducto() {
-		JFrame framePadre =  (JFrame) SwingUtilities.getWindowAncestor(this);
+		JFrame framePadre = (JFrame) SwingUtilities.getWindowAncestor(this);
 		this.dialogoDatosProducto = new DialogoDatosProducto(framePadre, true);
 		dialogoDatosProducto.setLocationRelativeTo(this);
 	}

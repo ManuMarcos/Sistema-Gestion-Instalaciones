@@ -7,7 +7,7 @@ import java.util.Date;
 public class Factura {
 
 	//Attributes
-	private static int generador;
+	private static int generador = 1;
 	private static final float iva = (float) 0.21;
 	private int numero;
 	private char tipo;

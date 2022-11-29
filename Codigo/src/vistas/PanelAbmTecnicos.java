@@ -116,7 +116,7 @@ public class PanelAbmTecnicos extends Panel {
 	}
 	
 	private void iniciarDialogoDatosTecnico() {
-		JFrame framePadre =  (JFrame) SwingUtilities.getWindowAncestor(this);
+		JFrame framePadre = (JFrame) SwingUtilities.getWindowAncestor(this);
 		this.dialogoDatosTecnico = new DialogoDatosTecnico(framePadre, true);
 		dialogoDatosTecnico.setLocationRelativeTo(this);
 	}

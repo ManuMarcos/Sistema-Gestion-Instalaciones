@@ -19,6 +19,17 @@ public class FacturaRenglon {
 		return importe;
 	}
 	
+	public int getCantidad() {
+		return this.cantidad;
+	}
+	
+	public float getPrecioUnitario() {
+		return this.precioUnitario;
+	}
+	
+	public String getDescripcion() {
+		return this.descripcion;
+	}
 	
 	public String toString() {
 		return "Producto: " + this.descripcion + " Cantidad: " + this.cantidad + " Precio unitario: " + this.precioUnitario + " Importe: " + this.importe;

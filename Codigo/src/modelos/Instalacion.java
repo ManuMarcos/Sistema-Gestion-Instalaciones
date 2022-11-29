@@ -154,7 +154,7 @@ public class Instalacion {
 		}
 		
 		float horasTrabajadas = (float) this.minsTrabajados / 60;
-		factura.agregarRenglon("Mano de Obra - " + this.tecnico.getExperienciaLaboral().toString() + " * " + horasTrabajadas + " Horas", 
+		factura.agregarRenglon("Mano de Obra (" + this.tecnico.getExperienciaLaboral().toString() + ", " + horasTrabajadas + " Horas)", 
 				1, this.tecnico.getExperienciaLaboral().costearHorasTrabajadas(horasTrabajadas));
 		
 		factura.agregarRenglon("Costo de Viaje", 1, costoViaje);

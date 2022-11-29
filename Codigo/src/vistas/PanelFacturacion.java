@@ -2,15 +2,18 @@ package vistas;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
@@ -27,6 +30,7 @@ public class PanelFacturacion extends Panel {
 	private JButton buttonActualizar;
 	private JLabel labelBuscarFactura;
 	private JTextField textFieldBuscarFactura;
+	private DialogoDatosFactura dialogoDatosFactura;
 	
 	
 	public PanelFacturacion() {
@@ -37,6 +41,7 @@ public class PanelFacturacion extends Panel {
 		this.agregarBotones();
 		this.agregarEtiquetas();
 		this.agregarTextFields();
+		this.iniciarDialogoDatosFactura();
 	}
 	
 	private void agregarPaneles() {
@@ -91,15 +96,39 @@ public class PanelFacturacion extends Panel {
 		this.listadoFacturas.setModel(listadoFacturas);
 	}
 	
+	public int getNroFacturaSeleccionada() {
+		int filaSeleccionada = this.listadoFacturas.getSelectedRow();
+		if (filaSeleccionada != -1) {
+			return (int) this.listadoFacturas.getValueAt(filaSeleccionada, 0);
+		}
+		return -1;
+	}
+	
+	private void iniciarDialogoDatosFactura() {
+		JFrame framePadre = (JFrame) SwingUtilities.getWindowAncestor(this);
+		this.dialogoDatosFactura = new DialogoDatosFactura(framePadre, true);
+		dialogoDatosFactura.setLocationRelativeTo(this);
+	}
+	
+	public void mostrarDatosFactura() {
+		this.dialogoDatosFactura.mostrar();
+	}
+	
+	public void setDatosFactura(Icon logoEmpresa, String nroFactura, String tipoFactura, String fecha, String idCliente, String nombreCliente, String direccionCliente,
+			DefaultTableModel listadoVenta, DefaultTableModel totales) {
+		this.dialogoDatosFactura.setDatos(logoEmpresa, nroFactura, tipoFactura, fecha, idCliente, nombreCliente, direccionCliente, listadoVenta, totales);
+		this.dialogoDatosFactura.mostrar();
+	}
+	
 	@Override
 	public void setActionListener(ActionListener controlador) {
 		this.buttonActualizar.addActionListener(controlador);
 	}
 	
+	public void setMouseListener(MouseListener controlador) {
+		this.listadoFacturas.addMouseListener(controlador);
+	}
 	
-	
-	
-
 	@Override
 	public void resetearPanel() {
 		// TODO Auto-generated method stub

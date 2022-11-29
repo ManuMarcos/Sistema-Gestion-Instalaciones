@@ -255,7 +255,14 @@ public class Empresa {
 		return facturasView;
 	}
 	
-	
+	public FacturaView getFacturaView(int nroFactura) {
+		for (Factura factura : this.facturas) {
+			if(factura.getNumero() == nroFactura) {
+				return factura.toView();
+			}
+		}
+		return null;
+	}
 	
 	
 	
