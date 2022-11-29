@@ -145,7 +145,7 @@ public class Instalacion {
 	
 	
 	private Factura facturar() {
-		this.factura = new Factura();
+		this.factura = new Factura(this.cliente);
 		
 		ArrayList<Producto> tiposElementosUtilizados = this.getTipoElementosUtilizados();
 		System.out.println(tiposElementosUtilizados.size());

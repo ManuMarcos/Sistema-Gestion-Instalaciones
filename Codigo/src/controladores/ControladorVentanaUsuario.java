@@ -33,7 +33,7 @@ public class ControladorVentanaUsuario {
 				this.iniciarVistaTecnico(empleadoView);
 				break;
 			case "Administrativo":
-				this.vista =  new VentanaUsuario(new ImageIcon("administrativo.png"), "Administrativo",1,1);
+				this.iniciarVistaAdministrativo();
 				break;
 			case "Administrador":
 				this.iniciarVistaAdministrador();
@@ -59,6 +59,13 @@ public class ControladorVentanaUsuario {
 		this.vista = new VentanaUsuario(new ImageIcon("tecnico.png"), "Tecnico", 2 ,1);
 		this.vista.agregarModulo(controladorModificarInstalacion.getVista());
 		this.vista.agregarModulo(controladorVerInstalaciones.getVista());
+	}
+
+	private void iniciarVistaAdministrativo(){
+		ControladorFacturacion controladorFacturacion = new ControladorFacturacion();
+		
+		this.vista = new VentanaUsuario(new ImageIcon("administrativo.png"), "Administrativo", 1,1);
+		this.vista.agregarModulo(controladorFacturacion.getVista());
 	}
 	
 

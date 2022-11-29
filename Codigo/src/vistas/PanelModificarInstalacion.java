@@ -253,9 +253,8 @@ public class PanelModificarInstalacion extends Panel {
 	}
 	
 	private void resetearFecha() {
-		
-		this.timePickerHoraInicio.setTimeToNow();
-		this.timePickerHoraFinalizacion.setTimeToNow();
+		this.timePickerHoraInicio.setText(null);
+		this.timePickerHoraFinalizacion.setText(null);
 	}
 	
 	public void setFechaInicio(String fechaInicio) {
@@ -277,7 +276,10 @@ public class PanelModificarInstalacion extends Panel {
 		this.timePickerHoraFinalizacion.setTime(LocalTime.of(horaFinalizacion.get(Calendar.HOUR_OF_DAY), horaFinalizacion.get(Calendar.MINUTE)));
 	}
 	
-
+	private void limpiarTextFields() {
+		this.textFieldFechaFinalizacion.setText(null);
+		this.textFieldFechaInicio.setText(null);
+	}
 	
 	
 	public LocalTime getHoraInicio() {
@@ -319,6 +321,7 @@ public class PanelModificarInstalacion extends Panel {
 		this.limpiarDatosCliente();
 		this.resetearFecha();
 		this.limpiarCheckBoxes();
+		this.limpiarTextFields();
 	}
 
 

@@ -1,28 +1,34 @@
 package modelos;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Factura {
 
 	//Attributes
 	private static int generador;
-	private static final int iva = 21;
+	private static final float iva = (float) 0.21;
 	private int numero;
+	private char tipo;
+	private Date fecha;
 	private float subtotal;
 	private float precioTotal;
 	private float importeIva;
+	private Cliente cliente;
 	private ArrayList<FacturaRenglon> renglones;
 	
 	
 	//Methods
 	//Constructor
-	public Factura() {
+	public Factura(Cliente cliente) {
 		this.numero = generador;
 		generador ++;
 		this.renglones = new ArrayList<FacturaRenglon>();
-		
+		this.cliente = cliente;
+		this.setTipoFactura(cliente.getTipoCliente());
+		this.fecha = Calendar.getInstance().getTime();
 	}
-	//Tipo cliente para el tipo de factura
 	
 	
 	public int getNumero() {
@@ -30,19 +36,25 @@ public class Factura {
 	}
 	
 	public void agregarRenglon(String descripcion, int cantidad, float precioUnitario) {
-		this.renglones.add(new FacturaRenglon(descripcion, cantidad, precioUnitario));
-		this.subtotal += precioUnitario * cantidad;
-		this.calcularIva();
-		this.calcularPrecioTotal();
+		FacturaRenglon renglon = new FacturaRenglon(descripcion, cantidad, precioUnitario);
+		this.renglones.add(renglon);
+		this.subtotal += renglon.getImporte();
+		this.importeIva += renglon.getImporte() * iva;
+		if (this.tipo == 'B') {
+			this.precioTotal = this.subtotal + this.importeIva;
+		}
+		else {
+			this.precioTotal = this.subtotal;
+		}
 	}
 	
-	private void calcularPrecioTotal() {
-		this.precioTotal +=  this.subtotal + this.importeIva;
-	}
-	
-	
-	private void calcularIva() {
-		this.importeIva += this.subtotal * (iva/100);
+	private void setTipoFactura(TipoCliente tipoCliente) {
+		if (this.cliente.getTipoCliente() == TipoCliente.EMPRESA) {
+			this.tipo = 'A';
+		}
+		else {
+			this.tipo = 'B';
+		}
 	}
 	
 	public float getPrecioTotal() {
@@ -58,12 +70,16 @@ public class Factura {
 		for(FacturaRenglon renglon : this.renglones) {
 			factura += renglon.toString() + "\n" ;
 		}
-		factura += "Subtotal: " + this.subtotal;
-		factura += "Importe Iva: " + this.importeIva;
-		factura += "Precio total: " + this.precioTotal+ "\n";
+		factura += " Subtotal: " + this.subtotal;
+		factura += " Importe Iva: " + this.importeIva;
+		factura += " Precio total: " + this.precioTotal+ "\n";
+		factura += this.tipo;
 		return factura;
 	}
 	
+	public FacturaView toView() {
+		return new FacturaView(this.numero,this.fecha, this.renglones, this.cliente.toView(), this.tipo, this.importeIva, this.subtotal, this.precioTotal); 
+	}
 
 	
 	

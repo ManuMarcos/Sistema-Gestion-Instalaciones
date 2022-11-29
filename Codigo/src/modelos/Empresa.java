@@ -247,6 +247,22 @@ public class Empresa {
 		return instalacionesAsignadas;
 	}
 	
+	public ArrayList<FacturaView> getFacturasView(){
+		ArrayList<FacturaView> facturasView = new ArrayList<FacturaView>();
+		for (Factura factura : this.facturas) {
+			facturasView.add(factura.toView());
+		}
+		return facturasView;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public boolean completarInstalacion(int id, LocalTime horaInicio, LocalTime horaFinalizacion, boolean almuerzo, 
 			int evaporadorasAdicionales, int kitsAdicionales, int condensadorasAdicionales, float otrosGastos) {
 		boolean sePudoCompletar = true;

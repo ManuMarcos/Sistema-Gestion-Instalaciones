@@ -61,6 +61,7 @@ public class ControladorModificarInstalacion implements ActionListener, KeyListe
 				} else {
 					vista.mostrarMensajeDeError("No se puede finalizar una instalación no válida. Utilice sólo números.");
 				}
+				this.vista.resetearPanel();
 				break;
 			case "CANCELAR":
 				this.vista.resetearPanel();
