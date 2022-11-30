@@ -39,10 +39,7 @@ public class Main {
 		empresa.setStockProducto("Evaporadora", 5);
 		empresa.setStockProducto("Condensadora", 6);
 		empresa.setStockProducto("KitDeInstalacion", 2);
-		
-		
-		
-		
+		empresa.setStockProducto("SoportePared", 0);
 		
 		ControladorLogin controlador = new ControladorLogin();
 		controlador.inciarVentanaLogin();

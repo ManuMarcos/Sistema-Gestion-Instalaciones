@@ -19,22 +19,21 @@ public class Instalacion {
 	private Cliente cliente;
 	private Factura factura;
 	private static float costoViaje;
+	private static float costoSeguro;
 	private float otrosGastos;
 	private int minsTrabajados;
 	private boolean necesitaSeguro;
-	private boolean necesitaSoportePared;
 	private boolean almuerzo;
 
 	// Methods
 
 	// Constructor
-	public Instalacion(Cliente cliente, Tecnico tecnico, boolean necesitaSeguro, boolean necesitaSoportePared) {
+	public Instalacion(Cliente cliente, Tecnico tecnico, boolean necesitaSeguro) {
 		this.cliente = cliente;
 		this.tecnico = tecnico;
 		this.id = generador;
 		generador++;
 		this.necesitaSeguro = necesitaSeguro;
-		this.necesitaSoportePared = necesitaSoportePared;
 		this.estado = Estado.PROGRAMADA;
 		this.elementos = new ArrayList<Producto>();
 	}
@@ -54,10 +53,22 @@ public class Instalacion {
 		}
 	}
 
+	public static void setCostoSeguro(float costo) {
+		costoSeguro = costo;
+	}
+
 	public static void setCostoViaje(float costo){
 		costoViaje = costo;
 	}
 	
+	public static float getCostoSeguro() {
+		return costoSeguro;
+	}
+	
+	public static float getCostoViaje() {
+		return costoViaje;
+	}
+
 	public Calendar getHoraInicio() {
 		return horaInicio;
 	}
@@ -160,7 +171,12 @@ public class Instalacion {
 		factura.agregarRenglon("Mano de Obra (" + this.tecnico.getExperienciaLaboral().toString() + ", " + horasTrabajadas + " Horas)", 
 				1, this.tecnico.getExperienciaLaboral().costearHorasTrabajadas(horasTrabajadas));
 		
+		if (this.necesitaSeguro) {
+			factura.agregarRenglon("Seguro de trabajo en Altura" , 1, costoSeguro);
+		}
+		
 		factura.agregarRenglon("Costo de Viaje", 1, costoViaje);
+		
 		if (this.otrosGastos != 0) {
 			factura.agregarRenglon("Otros gastos", 1, this.otrosGastos);
 		}
@@ -211,14 +227,6 @@ public class Instalacion {
 
 	public void setNecesitaSeguro(boolean necesitaSeguro) {
 		this.necesitaSeguro = necesitaSeguro;
-	}
-
-	public boolean getNecesitaSoportePared() {
-		return necesitaSoportePared;
-	}
-
-	public void setNecesitaSoportePared(boolean necesitaSoportePared) {
-		this.necesitaSoportePared = necesitaSoportePared;
 	}
 
 	public boolean almorzoElTecninco() {

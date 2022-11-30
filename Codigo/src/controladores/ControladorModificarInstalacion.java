@@ -46,8 +46,8 @@ public class ControladorModificarInstalacion implements ActionListener, KeyListe
 						LocalTime horaInicio = this.vista.getHoraInicio();
 						LocalTime horaFinalizacion = this.vista.getHoraFinalizacion();
 						boolean almorzo = this.vista.getAlmuerzo();
-						int condensadorasAdicionales = Integer.parseInt(this.vista.getCantidadDeCondensadoras()) -1  ;
-						int kitsAdicionales = Integer.parseInt(this.vista.getCantidadDeKits()) -1 ;
+						int condensadorasAdicionales = Integer.parseInt(this.vista.getCantidadDeCondensadoras()) - 1;
+						int kitsAdicionales = Integer.parseInt(this.vista.getCantidadDeKits()) - 1 ;
 						int evaporadorasAdicionales = Integer.parseInt(this.vista.getCantidadDeEvaporadoras()) -1;
 						
 						if (!this.modelo.completarInstalacion(idInstalacion, horaInicio, horaFinalizacion, almorzo, 

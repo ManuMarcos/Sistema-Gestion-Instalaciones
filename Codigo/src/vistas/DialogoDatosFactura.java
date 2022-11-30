@@ -10,11 +10,13 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Dimension;
@@ -58,9 +60,8 @@ public class DialogoDatosFactura extends JDialog {
 	
 	public DialogoDatosFactura(JFrame framePadre, boolean esModal) {
 		super(framePadre, esModal);
-		setBounds(100, 100, 708, 506);
+		setBounds(100, 100, 832, 605);
 		this.setBackground(Color.WHITE);
-		this.setTitle("Datos Factura");
 		this.agregarPaneles();
 		this.agregarTablas();
 		this.agregarEtiquetas();
@@ -75,6 +76,9 @@ public class DialogoDatosFactura extends JDialog {
 		this.tablaTotales = new JTable();
 		this.scrollPaneTotales = new JScrollPane(tablaTotales);
 		panelTotales.add(scrollPaneTotales, BorderLayout.CENTER);
+		DefaultTableCellRenderer alineacionDerecha =  new DefaultTableCellRenderer();
+		alineacionDerecha.setHorizontalAlignment(SwingConstants.CENTER);
+		tablaTotales.setDefaultRenderer(String.class, alineacionDerecha);
 	}
 	
 	private void agregarPaneles() {
@@ -198,6 +202,7 @@ public class DialogoDatosFactura extends JDialog {
 	
 	public void setDatos(Icon logoEmpresa, String nroFactura, String tipoFactura, String fecha, String idCliente, String nombreCliente, String direccionCliente, 
 			DefaultTableModel listadoVenta, DefaultTableModel totales) {
+		this.setTitle("Factura nro " + nroFactura);
 		this.labelLogoEmpresa.setIcon(logoEmpresa);
 		this.textFieldNroFactura.setText(nroFactura);
 		this.textFieldTipoFactura.setText(tipoFactura);

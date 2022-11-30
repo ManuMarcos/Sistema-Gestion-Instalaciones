@@ -31,6 +31,7 @@ public class Turno {
 		return "Hora Inicio: " + this.horaInicio.getTime() + "\nHora Finalizacion: " + this.horaFinalizacion.getTime();
 	}
 	
+	/*
 	public boolean estoyOcupando(Turno turno) {
 		if ((turno.getHoraInicio().after(this.horaInicio) && turno.getHoraInicio().before(this.horaFinalizacion)
 				|| turno.getHoraFinalizacion().after(horaInicio) && turno.getHoraFinalizacion().before(this.horaFinalizacion)
@@ -39,6 +40,20 @@ public class Turno {
 		}
 		return false;
 	}
+	*/
+	
+	public boolean estoyOcupando(Turno turno) {
+		//Utilizo 2 if para mejor legibilidad del codigo, pero se puede hacer en 1 solo
+		if ((turno.getHoraInicio().after(this.horaInicio) && turno.getHoraInicio().before(this.horaFinalizacion)
+				|| turno.getHoraFinalizacion().after(this.horaInicio) && turno.getHoraFinalizacion().before(this.horaFinalizacion))
+				|| turno.getHoraInicio().equals(this.horaFinalizacion)
+				|| turno.getHoraFinalizacion().equals(this.horaInicio)){
+			System.out.println("ESTOY OCUPANDO");
+			return true;
+		}
+		return false;
+	}
+	
 	
 	
 	public Calendar getHoraInicio() {

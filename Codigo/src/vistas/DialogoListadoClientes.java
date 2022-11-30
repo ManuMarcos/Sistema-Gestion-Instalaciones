@@ -51,10 +51,12 @@ public class DialogoListadoClientes extends JDialog {
 		panelPrincipal.setLayout(new BorderLayout(0, 0));
 		
 		this.panelCentral = new JPanel();
+		panelCentral.setOpaque(false);
 		panelPrincipal.add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new BorderLayout(0, 0));
 		
 		pabelBuscarCliente = new JPanel();
+		pabelBuscarCliente.setOpaque(false);
 		FlowLayout flowLayout = (FlowLayout) pabelBuscarCliente.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panelCentral.add(pabelBuscarCliente, BorderLayout.NORTH);

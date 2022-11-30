@@ -128,10 +128,10 @@ public class DialogoDatosProducto extends JDialog {
 	}
 	
 	private void agregarBotones(){
-		this.buttonConfirmar = VistaConfig.crearBotonFormateado("Confirmar", "ACTUALIZAR_DATOS_PRODUCTO");
+		this.buttonConfirmar = VistaConfig.crearBotonFormateado("Confirmar", "MODIFICAR_DATOS_PRODUCTO");
 		panelBotones.add(buttonConfirmar);
 		
-		this.buttonCancelar = VistaConfig.crearBotonFormateado("Cancelar", "CANCELAR");
+		this.buttonCancelar = VistaConfig.crearBotonFormateado("Cancelar", "CANCELAR_DATOS_PRODUCTO");
 		panelBotones.add(buttonCancelar);
 	}
 

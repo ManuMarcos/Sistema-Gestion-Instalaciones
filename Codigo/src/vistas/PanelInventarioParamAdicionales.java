@@ -16,24 +16,27 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 
-public class PanelAbmInventario extends Panel {
+public class PanelInventarioParamAdicionales extends Panel {
 	
 	private JTable tablaProductos;
 	private JScrollPane scrollPaneTablaProductos;
 	private JPanel panelPrincipal;
 	private DialogoDatosProducto dialogoDatosProducto;
+	private DialogoParametrosAdicionales dialogoParamAdicionales;
 	private JPanel panelBotones;
 	private JButton buttonActualizar;
+	private JButton buttonParamAdicionales;
 
 	
-	public PanelAbmInventario() {
+	public PanelInventarioParamAdicionales() {
 		setLayout(new BorderLayout(0, 0));
 		this.setBackground(Color.WHITE);
 		this.agregarPaneles();
 		this.agregarTablas();
 		this.agregarBotones();
 		this.iniciarDialogoDatosProducto();
-		this.setBordePanel("Inventario");
+		this.iniciarDialogoParamAdicionales();
+		this.setBordePanel("Inventario y Parametros Adicionales");
 		
 	}
 
@@ -47,8 +50,11 @@ public class PanelAbmInventario extends Panel {
 	}
 	
 	private void agregarBotones() {
-		buttonActualizar = VistaConfig.crearBotonFormateado("Actualizar", "ACTUALIZAR");
+		buttonActualizar = VistaConfig.crearBotonFormateado("Actualizar", "ACTUALIZAR_LISTADO_PRODUCTOS");
 		panelBotones.add(buttonActualizar);
+		
+		buttonParamAdicionales = VistaConfig.crearBotonFormateado("Parametros adicionales", "PARAMETROS_ADICIONALES");
+		panelBotones.add(buttonParamAdicionales);
 	}
 	
 	public void setearTablaProductos(DefaultTableModel listadoProductos) {
@@ -78,6 +84,21 @@ public class PanelAbmInventario extends Panel {
 		dialogoDatosProducto.setLocationRelativeTo(this);
 	}
 	
+	private void iniciarDialogoParamAdicionales() {
+		JFrame framePadre = (JFrame) SwingUtilities.getWindowAncestor(this);
+		this.dialogoParamAdicionales = new DialogoParametrosAdicionales(framePadre, true);
+		dialogoParamAdicionales.setLocationRelativeTo(this);
+	}
+	
+	public void setParametrosAdicionales(String costoSeguro, String costoViaje) {
+		this.dialogoParamAdicionales.setParametrosAdicionales(costoSeguro, costoViaje);
+	}
+	
+	public void cerrarDialogoParamAdicionales() {
+		this.dialogoParamAdicionales.cerrar();
+	}
+	
+	
 	private void agregarPaneles() {
 		this.panelPrincipal = new JPanel();
 		panelPrincipal.setOpaque(false);
@@ -103,6 +124,14 @@ public class PanelAbmInventario extends Panel {
 		return this.dialogoDatosProducto.getStock();
 	}
 	
+	public String getCostoViaje() {
+		return this.dialogoParamAdicionales.getCostoViaje();
+	}
+	
+	public String getCostoSeguro() {
+		return this.dialogoParamAdicionales.getCostoSeguro();
+	}
+	
 
 	@Override
 	public void resetearPanel() {
@@ -116,8 +145,10 @@ public class PanelAbmInventario extends Panel {
 	
 	@Override
 	public void setActionListener(ActionListener controlador) {
-		this.dialogoDatosProducto.setActionListener(controlador);
 		this.buttonActualizar.addActionListener(controlador);
+		this.buttonParamAdicionales.addActionListener(controlador);
+		this.dialogoDatosProducto.setActionListener(controlador);
+		this.dialogoParamAdicionales.setActionListener(controlador);
 	}
 
 	@Override

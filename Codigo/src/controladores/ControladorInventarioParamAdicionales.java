@@ -11,17 +11,17 @@ import javax.swing.table.DefaultTableModel;
 
 import modelos.Empresa;
 import modelos.ProductoInventarioView;
-import vistas.PanelAbmInventario;
+import vistas.PanelInventarioParamAdicionales;
 
-public class ControladorAbmInventario implements MouseListener, ActionListener{
+public class ControladorInventarioParamAdicionales implements MouseListener, ActionListener{
 
 	//Attributes
-	private PanelAbmInventario vista;
+	private PanelInventarioParamAdicionales vista;
 	private Empresa modelo;
 	
-	public ControladorAbmInventario() {
+	public ControladorInventarioParamAdicionales() {
 		this.modelo = Empresa.getInstance();
-		this.vista = new PanelAbmInventario();
+		this.vista = new PanelInventarioParamAdicionales();
 		this.cargarListadoDeProductos();
 		this.vista.setMouseListener(this);
 		this.vista.setActionListener(this);
@@ -58,26 +58,52 @@ public class ControladorAbmInventario implements MouseListener, ActionListener{
 		String comandoAccionado = e.getActionCommand();
 		
 		switch (comandoAccionado) {
-			case "ACTUALIZAR_DATOS_PRODUCTO":
+			case "MODIFICAR_DATOS_PRODUCTO":
 				this.actualizarDatosProducto();
 				this.cargarListadoDeProductos();
 				this.vista.cerrarDialogoDatosProducto();
 				break;
-			case "CANCELAR":
+			case "CANCELAR_DATOS_PRODUCTO":
+				this.vista.cerrarDialogoDatosProducto();
 				break;
-			case "ACTUALIZAR":
+			case "PARAMETROS_ADICIONALES":
+				this.mostrarParametroAdicionales();
+				break;
+			case "MODIFICAR_PARAMETROS":
+				this.modificarParametrosAdicionales();
+				break;
+			case "ACTUALIZAR_LISTADO_PRODUCTOS":
 				this.cargarListadoDeProductos();
+				break;
+			case "CANCELAR_PARAMETROS":
+				this.vista.cerrarDialogoParamAdicionales();
 				break;
 		}
 	}
 	
-	public void mostrarDatosProducto(int idProducto) {
+	private void mostrarDatosProducto(int idProducto) {
 		ProductoInventarioView productoView = this.modelo.getProductoView(idProducto);
 		this.vista.mostrarDatosProducto(productoView.getId(), productoView.getNombre(), productoView.getStock(), productoView.getPrecio());
 	}
 	
-	public void actualizarDatosProducto() {
+	private void actualizarDatosProducto() {
 		this.modelo.actualizarDatosProducto(this.vista.getNombreProducto(), Float.parseFloat(this.vista.getPrecioProducto()), Integer.parseInt(this.vista.getStockProducto()));
+	}
+	
+	private void modificarParametrosAdicionales() {
+		float costoSeguro = Float.parseFloat(this.vista.getCostoSeguro());
+		float costoViaje = Float.parseFloat(this.vista.getCostoViaje());
+		
+		this.modelo.setCostoSeguro(costoSeguro);
+		this.modelo.setCostoViaje(costoViaje);
+		this.vista.cerrarDialogoParamAdicionales();
+	}
+	
+	private void mostrarParametroAdicionales() {
+		String costoSeguro =  Float.toString(this.modelo.getCostoSeguro());
+		String costoViaje =  Float.toString(this.modelo.getCostoViaje());
+		
+		this.vista.setParametrosAdicionales(costoSeguro, costoViaje);
 	}
 	
 	

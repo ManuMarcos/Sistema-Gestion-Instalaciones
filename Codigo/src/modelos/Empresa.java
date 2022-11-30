@@ -14,12 +14,6 @@ public class Empresa {
 	private Inventario inventario;
 	private ArrayList<Factura> facturas = new ArrayList<Factura>();
 	private static Empresa instance;
-	
-	/*
-	private static double precioSeguro = 100;
-	private static double precioSoportePared = 50;
-	private static double precioTransporte = 20;
-	*/
 
 	//Methods
 	private Empresa() {
@@ -108,14 +102,25 @@ public class Empresa {
 	}
 	
 	
-	private boolean esPosibleAgendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
+	private boolean esPosibleAgendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha, boolean necesitaSeguro, boolean necesitaSoportePared) {
 		Agenda agendaCliente = cliente.getAgenda();
 		Agenda agendaTecnico = tecnico.getAgenda();
 		Turno turno = new Turno(fecha);
 		
-		if (agendaCliente.estaDisponible(turno) && agendaTecnico.estaDisponible(turno) && this.hayStockDisponibleParaAgendar()){
+		if (agendaCliente.estaDisponible(turno) && agendaTecnico.estaDisponible(turno) && this.hayStockDisponibleParaAgendar(necesitaSoportePared)){
 			agendaCliente.agendarTurno(turno);
 			agendaTecnico.agendarTurno(turno);
+			Instalacion instalacion = new Instalacion(cliente, tecnico, necesitaSeguro);
+			turno.setInstalacion(instalacion);
+			this.instalaciones.add(instalacion);
+			instalacion.setHoraInicio(turno.getHoraInicio());
+			instalacion.setHoraFinalizacion(turno.getHoraFinalizacion());
+			instalacion.agregarElemento(this.inventario.quitarProducto(new Condensadora()));
+			instalacion.agregarElemento(this.inventario.quitarProducto(new Evaporadora()));
+			instalacion.agregarElemento(this.inventario.quitarProducto(new KitDeInstalacion()));
+			if (necesitaSoportePared) {
+				instalacion.agregarElemento(this.inventario.quitarProducto(new SoportePared()));
+			}
 			return true;
 		}
 		System.out.println("No se agendo la instalacion para la fecha " + fecha.getTime());
@@ -128,22 +133,8 @@ public class Empresa {
 		Cliente cliente = this.buscarCliente(idCliente);
 		Tecnico tecnico = (Tecnico) this.buscarEmpleado(idTecnico);
 		
-		if (this.esPosibleAgendarInstalacion(cliente, tecnico, fecha)) {
-			if (this.hayStockDisponibleParaAgendar()) {
-				Turno turno = new Turno(fecha);
-				cliente.getAgenda().agendarTurno(turno);
-				tecnico.getAgenda().agendarTurno(turno);
-				Instalacion instalacion = new Instalacion(cliente, tecnico, necesitaSeguro, necesitaSoportePared);
-				turno.setInstalacion(instalacion);
-				this.instalaciones.add(instalacion);
-				instalacion.setHoraInicio(turno.getHoraInicio());
-				instalacion.setHoraFinalizacion(turno.getHoraFinalizacion());
-				instalacion.agregarElemento(this.inventario.quitarProducto(new Condensadora()));
-				instalacion.agregarElemento(this.inventario.quitarProducto(new Evaporadora()));
-				instalacion.agregarElemento(this.inventario.quitarProducto(new KitDeInstalacion()));
-				
-				return true;
-			}
+		if (this.esPosibleAgendarInstalacion(cliente, tecnico, fecha, necesitaSeguro, necesitaSoportePared)) {
+			return true;
 		}
 		return false;
 	}
@@ -184,6 +175,23 @@ public class Empresa {
 		}
 		return false;
 	}
+	
+	public void setCostoSeguro(float costoSeguro) {
+		Instalacion.setCostoSeguro(costoSeguro);
+	}
+	
+	public void setCostoViaje(float costoViaje) {
+		Instalacion.setCostoViaje(costoViaje);
+	}
+	
+	public float getCostoSeguro() {
+		return Instalacion.getCostoSeguro();
+	}
+	
+	public float getCostoViaje() {
+		return Instalacion.getCostoViaje();
+	}
+	
 	
 	public ArrayList<ClienteView> buscarNombreClienteLike(String nombreApellido) {
 		ArrayList<ClienteView> clientesView = new ArrayList<ClienteView>();
@@ -354,8 +362,11 @@ public class Empresa {
 	}
 	
 	
-	public boolean hayStockDisponibleParaAgendar() {
+	public boolean hayStockDisponibleParaAgendar(boolean necesitaSoporte) {
 		if (this.inventario.hayStock(new Evaporadora()) && this.inventario.hayStock(new Condensadora()) && this.inventario.hayStock(new KitDeInstalacion())) {
+			if (necesitaSoporte) {
+				return this.inventario.hayStock(new SoportePared());
+			}
 			return true;
 		}
 		return false;
@@ -395,6 +406,8 @@ public class Empresa {
 				return new Evaporadora();
 			case "KitDeInstalacion":
 				return new KitDeInstalacion();
+			case "SoportePared":
+				return new SoportePared();
 			default:
 				System.out.println("ERROR");
 				return null;

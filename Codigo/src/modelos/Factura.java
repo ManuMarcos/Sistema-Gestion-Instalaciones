@@ -7,12 +7,12 @@ import java.util.Date;
 public class Factura {
 
 	//Attributes
-	private static int generador = 1;
+	private static int generador = 1000;
 	private static final float iva = (float) 0.21;
 	private int numero;
 	private char tipo;
 	private Date fecha;
-	private float subtotal;
+	private float importeNeto;
 	private float precioTotal;
 	private float importeIva;
 	private Cliente cliente;
@@ -38,14 +38,9 @@ public class Factura {
 	public void agregarRenglon(String descripcion, int cantidad, float precioUnitario) {
 		FacturaRenglon renglon = new FacturaRenglon(descripcion, cantidad, precioUnitario);
 		this.renglones.add(renglon);
-		this.subtotal += renglon.getImporte();
+		this.importeNeto += renglon.getImporte();
 		this.importeIva += renglon.getImporte() * iva;
-		if (this.tipo == 'B') {
-			this.precioTotal = this.subtotal + this.importeIva;
-		}
-		else {
-			this.precioTotal = this.subtotal;
-		}
+		this.precioTotal = this.importeNeto + this.importeIva;
 	}
 	
 	private void setTipoFactura(TipoCliente tipoCliente) {
@@ -70,7 +65,7 @@ public class Factura {
 		for(FacturaRenglon renglon : this.renglones) {
 			factura += renglon.toString() + "\n" ;
 		}
-		factura += " Subtotal: " + this.subtotal;
+		factura += " Importe Neto: " + this.importeNeto;
 		factura += " Importe Iva: " + this.importeIva;
 		factura += " Precio total: " + this.precioTotal+ "\n";
 		factura += this.tipo;
@@ -78,7 +73,7 @@ public class Factura {
 	}
 	
 	public FacturaView toView() {
-		return new FacturaView(this.numero,this.fecha, this.renglones, this.cliente.toView(), this.tipo, this.importeIva, this.subtotal, this.precioTotal); 
+		return new FacturaView(this.numero,this.fecha, this.renglones, this.cliente.toView(), this.tipo, this.importeIva, this.importeNeto, this.precioTotal); 
 	}
 
 	

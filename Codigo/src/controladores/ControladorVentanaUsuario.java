@@ -72,7 +72,7 @@ public class ControladorVentanaUsuario {
 	private void iniciarVistaAdministrador() {
 
 		ControladorAbmTecnicos controladorAbmTecnicos = new ControladorAbmTecnicos();
-		ControladorAbmInventario controladorAbmInventario = new ControladorAbmInventario();
+		ControladorInventarioParamAdicionales controladorAbmInventario = new ControladorInventarioParamAdicionales();
 		
 		//Se crear el panel modular
 		this.vista = new VentanaUsuario(new ImageIcon("administrador.png"), "Administrador",2,1);

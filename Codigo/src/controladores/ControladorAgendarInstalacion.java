@@ -70,7 +70,7 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 	
 	
 	private void agendarInstalacion(long idCliente) {
-		boolean hayStockDisponible = this.modelo.hayStockDisponibleParaAgendar();
+		boolean hayStockDisponible = this.modelo.hayStockDisponibleParaAgendar(this.vista.necesitaSoporte());
 		Calendar fechaSeleccionada = this.vista.getFechaSeleccionada();
 		
 		if (hayStockDisponible) {
@@ -88,7 +88,7 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 					}
 				}
 		else {
-			vista.mostrarMensajeDeError("Falta de Stock", "No hay stock de productos, se necesitan: (1 Evaporadora, 1 Kit, 1 Condesadora)");
+			vista.mostrarMensajeDeError("Falta de Stock", "No hay stock de productos");
 		};
 	}
 	
@@ -101,28 +101,15 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		return comboBoxModel;
 	}
 	
-	/*
-	private void mostrarDatosCliente() {
-		
-		if (esIdValido) {
-			long idIngresadoLong = Long.parseLong(idIngresado);
-			if (this.existeCliente(idIngresadoLong)){
-				ClienteView clienteView = modelo.buscarClienteToView(idIngresadoLong);
-				String [] columnas = {"Cuil/Cuit", "NombreApellido", "Direccion", "Categoria", "Correo"};
-				String [][] datosCliente = {{Long.toString(clienteView.getCuitCuil()), clienteView.getNombre(), clienteView.getDireccion(), 
-						clienteView.getTipoCliente().toString(), clienteView.getCorreo()}};
-				DefaultTableModel tableModel = new DefaultTableModel(datosCliente, columnas);
-				vista.mostrarDatosCliente(tableModel);
-			}
-		}
-	}
-	*/
-	
-	
-	
-	
+
 	private void mostrarListadoClientes(ArrayList<ClienteView> clientes) {
-		DefaultTableModel tableModel = new DefaultTableModel();
+		DefaultTableModel tableModel = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		String[] columnas = {"Cuil/Cuit", "NombreApellido", "Direccion", "Categoria", "Correo"};
 		tableModel.setColumnIdentifiers(columnas);
 		

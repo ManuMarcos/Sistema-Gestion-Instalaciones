@@ -10,7 +10,10 @@ import java.util.Date;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import modelos.Empresa;
@@ -40,7 +43,7 @@ public class ControladorFacturacion implements ActionListener, MouseListener{
 	private void setearListadoFacturas() {
 		DefaultTableModel modeloTabla = new DefaultTableModel();
 		
-		String[] columnas = {"Numero", "Tipo", "Fecha", "Cliente", "Subtotal", "Importe IVA", "Importe Total"};
+		String[] columnas = {"Numero", "Tipo", "Fecha", "Cliente", "Importe Neto", "Importe IVA", "Importe Total"};
 		modeloTabla.setColumnIdentifiers(columnas);
 		
 		for(FacturaView facturaView : this.modelo.getFacturasView()) {
@@ -87,14 +90,22 @@ public class ControladorFacturacion implements ActionListener, MouseListener{
 			String[] columnasListadoVentas = {"Descripcion", "Cantidad", "Precio unitario", "Importe"};
 			listadoVenta.setColumnIdentifiers(columnasListadoVentas);
 			for(FacturaRenglon renglon : facturaView.getRenglones()) {
-				listadoVenta.addRow(new Object [] {renglon.getDescripcion(), renglon.getCantidad(), renglon.getPrecioUnitario(), renglon.getImporte()});
+				listadoVenta.addRow(new Object [] {renglon.getDescripcion(), renglon.getCantidad(), "$" + renglon.getPrecioUnitario(), "$" + renglon.getImporte()});
 			}
 			
 			DefaultTableModel listadoTotales = new DefaultTableModel();
-			String[] columnasListadoTotales = {"Subtotal", "Importe Iva", "Importe total"};
-			listadoTotales.setColumnIdentifiers(columnasListadoTotales);
-			listadoTotales.addRow(new Object[] {facturaView.getSubtotal(), facturaView.getImporteIva(), facturaView.getImporteTotal()});
 			
+			if (facturaView.getTipoFactura() == 'A') {
+				String[] columnasListadoTotales = {"Importe Neto", "Importe Iva", "Importe Total"};
+				listadoTotales.setColumnIdentifiers(columnasListadoTotales);
+				listadoTotales.addRow(new Object[] {"$" + facturaView.getSubtotal(), "$" + facturaView.getImporteIva(), "$" + facturaView.getImporteTotal()});
+			}
+			else {
+				String[] columnasListadoTotales = {"Importe Total"};
+				listadoTotales.setColumnIdentifiers(columnasListadoTotales);
+				listadoTotales.addRow(new Object[] {"$" + facturaView.getImporteTotal()});
+			}
+		
 			this.vista.setDatosFactura(logoEmpresa, nroFacturaS, tipoFactura, fechaFactura, idCliente, nombreCliente, direccionCliente, listadoVenta, listadoTotales);
 		}
 	}
