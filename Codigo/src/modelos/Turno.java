@@ -28,30 +28,38 @@ public class Turno {
 	}
 	
 	public String toString() {
-		return "Hora Inicio: " + this.horaInicio.getTime() + "\nHora Finalizacion: " + this.horaFinalizacion.getTime();
+		return "Hora Inicio: " + this.horaInicio.getTimeInMillis()/1000 + "\nHora Finalizacion: " + this.horaFinalizacion.getTimeInMillis()/1000;
 	}
 	
-	/*
-	public boolean estoyOcupando(Turno turno) {
-		if ((turno.getHoraInicio().after(this.horaInicio) && turno.getHoraInicio().before(this.horaFinalizacion)
-				|| turno.getHoraFinalizacion().after(horaInicio) && turno.getHoraFinalizacion().before(this.horaFinalizacion)
-				|| turno.getHoraInicio().equals(this.horaInicio))){
-			return true;
-		}
-		return false;
-	}
-	*/
 	
 	public boolean estoyOcupando(Turno turno) {
-		//Utilizo 2 if para mejor legibilidad del codigo, pero se puede hacer en 1 solo
-		if ((turno.getHoraInicio().after(this.horaInicio) && turno.getHoraInicio().before(this.horaFinalizacion)
-				|| turno.getHoraFinalizacion().after(this.horaInicio) && turno.getHoraFinalizacion().before(this.horaFinalizacion))
-				|| turno.getHoraInicio().equals(this.horaFinalizacion)
-				|| turno.getHoraFinalizacion().equals(this.horaInicio)){
+		//System.out.println("Nuevo turno " + turno.toString());
+		//System.out.println("Mi turno " + this.toString());
+		
+		/*
+		if ((turno.getHoraInicio().after(this.horaInicio) && turno.getHoraInicio().before(this.horaFinalizacion))
+				|| (turno.getHoraFinalizacion().after(this.horaInicio) && turno.getHoraFinalizacion().before(this.horaFinalizacion))
+				|| (turno.getHoraInicio().equals(horaInicio))) {
 			System.out.println("ESTOY OCUPANDO");
 			return true;
 		}
 		return false;
+		*/
+		//No se utiliza esa forma ya que hay un bug ocasionado por los milisegundos al querer agendar un pegado a otro
+		//Se deja comentado por si se encuentra algun bug en la nueva metodologia
+		
+		long turnoHoraInicio = turno.getHoraInicio().getTimeInMillis()/1000;
+		long turnoHoraFin = turno.getHoraFinalizacion().getTimeInMillis()/1000;
+		long esteTurnoHoraInicio = this.getHoraInicio().getTimeInMillis()/1000;
+		long esteTurnoHoraFin = this.getHoraFinalizacion().getTimeInMillis()/1000;
+		
+		if((turnoHoraInicio > esteTurnoHoraInicio && turnoHoraInicio < esteTurnoHoraFin)
+				|| (turnoHoraFin > esteTurnoHoraInicio && turnoHoraFin < esteTurnoHoraFin)
+				|| (turnoHoraInicio == esteTurnoHoraInicio)) {
+			System.out.println("Estoy ocupando");
+			return true;
+		}
+		return false;		
 	}
 	
 	
