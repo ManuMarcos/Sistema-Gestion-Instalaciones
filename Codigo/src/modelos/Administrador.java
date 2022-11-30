@@ -3,7 +3,6 @@ package modelos;
 public class Administrador extends Empleado{
 
 	//Attributes
-	Empresa empresa = Empresa.getInstance();
 
 	//Methods
 	

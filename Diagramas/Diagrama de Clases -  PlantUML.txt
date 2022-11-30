@@ -1,33 +1,95 @@
 @startuml
 class Empresa <<Singleton, Facade>>{
 - instalaciones : ArrayList<Instalacion>
-- personas : ArrayList<Persona>
+- empleados : ArrayList<Empleado>
+- clientes : ArrayList<Cliente>
 - inventario : Inventario
-+ agregarProducto(String) 
-+ agregarCliente(String)
-+ agregarEmpleado(String)
-+ agregarCalendario()
+- facturas : ArrayList<Factura>
+- Empresa()
++crearCliente(String,String,long,TipoCliente,String)  : boolean
++crearEmpleado(String, String, String, String, String) : boolean
++existeCliente(long) : boolean
++buscarClienteToView(long) : ClienteView
+-buscarCliente(long) : Cliente
+-buscarEmpleado(int) : Empleado
+-esPosibleAgendarInstalacion(Cliente, Tecnico, Calendar, boolean, boolean) : boolean
++agendarInstalacion(long, int, Calendar, boolean, boolean) : boolean
+-buscarInstalacion(int) : Instalacion
++existeInstalacion(int) : boolean
++setStockProducto(String, int) : boolean
++setPrecioProducto(String, float) : boolean
++setCostoSeguro(float) : void
++setCostoViaje(float) : void
++getCostoSeguro() : float
++getCostoVIaje() : float
++buscarNombreClienteLike(String) : ArrayList<ClienteView>
++esUsuarioValido(String, String, String) : int
++getTipoDeUsuario() : ArrayList<String>
++getInstalacionesAsignadas(int) : ArrayList<InstalacionView>
++getFacturasView() : ArrayList<FacturaView>
++getFacturaView(int) : FacturaView
++completarInstalacion(int, LocalTime, LocalTime, boolean, int, int, int, float) : boolean
++getClientesView() : ArrayList<ClienteView>
++getTecnicosView() : ArrayList<TecnicoView>
++getClienteView(long) : ClienteView
++formatearFecha(Calendar) : String
++getEmpleadoView(int) : EmpleadoView
++getTecnicosDisponibles(Calendar) : ArrayList<EmpleadoView>
+-getTecnicos() : ArrayList<Tecnico>
++getInstalacionView(int) : InstalacionView
++estaDisponibleCliente(Calendar, long) : boolean
++hayStockDisponibleParaAgendar(boolean) : boolean
++getProductosView() : ArrayList<ProductoInventarioView>
++getTecnicoView(int) : TecnicoView
++getProductoView(ing) : ProductoInventarioView
++actualizarDatosProducto(String, float, int) : void
+-crearProducto(String) : Producto
+-crearTurnoLaboral(String) : Disponibilidad
+-crearExpLaboral(String) : ExperienciaLaboral
++setCostoHoras(String, float) : boolean
++getCostoHoras(String) : float
++crearTecnico(String, String, String, String, String, String) : TecnicoView
++modificarTecnico(int, String, String, String, String, String, String) : void
++eliminarEmpleado(int) : boolean
 }
 
 
 abstract class Persona{
-- id : int
 - nombre : String
 - direccion : String
 # Persona(nombre : String, direccion : String)
++getNombre() : String
++getDireccion() : String
++setNombre(String) : void
++setDireccion(String) : void
 }
 
 class Cliente{
-- {static} generador : int
+-cuitCuil : long
+-agenda : Agenda
 - tipoCliente : TipoCliente
 - correoElectronico : String
 + Cliente(nombre : String, direccion : String, tipoCliente : TipoCliente, correoElectronico : String)
+- tengoElCuitCuil(Long) : boolean
++getAgenda() : Agenda
++getCuitCuil() : long
++getCorreoElectronico() : String
++getTipoCliente() : TipoCliente
 }
 
 abstract class Empleado{
 # {static} generador : int
-- sueldo : float
+# id:int
+# sueldo : float
+# usuario : String
+# contraseña : String
 # Empleado(nombre : String, direccion : String)
++getUsuario() : String
++getContraseña() String
++getId() : int
++setUsuario(String): void
++setContraseña(String): void
+#ToView() : EmpleadoView
 }
 
 
@@ -37,66 +99,89 @@ INDIVIDUO
 EMPRESA
 }
 
+class Administrador{
++Administrador(String,String,String,String)
+}
+
 class Operador{
-+ darDeAlta() : void
-+ agendarInstalacion(Cliente, Tecnico, Dia, Turno, boolean, boolean) : void 
++Operador(String,String,String,String)
+}
+
+class Administrativo{
++ Administrativo(String, String, Disponibilidad, String, String, ExperienciaLaboral)
 }
 
 class Tecnico{
 - experienciaLaboral : ExperienciaLaboral
 - agenda : Agenda
-- turnoLaboral : Disponibilidad
-- empresa : Empresa
-+ Tecnico(nombre : String, direccion : String, experienciaLaboral : ExperienciaLaboral, turnoLaboral : Disponibilidad)
++ Tecnico(String, String, ExperienciaLaboral, Disponibilidad)
 + getExperienciaLaboral() : ExperienciaLaboral
 + setExperienciaLaboral(ExperienciaLaboral) : void
 + getTurnoLaboral() : Disponibilidad
-+ setTurnoLaboral(turnoLaboral : Disponibilidad) : void
++ setTurnoLaboral(Disponibilidad) : void
 + getAgenda() : Agenda
-+ completarInstalacion(Instalacion instalacion, horaInicio : Calendar, horaFinalizacion : Calendar, almuerzo : Boolean) : void
-+ agregarElementoUtilizado(instalacion : Instalacion, producto : Producto) : void
++ toView() : TecnicoView
 + toString() : String
+
 }
 
 abstract class ExperienciaLaboral{}
 
 class Junior{
 - {static} costoHora : float
++ Junior()
++ setCostoHora(float) : void
++ getCostoHora(): : float
+
 }
 
 class SemiSenior{
 - {static} costoHora : float
++ SemiSenior()
++ setCostoHora(float) : void
++ getCostoHora() : float
 }
 
 class Senior{
 - {static} costoHora : float
-}
-
-class Administrativo{
-+ facturarInstalacion()
-- emitirFactura()
-- enviarFactura()
-+ modificarInstalacion(Instalacion)
-+ imprimirFactura()
-+ obtenerFacturasEmitidas() : ArrayList<Factura>
++ Senior()
++ setCostoHora(float)  : void
++ getCostoHora() : float
 }
 
 class Factura{
 - {static} generador : int
-- numero : int 
-- {static} iva : int
+- {static} iva : double
+- numero : int
+- tipo : char
+- fecha : Date
+- importeNeto : float
 - precioTotal : float
+- importeIva : float
+- cliente : Cliente
+- renglones : ArrayList<FacturaRenglon>
++ Factura(Cliente)
++getNumero() : int
++agregarRenglon(String, int, float) : void
++setTipoFactura(TipoCliente) : void
++getPrecioTotal() : float
++getRenglones() : ArrayList<FacturaRenglon>
++toView() : FacturaView
 }
 
-
-class Administrador{
-+ crearTecnico(faltanParametros) : void
-+ crearProducto(faltanParametros) : void
-+ setCostoHoraTrabajo(Tecnico, float) : void
-+ setStockProducto(Producto, int) : void
-+ setPrecioProducto(Producto, float) : void
-+ setCostoViaje(float) : void
+class FacturaRenglon{
+- descripcion : String
+- cantidad : int
+- precioUnitario : float
+- importe : float
++ FacturaRenglon(String, int, float)
++ getImporte() : float
++ getCantidad() : int
++ getPrecioUnitario() : float
++ getDescripcion() : Sting
++ toString() : String
 }
+
 
 
 
@@ -104,47 +189,98 @@ class Administrador{
 class Inventario{
 - productos : HashMap<Producto, stock : Integer>
 + Inventario()
-+ obtenerStock(Producto) : int
++ getStock(Producto) : int
 + setStock(Producto, stock : int) : void
 + setPrecioProducto(Producto, precio : float) : boolean
++agregarProducto(Producto) : void
 + hayStock(Producto) : boolean
 + quitarProducto(Producto) : Producto
 - buscarProducto(Producto) : Producto
++getProductos() : ArrayList<ProductoInventarioView>
++getProductoView(int) : ProductoInventarioView
 + toString() : String
 }
 
 abstract class Producto{
-# precio : float
-# setPrecio(precio : float) : void
-# getPrecio() : float
+- precio : float
+# generador : int
+# id : int
++ Producto(float)
++ setPrecio(precio : float) : void
++ getPrecio() : float
+# getId() : int
 }
 
 
 class Evaporadora{
 }
 
+class SoportePared{
++ SoportePared()
++ SoportePared(float)
++ toString(String)
+}
+
+
 class Condensadora{
 }
 
 class KitDeInstalacion{
++ kitDeInstalacion()
++ kitDeInstalacion(float)
++ toString() : String
 }
 
 class Instalacion{
 - generador {static} : int
 - id : int
 - estado : Estado
-- horaInicio : Date
-- horaFinalizacion : Date
-- turno : Turno
+- horaInicio : Calendar
+- horaFinalizacion : Calendar
 - elementos : ArrayList<Producto>
 - tecnico : Tecnico
 - cliente : Cliente
 - factura : Factura
-- tiempoTrabajado : Date
+- {static} costoViaje : float
+- {static} costoSeguro : float
+- otrosGastos : float
+- minsTrabajados : int
 - necesitaSeguro : boolean
-- necesitaSoportePared : boolean
 - almuerzo : boolean
-- costoDeViaje : float
++Instalacion(Cliente,Tecnico,boolean)
++getId() : int
++getEstado() : Estado
++setEstado(Estado) : void
++setCostoSeguro(float) : void
++setCostoViaje(float) : void
++getCostoSeguro() : float
++getCostoVIaje() : float
++getHoraInicio() : Calendar
++setHoraInicio(Calendar) : void
+-setHoraInicio(LocalTime) : void
+-setHoraFinalizacion(LocalTime) : void
+-calcularPrecioElementos() : float
++getPrecioProvisorio() : float
++finalizar(LocalTime, LocalTime, ArrayList<Producto>, float, boolean)
++getHoraFinalizacion() : Calendar
++setHoraFinalizacion(Calendar) : void
++getCantElementos(Producto) : int
+-getTipoElementosUtilizados() : ArrayList<Producto>
+-facturar() : Factura
++agregarElemento(Producto) : void
++getTecnico() : Tecnico
++setTecnico(Tecnico) : void
++getCliente() : Cliente
++setCliente(Cliente) : void
++getFactura() : Factura
++setFactura(Factura) : void
++getMinsTrabajados() : int
+-setMinsTrabajados(long) : void
++getNecesitaSeguro() : boolean
++setNecesitaSeguro(boolean) : void
++almorzoElTecnico() : boolean
++setAlmuerzo(boolean) : void
++toView() : InstalacionView
 }
 
 enum Estado{
@@ -158,11 +294,20 @@ class Agenda{
 - dias : ArrayList<Dia>
 - Disponibilidad : Disponibilidad
 + Agenda(Disponibilidad : Disponibilidad)
-+ agendarInstalacion(instalacion : Instalacion, fecha : Calendar)
-+ imprimirTurnosPorFecha(fecha : Calendar)
-- existeDia(fecha : Calendar) : Dia
-- buscarDia(fecha : Calendar) : Dia
-- verificarFecha(fecha : Calendar) : boolean
++setDisponibilidad(Disponibilidad):void
++getDisponibilidad():Disponibilidad
++agendarTurno(Turno):boolean
++estaDisponible(Turno):boolean
+-esValido(Turno):boolean
+-tieneFechaPosteriorAHoy(Turno) :boolean
++imprimirTurnosPorFecha(Calendar):void
++getTurnosAgendados() : ArrayList<Turno>
+-getDia(Calendar):Dia
+-buscarDia(Calendar):Dia
+-existeDia(Calendar):boolean
++imprimirTurnos():void
++ordenarDias():void
++getDias() : ArrayList<Dia>
 }
 
 class Dia{
@@ -176,6 +321,7 @@ class Dia{
 + getFecha() : Calendar
 + getTurnos() : ArrayList<Turno>
 + toString() : String
++ordenarTurnos(): void
 }
 
 class Turno{
@@ -259,16 +405,17 @@ Instalacion o-- Persona
 Instalacion o-- Producto
 Instalacion o-- Estado
 Instalacion *-- Factura
-Instalacion o-- Turno
+Instalacion --o Turno
 Inventario *-- Producto
 Empresa *-- Instalacion
 Empresa *-- Persona
 Empresa *-- Inventario
+Factura *-- FacturaRenglon
 Cliente o-- TipoCliente
 
 
 
-
+Producto <|-- SoportePared
 Producto <|-- Evaporadora
 Producto <|-- Condensadora
 Producto <|-- KitDeInstalacion

@@ -8,7 +8,6 @@ public class Tecnico extends Empleado {
 	//Attributes
 	private ExperienciaLaboral experienciaLaboral;
 	private Agenda agenda;
-	private Empresa empresa = Empresa.getInstance();
 
 	//Methods
 	

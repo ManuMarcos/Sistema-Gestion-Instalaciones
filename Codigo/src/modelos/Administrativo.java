@@ -6,8 +6,6 @@ import java.util.Calendar;
 public class Administrativo extends Empleado{
 
 	//Attributes
-	Empresa empresa = Empresa.getInstance();
-
 	//Methods
 
 	//Constructor
