@@ -38,8 +38,7 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 		String comandoAccionado = e.getActionCommand();
 		switch (comandoAccionado) {
 			case "AGENDAR":
-				long idCliente = this.vista.getIdClienteSeleccionado();
-				this.agendarInstalacion(idCliente);
+				this.agendarInstalacion();
 				break;
 			case "CONFIRMAR_TECNICO":
 				this.confirmarInstalacion();
@@ -69,7 +68,8 @@ public class ControladorAgendarInstalacion implements ActionListener, KeyListene
 	}
 	
 	
-	private void agendarInstalacion(long idCliente) {
+	private void agendarInstalacion() {
+		long idCliente = this.vista.getIdClienteSeleccionado();
 		boolean hayStockDisponible = this.modelo.hayStockDisponibleParaAgendar(this.vista.necesitaSoporte());
 		Calendar fechaSeleccionada = this.vista.getFechaSeleccionada();
 		

@@ -1,0 +1,56 @@
+@startuml
+actor Usuario as u
+
+participant "Empresa" as sis
+
+participant "Inventario" as inv
+
+participant "productos: HashMap<Producto, Integer>" as arrprod
+
+participant "System"
+
+u->sis:hayStockDelProducto(Producto)
+
+activate sis
+
+sis->inv:hayStock(Producto):boolean
+
+activate inv
+
+inv->inv:getStock(Producto):int
+
+inv->inv:buscarProducto(Producto):Producto
+
+loop Producto pi : this.productos.keySet()
+inv->arrprod
+
+activate arrprod
+
+alt if (pi.getClass().equals(producto.getClass()))
+
+arrprod->inv: Producto
+
+else else
+arrprod->inv: Producto (null)
+end
+destroy arrprod
+end
+
+alt if getStock(Producto) > 0
+inv->sis:boolean
+else else
+inv->sis:boolean
+end
+
+destroy inv
+
+sis->System:out.println()
+
+activate System
+
+destroy sis
+
+System->u:String
+
+destroy System
+@enduml

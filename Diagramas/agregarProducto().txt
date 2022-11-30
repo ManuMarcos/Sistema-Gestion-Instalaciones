@@ -1,0 +1,70 @@
+@startuml
+actor User as u
+
+participant Empresa as empresa
+
+participant Inventario as inventario
+
+participant "producto: Producto" as producto
+
+participant Inventario as inventario
+
+participant "productos: HashMap<Producto, Integer>" as arrProd
+
+participant System as system
+
+u->empresa:agregarProducto(String nombre, int cantidad)
+
+activate empresa
+
+empresa->empresa:crearProducto(String nombre, int cantidad):Producto
+
+alt case "Condensadora"
+empresa->producto:<<Create>>
+activate producto
+
+else case "Evaporadora"
+empresa->producto:<<Create>>
+
+else case "KitDeInstalacion"
+empresa->producto:<<Create>>
+
+destroy producto
+
+else default
+empresa->system:out.println()
+activate system
+system->u:String
+destroy system
+end
+
+alt if Producto != null
+
+empresa->inventario:setStock(Producto producto, int cantidad)
+activate inventario
+inventario->inventario:buscarProducto(producto)
+loop Producto pi : this.productos.keySet()
+alt if pi.getClass().equals(producto.getClass()
+inventario->inventario:Producto
+
+inventario->inventario:Producto (null)
+end
+
+inventario->arrProd:put(Producto productoBuscado, int cantidad)
+activate arrProd
+destroy arrProd
+else else 
+inventario->arrProd:put(Producto producto, int cantidad)
+activate arrProd
+destroy arrProd
+destroy inventario
+end
+
+empresa->u:boolean
+
+else else
+empresa->u:boolean
+
+destroy empresa
+end
+@enduml

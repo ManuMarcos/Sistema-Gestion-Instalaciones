@@ -1,0 +1,52 @@
+@startuml
+actor Operador as operador
+
+participant PanelAgendarInstalacion as vista
+
+participant ControladorAgendarInstalacion as controlador
+
+participant Empresa as modelo
+
+operador -> vista : Presiona "Agendar"
+activate vista
+vista -> controlador : actionPerformed(ActionEvent e) : void
+activate controlador
+alt case e.getActionCommand() = "AGENDAR"
+controlador -> controlador : agendarInstalacion() : void
+controlador -> vista : getIdClienteSeleccionado() : long
+controlador -> vista : necesitaSoporte() : boolean
+controlador -> vista : fechaSeleccionada() : Calendar
+controlador -> modelo : hayStockDisponibleParaAgendar(boolean) : boolean
+activate modelo
+
+alt hayStockDisponible
+controlador -> modelo : estaDisponibleCliente(Calendar, long) : boolean
+
+alt estaDisponibleCliente
+controlador -> modelo : getTecnicosDisponibles(Calendar) : ArrayList<EmpleadoView>
+alt tecnicosDisponibles.size > 0
+controlador -> controlador : setearComboBoxTecnicos(tecnicosDisponibles) : ComboBoxModel
+controlador -> vista : mostrarTecnicosDisponbles(ComboBoxModel)
+else else
+controlador -> vista : mostrarMensajeDeError("No hay tecnicos disponibles")
+end
+else else
+controlador -> vista : mostrarMensajeDeError("No se pudo agendar la instalacion")
+end
+else else
+controlador -> vista : mostrarMensajeDeError("Falta stock")
+end
+end
+operador -> vista : Selecciona Tecnico del comboBox
+operador -> vista : Presiona "Confirmar"
+vista -> controlador : actionPermormed(ActionEvente e) : void
+alt case e.getActionCommand() = "CONFIRMAR_TECNICO"
+controlador -> controlador : confirmarInstalacion() : void
+controlador -> vista : getIdTecnicoSeleccionado() : int
+controlador -> vista : necesitaSeguro() : boolean
+controlador -> modelo : agendarInstalacion(long : cuitCuil, int : idTecnico, Calendar : fecha, boolean : necesitaSeguro, boolean : necesitaSoporte) : boolean
+alt agendarInstalacion
+controlador -> vista : mostrarMensajeInformativo("Instalacion agendada con exito", datosInstalacion)
+end
+end
+@enduml
