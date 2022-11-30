@@ -91,16 +91,19 @@ public class Instalacion {
 	
 	public Factura  finalizar(LocalTime horaInicio, LocalTime horaFinalizacion, ArrayList<Producto> materialesAdicionales, 
 			float otrosGastos, boolean almuerzo) {
-		this.setHoraInicio(horaInicio);
-		this.setHoraFinalizacion(horaFinalizacion);
-		this.elementos.addAll(materialesAdicionales);
-		this.otrosGastos = otrosGastos;
-		this.almuerzo = almuerzo;
-		if (almuerzo == true) {
-			this.minsTrabajados -= 30;
+		if (this.estado != Estado.FINALIZADA) {
+			this.setHoraInicio(horaInicio);
+			this.setHoraFinalizacion(horaFinalizacion);
+			this.elementos.addAll(materialesAdicionales);
+			this.otrosGastos = otrosGastos;
+			this.almuerzo = almuerzo;
+			if (almuerzo == true) {
+				this.minsTrabajados -= 30;
+			}
+			this.estado = Estado.FINALIZADA;
+			return this.facturar();
 		}
-		this.estado = Estado.FINALIZADA;
-		return this.facturar();
+		return null;
 	}
 	
 	public Calendar getHoraFinalizacion() {

@@ -327,8 +327,5 @@ public class PanelModificarInstalacion extends Panel {
 
 	
 	
-	
-	
-	
-
 }
+	

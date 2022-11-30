@@ -30,15 +30,15 @@ import java.awt.Component;
 public class PanelAbmTecnicos extends Panel {
 	private JPanel panelPrincipal;
 	private JPanel panelSuperior;
-	private JLabel labelBuscarTecnico;
 	private JPanel panelCentral;
 	private JTable tablaTecnicos;
 	private JScrollPane scrollPaneTablaTecnicos;
-	private JPanel panelBuscarTecnico;
-	private JPanel panelNuevoTecnico;
-	private JTextField textFieldBuscarTecnico;
+	private JPanel panelHeaderListado;
+	private JPanel panelBotones;
 	private JButton buttonNuevoTecnico;
+	private JButton buttonCostoHoras;
 	private DialogoDatosTecnico dialogoDatosTecnico;
+	private DialogoCostoHoras dialogoCostoHoras;
 	
 	
 	
@@ -48,10 +48,10 @@ public class PanelAbmTecnicos extends Panel {
 		this.setBackground(Color.WHITE);
 		
 		this.agregarPaneles();
-		this.agregarEtiquetas();
-		this.agregarTextFields();
 		this.agregarTabla();
+		this.agregarBotones();
 		this.iniciarDialogoDatosTecnico();
+		this.iniciarDialogoCostoHoras();
 		
 		this.setBordePanel("ABM Tecnicos");
 	}
@@ -71,14 +71,6 @@ public class PanelAbmTecnicos extends Panel {
 	}
 	
 	
-	
-	
-	private void agregarEtiquetas() {
-		labelBuscarTecnico = this.crearEtiquetaFormateada("Buscar tecnico");
-		labelBuscarTecnico.setHorizontalAlignment(SwingConstants.LEFT);
-		panelBuscarTecnico.add(labelBuscarTecnico);
-	}
-	
 	private void agregarPaneles() {
 		this.panelPrincipal= new JPanel();
 		panelPrincipal.setOpaque(false);
@@ -95,24 +87,22 @@ public class PanelAbmTecnicos extends Panel {
 		panelCentral.setLayout(new BorderLayout(0, 0));
 		panelSuperior.setLayout(new BorderLayout(0, 0));
 		
-		this.panelBuscarTecnico = new JPanel();
-		panelBuscarTecnico.setOpaque(false);
-		panelSuperior.add(panelBuscarTecnico, BorderLayout.CENTER);
+		this.panelHeaderListado = new JPanel();
+		panelHeaderListado.setOpaque(false);
+		panelSuperior.add(panelHeaderListado, BorderLayout.CENTER);
+		panelHeaderListado.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-		panelNuevoTecnico = new JPanel();
-		panelNuevoTecnico.setOpaque(false);
-		panelSuperior.add(panelNuevoTecnico, BorderLayout.EAST);
-		
-		buttonNuevoTecnico = this.crearBotonFormateado("Nuevo Tecnico", "NUEVO_TECNICO");
-		panelNuevoTecnico.add(buttonNuevoTecnico);
+		panelBotones = new JPanel();
+		panelBotones.setOpaque(false);
+		panelSuperior.add(panelBotones, BorderLayout.EAST);
 	}
 	
-	private void agregarTextFields() {
-		panelBuscarTecnico.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+	private void agregarBotones() {
+		buttonNuevoTecnico = this.crearBotonFormateado("Nuevo Tecnico", "NUEVO_TECNICO");
+		panelBotones.add(buttonNuevoTecnico);
 		
-		textFieldBuscarTecnico = new JTextField();
-		textFieldBuscarTecnico.setColumns(40);
-		panelBuscarTecnico.add(textFieldBuscarTecnico);
+		buttonCostoHoras = this.crearBotonFormateado("Costo Horas", "COSTO_HORAS");
+		panelBotones.add(buttonCostoHoras);
 	}
 	
 	private void iniciarDialogoDatosTecnico() {
@@ -123,6 +113,16 @@ public class PanelAbmTecnicos extends Panel {
 	
 	public void cerrarDialogoDatosTecnico() {
 		dialogoDatosTecnico.cerrar();
+	}
+	
+	private void iniciarDialogoCostoHoras() {
+		JFrame framePadre = (JFrame) SwingUtilities.getWindowAncestor(this);
+		this.dialogoCostoHoras = new DialogoCostoHoras(framePadre, true);
+		dialogoCostoHoras.setLocationRelativeTo(this);
+	}
+	
+	public void cerrarDialogoCostoHoras() {
+		dialogoCostoHoras.cerrar();
 	}
 	
 		
@@ -150,6 +150,8 @@ public class PanelAbmTecnicos extends Panel {
 		}
 		return -1;
 	}
+	
+	
 
 	public void setMouseListener(MouseListener controlador) {
 		this.tablaTecnicos.addMouseListener(controlador);
@@ -182,6 +184,23 @@ public class PanelAbmTecnicos extends Panel {
 	public String getId() {
 		return this.dialogoDatosTecnico.getId();
 	}
+	
+	public String getCostoJunior() {
+		return this.dialogoCostoHoras.getCostoJunior();
+	}
+	
+	public String getCostoSemiSenior() {
+		return this.dialogoCostoHoras.getCostoSemiSenior();
+	}
+	
+	public String getCostoSenior() {
+		return this.dialogoCostoHoras.getCostoSenior();
+	}
+	
+	public void setCostosHoras(String costoJunior, String costoSemiSenior, String costoSenior) {
+		this.dialogoCostoHoras.setCostos(costoJunior, costoSemiSenior, costoSenior);
+	}
+	
 
 	@Override
 	public void resetearPanel() {
@@ -192,7 +211,9 @@ public class PanelAbmTecnicos extends Panel {
 	public void setActionListener(ActionListener controlador) {
 		// TODO Auto-generated method stub
 		this.buttonNuevoTecnico.addActionListener(controlador);
+		this.buttonCostoHoras.addActionListener(controlador);
 		dialogoDatosTecnico.setActionListener(controlador);
+		dialogoCostoHoras.setActionListener(controlador);
 	}
 
 	@Override

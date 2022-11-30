@@ -22,7 +22,7 @@ import modelos.Turno;
 import vistas.PanelVerInstalaciones;
 import vistas.VistaConfig;
 
-public class ControladorVerInstalaciones implements ActionListener, KeyListener {
+public class ControladorVerInstalaciones implements ActionListener {
 
 	// Attributes
 	private PanelVerInstalaciones vista;
@@ -68,55 +68,12 @@ public class ControladorVerInstalaciones implements ActionListener, KeyListener 
 		return tableModel;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-
 	public String booleanToString(boolean booleano) {
 		if (booleano) {
 			return "Si";
 		}
 		return "No";
 	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_ENTER) {
-
-			String[] columnas = { "ID", "Cliente", "Direccion", "Estado", "Elementos" };
-			DefaultTableModel tableModel = new DefaultTableModel(columnas, 0);
-			for (int i = 0; i < modelo.instalacionesAsignadasATecnico(1).size(); i++) {
-				int id = modelo.instalacionesAsignadasATecnico(1).get(i).getId();
-				String cliente = modelo.instalacionesAsignadasATecnico(1).get(i).getCliente().getNombre();
-				String direccion = modelo.instalacionesAsignadasATecnico(1).get(i).getCliente().getDireccion();
-				Estado estado = modelo.instalacionesAsignadasATecnico(1).get(i).getEstado();
-				String cantidadElementos = modelo.instalacionesAsignadasATecnico(1).get(i).getElementos().toString();
-
-				Object[] filas = { id, cliente, direccion, estado, cantidadElementos };
-				tableModel.addRow(filas);
-			}
-
-			vista.mostrarDatosInstalacion(tableModel);
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	
 
 	public PanelVerInstalaciones getVista() {
 		return this.vista;

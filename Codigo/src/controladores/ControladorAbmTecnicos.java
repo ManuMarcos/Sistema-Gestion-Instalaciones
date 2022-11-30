@@ -108,7 +108,6 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String comandoAccionado = e.getActionCommand();
-		System.out.println(comandoAccionado);
 		switch (comandoAccionado) {
 			case "NUEVO_TECNICO":
 				this.vista.pedirDatosTecnico();
@@ -125,6 +124,15 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 			case "ELIMINAR_TECNICO":
 				this.eliminarTecnico();
 				break;
+			case "COSTO_HORAS":
+				this.getCostoHoras();
+				break;
+			case "CONFIRMAR_COSTOS_HORA":
+				this.modificarCostosHora();
+				break;
+			case "CANCELAR_COSTOS_HORA":
+				this.vista.cerrarDialogoCostoHoras();
+				break;
 		}
 	}
 	
@@ -135,7 +143,22 @@ public class ControladorAbmTecnicos implements MouseListener, ActionListener{
 				tecnico.getTurnoLaboral(), tecnico.getExperienciaLaboral());
 	}
 	
+	private void getCostoHoras() {
+		String costoJunior = Float.toString(this.modelo.getCostoHoras("Junior"));
+		String costoSemiSenior = Float.toString(this.modelo.getCostoHoras("SemiSenior"));
+		String costoSenior = Float.toString(this.modelo.getCostoHoras("Senior"));
+		this.vista.setCostosHoras(costoJunior, costoSemiSenior, costoSenior);
+	}
 	
+	private void modificarCostosHora() {
+		float costoJunior = Float.parseFloat(this.vista.getCostoJunior());
+		float costoSemiSenior = Float.parseFloat(this.vista.getCostoSemiSenior());
+		float costoSenior = Float.parseFloat(this.vista.getCostoSenior());
+		this.modelo.setCostoHoras("Junior", costoJunior);
+		this.modelo.setCostoHoras("SemiSenior", costoSemiSenior);
+		this.modelo.setCostoHoras("Senior", costoSenior);
+		this.vista.cerrarDialogoCostoHoras();
+	}
 	
 	private void crearTecnico() {
 		//Falta validar si crearTecnico devuelve true or false

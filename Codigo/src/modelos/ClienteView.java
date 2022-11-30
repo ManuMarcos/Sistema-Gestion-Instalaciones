@@ -26,8 +26,4 @@ public class ClienteView extends PersonaView{
 	public String getCorreo() {
 		return this.correoElectronico;
 	}
-
-
-	
-	
 }

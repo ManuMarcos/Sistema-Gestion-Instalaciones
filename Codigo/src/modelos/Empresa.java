@@ -14,9 +14,12 @@ public class Empresa {
 	private Inventario inventario;
 	private ArrayList<Factura> facturas = new ArrayList<Factura>();
 	private static Empresa instance;
+	
+	/*
 	private static double precioSeguro = 100;
 	private static double precioSoportePared = 50;
 	private static double precioTransporte = 20;
+	*/
 
 	//Methods
 	private Empresa() {
@@ -26,14 +29,6 @@ public class Empresa {
 		this.inventario = new Inventario();
 	}
 	
-	public static double getPrecioTransporte() {
-		return precioTransporte;
-	}
-
-	public static void setPrecioTransporte(double precioTransporte) {
-		Empresa.precioTransporte = precioTransporte;
-	}
-
 	public static Empresa getInstance() {
 		if (instance == null) {
 			instance = new Empresa();
@@ -49,6 +44,32 @@ public class Empresa {
 		}
 		return false;
 	}
+	
+	/**
+	 * Se crea un empleado de segun el tipo: operador, administrador o administrativo.
+	 * @param tipoEmpleado
+	 * @param nombre
+	 * @param direccion
+	 * @param usuario
+	 * @param contrasena
+	 * @return
+	 */
+	public boolean crearEmpleado(String tipoEmpleado, String nombre, String direccion, String usuario, String contrasena) {
+		switch (tipoEmpleado.toUpperCase()){
+			case "OPERADOR":
+				this.empleados.add(new Operador(nombre, direccion, usuario, contrasena));
+				return true;
+			case "ADMINISTRADOR":
+				this.empleados.add(new Administrador(nombre, direccion, usuario, contrasena));
+				return true;
+			case "ADMINISTRATIVO":
+				this.empleados.add(new Administrativo(nombre, direccion, usuario, contrasena));
+				return true;
+			default:
+				return false;
+		}
+	}
+	
 	
 	public boolean existeCliente(long cuitCuil) {
 		for (Cliente cliente : this.clientes) {
@@ -77,19 +98,7 @@ public class Empresa {
 		return null;
 	}
 	
-
-	public ArrayList<Instalacion> instalacionesAsignadasATecnico(int idTecnico) {
-		ArrayList<Instalacion> resultado = new ArrayList<>();
-		for (Instalacion i : this.instalaciones) {
-			if (i.getTecnico().getId() == idTecnico) {
-				resultado.add(i);
-			}
-		}
-		return resultado;
-	}
-
-	
-	public Empleado buscarEmpleado(int id) {
+	private Empleado buscarEmpleado(int id) {
 		for (Empleado empleado : this.empleados) {
 			if (empleado.getId() == id) {
 				return empleado;
@@ -99,12 +108,7 @@ public class Empresa {
 	}
 	
 	
-	
-	
-	
-	
-	
-	public boolean esPosibleAgendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
+	private boolean esPosibleAgendarInstalacion(Cliente cliente, Tecnico tecnico, Calendar fecha) {
 		Agenda agendaCliente = cliente.getAgenda();
 		Agenda agendaTecnico = tecnico.getAgenda();
 		Turno turno = new Turno(fecha);
@@ -112,19 +116,13 @@ public class Empresa {
 		if (agendaCliente.estaDisponible(turno) && agendaTecnico.estaDisponible(turno) && this.hayStockDisponibleParaAgendar()){
 			agendaCliente.agendarTurno(turno);
 			agendaTecnico.agendarTurno(turno);
-			/*
-			Instalacion instalacion = new Instalacion(cliente, tecnico);
-			turno.setInstalacion(instalacion);
-			this.instalaciones.add(instalacion);
-			System.out.println("Se agendo con exito la instalacion para la fecha " + fecha.getTime());
-			*/
 			return true;
 		}
 		System.out.println("No se agendo la instalacion para la fecha " + fecha.getTime());
 		
 		return false;
 	}
-	
+
 	
 	public boolean agendarInstalacion(long idCliente, int idTecnico, Calendar fecha, boolean necesitaSeguro, boolean necesitaSoportePared) {
 		Cliente cliente = this.buscarCliente(idCliente);
@@ -151,11 +149,7 @@ public class Empresa {
 	}
 	
 	
-	public ArrayList<Instalacion> getInstalaciones() {
-		return instalaciones;
-	}
-	
-	public Instalacion buscarInstalacion(int id) {
+	private Instalacion buscarInstalacion(int id) {
 		for (Instalacion instalacion : this.instalaciones) {
 			if (instalacion.getId() == id) {
 				return instalacion;
@@ -171,10 +165,6 @@ public class Empresa {
 			}
 		}
 		return false;
-	}
-
-	public void agregarInstalaciones(Instalacion instalacion) {
-		this.instalaciones.add(instalacion);
 	}
 
 	public boolean setStockProducto(String nombreProducto, int cantidadStock) {
@@ -205,21 +195,6 @@ public class Empresa {
 		}
 		return clientesView;
 	}
-	
-	
-	
-	public Producto removerUnidadProducto(Producto producto) {
-		return this.inventario.quitarProducto(producto);
-	}
-	
-	
-	
-	
-	
-	public void imprimirInventario() {
-		System.out.println(this.inventario.toString());
-	}
-	
 	
 	
 	/*
@@ -264,12 +239,7 @@ public class Empresa {
 		return null;
 	}
 	
-	
-	
-	
-	
-	
-	
+
 	public boolean completarInstalacion(int id, LocalTime horaInicio, LocalTime horaFinalizacion, boolean almuerzo, 
 			int evaporadorasAdicionales, int kitsAdicionales, int condensadorasAdicionales, float otrosGastos) {
 		boolean sePudoCompletar = true;
@@ -286,11 +256,18 @@ public class Empresa {
 			}
 			else {
 				System.out.println("Ocurrio un error, elementos utilizados > stock en inventario");
+				sePudoCompletar = false;
 			}
 			
 			Factura factura = instalacion.finalizar(horaInicio, horaFinalizacion, elementosUtilizados, otrosGastos, almuerzo);
-			this.facturas.add(factura);
-			System.out.println(factura.toString());
+			
+			if (factura != null) {
+				this.facturas.add(factura);
+			}
+			else {
+				System.out.println("La instalacion ya estaba finalizada");
+				sePudoCompletar = false;
+			}
 		}
 		else {
 			sePudoCompletar = false;
@@ -299,39 +276,12 @@ public class Empresa {
 	}
 	
 	
-	public void agregarEmpleado(Empleado empleado) {
-		this.empleados.add(empleado);
-	};
-	
-	/*
-	public ArrayList<Cliente> getClientes(){
-		return this.clientes;
-	}
-	*/
-	
 	public ArrayList<ClienteView> getClientesView(){
 		ArrayList<ClienteView> clientesView = new ArrayList<ClienteView>();
 		for (Cliente cliente : this.clientes) {
 			clientesView.add(cliente.toView());
 		}
 		return clientesView;
-	}
-	
-	
-	public ArrayList<String> getNombresClientes(){
-		ArrayList<String> nombreClientes = new ArrayList<String>();
-		for (Cliente cliente : this.clientes) {
-			nombreClientes.add(cliente.getNombre());
-		}
-		return nombreClientes;
-	}
-	
-	public ArrayList<String> getNombresTecnicos(ArrayList<Tecnico> tecnicos) {
-		ArrayList<String> nombres = new ArrayList<String>();
-		for (int i = 0; i < tecnicos.size(); i++) {
-			nombres.add(tecnicos.get(i).getNombre());
-		}
-		return nombres;
 	}
 	
 	public ArrayList<TecnicoView> getTecnicosView(){
@@ -352,55 +302,7 @@ public class Empresa {
 	public String formatearFecha(Calendar fecha) {
 		return Agenda.formatearFecha(fecha);
 	}
-	
-	
-	public static double getPrecioSeguro() {
-		return precioSeguro;
-	}
-
-	public static void setPrecioSeguro(double precioSeguro) {
-		Empresa.precioSeguro = precioSeguro;
-	}
-
-	public static double getPrecioSoportePared() {
-		return precioSoportePared;
-	}
-
-	public static void setPrecioSoportePared(double precioSoportePared) {
-		Empresa.precioSoportePared = precioSoportePared;
-	}
-	
-	public void agregarCliente(Cliente cliente) {
-		this.clientes.add(cliente);
-	}
-	
-	public boolean agregarProducto(String nombreProducto, int cantidad) {
-		Producto producto = this.crearProducto(nombreProducto);
-		if (producto != null) {
-			this.inventario.setStock(producto, cantidad);
-			return true;
-		}
-		return false;
-	};
-	
-	
-	public void agregarCalendario() {}
-
-	public ArrayList<Factura> getFacturas() {
-		return facturas;
-	}
-
-	public void agregarFactura(Factura factura) {
-		this.facturas.add(factura);
-	};
-	
-	
-	
-	
-	
-	public Inventario getInventario() {
-		return this.inventario;
-	}
+		
 	
 	public EmpleadoView getEmpleadoView(int id) {
 		Empleado empleado = this.buscarEmpleado(id);
@@ -485,19 +387,7 @@ public class Empresa {
 	}
 	
 	
-	
-	/*
-	
-	*/
-	/*
-	public void imprimirTecnicos() {
-		for (Tecnico tecnico : this.getTecnicos()) {
-			System.out.println(tecnico.toString());
-		}
-	}
-	*/
-	
-	public Producto crearProducto(String nombreProducto) {
+	private Producto crearProducto(String nombreProducto) {
 		switch (nombreProducto) {
 			case "Condensadora":
 				return new Condensadora();
@@ -511,7 +401,7 @@ public class Empresa {
 		}
 	}
 	
-	public Disponibilidad crearTurnoLaboral(String turno) {
+	private Disponibilidad crearTurnoLaboral(String turno) {
 		switch (turno) {
 			case "TurnoManana":
 				return new TurnoManana();
@@ -525,18 +415,35 @@ public class Empresa {
 		}
 	}
 	
-	public ExperienciaLaboral crearExpLaboral(String expLaboral) {
-		switch (expLaboral) {
-		case "Junior":
+	private ExperienciaLaboral crearExpLaboral(String expLaboral) {
+		switch (expLaboral.toUpperCase()) {
+		case "JUNIOR":
 			return new Junior();
-		case "SemiSenior":
+		case "SEMISENIOR":
 			return new SemiSenior();
-		case "Senior":
+		case "SENIOR":
 			return new Senior();
 		default:
 			System.out.println("ERROR");
 			return null;
 		}
+	}
+	
+	public boolean setCostoHoras(String experienciaLaboral, float costo) {
+		ExperienciaLaboral expLaboral = this.crearExpLaboral(experienciaLaboral);
+		if (expLaboral != null) {
+			expLaboral.setCostoHora(costo);
+			return true;
+		}
+		return false;
+	}
+	
+	public float getCostoHoras(String experienciaLaboral) {
+		ExperienciaLaboral expLaboral = this.crearExpLaboral(experienciaLaboral);
+		if (expLaboral !=  null) {
+			return expLaboral.getCostoHora();
+		}
+		return -1;
 	}
 	
 	public TecnicoView crearTecnico(String nombre, String direccion, String turnoLaboral, String usuario, String contrasena, String experiencia) {
@@ -564,7 +471,6 @@ public class Empresa {
 		}
 		return false;
 	}
-	
-	
+
 	
 }
