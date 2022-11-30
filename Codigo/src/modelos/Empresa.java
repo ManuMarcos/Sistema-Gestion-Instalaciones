@@ -219,6 +219,15 @@ public class Empresa {
 		return -1;
 	}
 	
+	public ArrayList<String> getTiposDeUsuario(){
+		ArrayList<String> tiposDeUsuario = new ArrayList<String>();
+		tiposDeUsuario.add(Operador.class.getSimpleName());
+		tiposDeUsuario.add(Tecnico.class.getSimpleName());
+		tiposDeUsuario.add(Administrador.class.getSimpleName());
+		tiposDeUsuario.add(Administrativo.class.getSimpleName());
+		return tiposDeUsuario;
+	}
+	
 	
 	public ArrayList<InstalacionView> getInstalacionesAsignadas(int idTecnico) {
 		ArrayList<InstalacionView> instalacionesAsignadas = new ArrayList<InstalacionView>();
