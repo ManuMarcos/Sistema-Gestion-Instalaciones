@@ -1,11 +1,11 @@
 @startuml
 actor Operador as operador
 
-participant PanelAgendarInstalacion as vista
+participant "vista : PanelAgendarInstalacion" as vista
 
-participant ControladorAgendarInstalacion as controlador
+participant "controlador : ControladorAgendarInstalacion" as controlador
 
-participant Empresa as modelo
+participant "modelo : Empresa" as modelo
 
 operador -> vista : Presiona "Agendar"
 activate vista
